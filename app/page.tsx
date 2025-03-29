@@ -1,9 +1,14 @@
-import Image from "next/image";
+'use client'
+import { useState } from "react";
+import Sidebar from "./Sidebar";
+// import Header from "./components/Header";
 
 export default function Home() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+    <div className="">
+      {/* <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -97,7 +102,12 @@ export default function Home() {
           />
           Go to nextjs.org →
         </a>
-      </footer>
+      </footer> */}
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <div className="lg:pl-72">
+        {/* <Header setSidebarOpen={setSidebarOpen} sidebarOpen={false} /> */}
+        <main className="py-10 px-4 sm:px-6 lg:px-8">{/* Your content */}</main>
+      </div>
     </div>
   );
 }
