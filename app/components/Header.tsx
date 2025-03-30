@@ -1,183 +1,68 @@
-// components/Header.tsx
-"use client";
+'use client';
 
-import { Dialog, DialogPanel, TransitionChild } from "@headlessui/react";
-import {
-  Cog6ToothIcon,
-  FolderIcon,
-  HomeIcon,
-  UsersIcon,
-  XMarkIcon,
-  ChartPieIcon,
-  CalendarIcon,
-  DocumentDuplicateIcon,
-} from "@heroicons/react/24/outline";
-import Image from "next/image";
+import { Bars3Icon, BellIcon, MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import Image from 'next/image';
+import { userNavigation } from "@/app/setting";
 
-const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
-  { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
-  { name: "Documents", href: "#", icon: DocumentDuplicateIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
-];
-
-const teams = [
-  { id: 1, name: "Heroicons", href: "#", initial: "H", current: false },
-  { id: 2, name: "Tailwind Labs", href: "#", initial: "T", current: false },
-  { id: 3, name: "Workcation", href: "#", initial: "W", current: false },
-];
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
-
-interface SidebarProps {
-  sidebarOpen: boolean;
+interface HeaderProps {
   setSidebarOpen: (open: boolean) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
+const Header: React.FC<HeaderProps> = ({ setSidebarOpen }) => {
   return (
-    <>
-      {/* Mobile Sidebar */}
-      <Dialog
-        open={sidebarOpen}
-        onClose={setSidebarOpen}
-        className="relative z-50 lg:hidden"
+    <div className="sticky top-0 z-40 flex h-16 items-center border-b  px-4 shadow-sm sm:px-6 lg:px-8">
+      {/* Sidebar Toggle Button (Mobile) - Ensure Only One Instance */}
+      <button 
+        type="button" 
+        onClick={() => setSidebarOpen(true)} 
+        className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-600 lg:hidden"
       >
-        <div className="fixed inset-0 bg-gray-900/80" />
-        <div className="fixed inset-0 flex">
-          <DialogPanel className="relative flex w-full max-w-xs flex-1 flex-col bg-gray-900 px-6 pb-4">
-            <TransitionChild>
-              <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
-                <button
-                  type="button"
-                  onClick={() => setSidebarOpen(false)}
-                  className="p-2"
-                >
-                  <XMarkIcon className="size-6 text-white" />
-                </button>
-              </div>
-            </TransitionChild>
-            <div className="flex h-16 items-center">
-              <Image
-                alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                width={32}
-                height={32}
-                className="h-8 w-auto"
-              />
-            </div>
-            <nav className="mt-5 flex flex-1 flex-col">
-              <ul className="flex-1 space-y-1">
-                {navigation.map((item) => (
-                  <li key={item.name}>
-                    <a
-                      href={item.href}
-                      className={classNames(
-                        item.current
-                          ? "bg-gray-800 text-white"
-                          : "text-gray-400 hover:bg-gray-800 hover:text-white",
-                        "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold"
-                      )}
-                    >
-                      <item.icon className="size-6" />
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <div className="text-xs font-semibold text-gray-400 mt-5">
-                Your teams
-              </div>
-              <ul className="mt-2 space-y-1">
-                {teams.map((team) => (
-                  <li key={team.name}>
-                    <a
-                      href={team.href}
-                      className="flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold text-gray-400 hover:bg-gray-800 hover:text-white"
-                    >
-                      <span className="size-6 flex items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-xs font-medium">
-                        {team.initial}
-                      </span>
-                      {team.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="#"
-                className="mt-auto flex items-center gap-x-3 p-2 text-sm font-semibold text-gray-400 hover:bg-gray-800 hover:text-white"
-              >
-                <Cog6ToothIcon className="size-6" />
-                Settings
-              </a>
-            </nav>
-          </DialogPanel>
-        </div>
-      </Dialog>
+        <Bars3Icon className="size-6 mr-2" />
+      </button>
 
-      {/* Desktop Sidebar */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col bg-gray-900 px-6 pb-4">
-        <div className="flex h-16 items-center">
-          <Image
-            alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-            width={32}
-            height={32}
-            className="h-8 w-auto"
-          />
-        </div>
-        <nav className="mt-5 flex flex-1 flex-col">
-          <ul className="flex-1 space-y-1">
-            {navigation.map((item) => (
-              <li key={item.name}>
-                <a
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-800 text-white"
-                      : "text-gray-400 hover:bg-gray-800 hover:text-white",
-                    "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold"
-                  )}
-                >
-                  <item.icon className="size-6" />
-                  {item.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <div className="text-xs font-semibold text-gray-400 mt-5">
-            Your teams
-          </div>
-          <ul className="mt-2 space-y-1">
-            {teams.map((team) => (
-              <li key={team.name}>
-                <a
-                  href={team.href}
-                  className="flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold text-gray-400 hover:bg-gray-800 hover:text-white"
-                >
-                  <span className="size-6 flex items-center justify-center rounded-lg border border-gray-700 bg-gray-800 text-xs font-medium">
-                    {team.initial}
-                  </span>
-                  {team.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <a
-            href="#"
-            className="mt-auto flex items-center gap-x-3 p-2 text-sm font-semibold text-gray-400 hover:bg-gray-800 hover:text-white"
-          >
-            <Cog6ToothIcon className="size-6" />
-            Settings
-          </a>
-        </nav>
+      {/* Search Bar */}
+      <div className="relative flex flex-1 items-center">
+        <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
+        <input
+          type="search"
+          placeholder="Search..."
+          className="w-1/2 rounded-md border border-gray-300 pl-10 pr-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        />
       </div>
-    </>
+
+      {/* Right Side */}
+      <div className="ml-4 flex items-center space-x-4">
+        {/* Notification Bell */}
+        <button className="p-2 text-gray-400 hover:text-gray-600">
+          <BellIcon className="size-6" />
+        </button>
+
+        {/* Profile Dropdown */}
+        <Menu as="div" className="relative">
+          <MenuButton className="flex items-center space-x-2">
+            <Image alt="profile" width={12} height={12} priority src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e" className="size-8 rounded-full" />
+            <ChevronDownIcon className="size-5 text-gray-400 hover:text-gray-600" />
+          </MenuButton>
+          
+          <MenuItems className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            {userNavigation.map((item) => (
+              <MenuItem key={item.name}>
+                {({ active }) => (
+                  <a
+                    href={item.href}
+                    className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 ${active ? "bg-gray-200" : ""}`}
+                  >
+                    {item.name}
+                  </a>
+                )}
+              </MenuItem>
+            ))}
+          </MenuItems>
+        </Menu>
+      </div>
+    </div>
   );
 };
 
-export default Sidebar;
+export default Header;
