@@ -10,8 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        {/* ✅ Wrap content in LayoutWrapper */}
-        <LayoutWrapper>{children}</LayoutWrapper>
+         <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );
