@@ -1,7 +1,6 @@
 "use client";
 
-import { Fragment } from "react";
-import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from "@headlessui/react";
+ import { Dialog, DialogBackdrop, DialogPanel, TransitionChild } from "@headlessui/react";
 import { XMarkIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import NavMenu from "@/app/components/NavMenu";
@@ -55,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
                   <li className="mt-auto">
                     <a
                       href="#"
-                      className="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-400 hover:bg-gray-800 hover:text-white"
+                      className="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-400 hover:bg-gray-500 hover:text-white"
                     >
                       <Cog6ToothIcon className="size-6 shrink-0" />
                       Settings
@@ -88,7 +87,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
             <li className="mt-auto">
               <a
                 href="#"
-                className="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-400 hover:bg-gray-800 hover:text-white"
+                className="group flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-400 hover:bg-gray-500 hover:text-white"
               >
                 <Cog6ToothIcon className="size-6 shrink-0" />
                 App Settings
