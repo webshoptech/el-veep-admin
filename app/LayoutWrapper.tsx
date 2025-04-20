@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
-    <div className="flex bg-[#F9F9F9] h-screen">
+    <div className="flex bg-hub-primary-50 h-full">
       <Sidebar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}

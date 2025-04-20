@@ -25,7 +25,7 @@ type SidebarProps = {
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
-  const [collapsed, setCollapsed] = useState(false); // manage collapsed state at top level
+  const [collapsed, setCollapsed] = useState(false);  
 
   return (
     <>
@@ -123,7 +123,7 @@ function BottomMenu({
           />
           <div className="flex flex-col">
             <span className="text-sm font-semibold">David Market</span>
-            <span className="max-w-[120px] truncate text-xs text-gray-400">
+            <span className="max-w-[120px] truncate text-xs text-white">
               david@africanhubmarket.com
             </span>
           </div>
@@ -131,7 +131,7 @@ function BottomMenu({
 
         {/* Toggle Button */}
         <PopoverButton
-          className="text-gray-400 hover:text-white transition"
+          className="text-white hover:text-white transition"
           aria-label="Toggle menu"
         >
           {({ open }) => (

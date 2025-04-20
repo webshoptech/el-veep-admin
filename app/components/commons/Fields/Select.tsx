@@ -2,6 +2,8 @@ interface SelectProps {
     label: string;
     id: string;
     options: string[];
+    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
+    value?: string
   }
   
   const Select: React.FC<SelectProps> = ({ label, id, options }) => {

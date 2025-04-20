@@ -1,8 +1,13 @@
+export const APP_NAME = "African Hub Marketplace";
+export const APP_DESCRIPTION = "Your go to marketplace for African products";
+
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 import {
   HomeIcon,
   ShoppingBagIcon,
   CreditCardIcon,
-   TruckIcon,
+  TruckIcon,
   ChartBarIcon,
   Cog6ToothIcon,
   QuestionMarkCircleIcon,
@@ -14,7 +19,6 @@ import {
   ArrowRightStartOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 
-  
 export const navigation = [
   {
     name: "Dashboard",
@@ -108,12 +112,12 @@ export const navigation = [
 export const bottomNavigation = [
   {
     name: "App Settings",
-    href: "/app-settings",
+    href: "/settings/app",
     icon: WrenchIcon,
   },
   {
-    name: "Policy Settings",
-    href: "#",
+    name: "Policies Settings",
+    href: "/settings/policies",
     icon: ShieldCheckIcon,
   },
   {
@@ -133,7 +137,3 @@ export const bottomNavigation = [
     isLogout: true,
   },
 ];
-
-
-export const APP_NAME = "African Hub Marketplace";
-export const APP_DESCRIPTION = "Your go to marketplace for African products";
