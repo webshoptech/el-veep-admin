@@ -111,7 +111,7 @@ function BottomMenu({
 }) {
  return (
     <Popover className="relative w-1/2">
-      <div className="fixed bottom-0 z-50 bg-hub-primary-600 text-white rounded-xl shadow-inner px-4 py-3 flex items-center justify-between mb-2">
+      <div className="fixed bottom-0 z-50 bg-hub-primary-400 text-white rounded-xl shadow-inner px-4 py-3 flex items-center justify-between mb-2">
         {/* Profile */}
         <div className="flex items-center gap-x-3">
           <Image
@@ -149,22 +149,22 @@ function BottomMenu({
         transition
         className="fixed bottom-[60px] z-40 px-4 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
       >
-        <div className="rounded-t-xl bg-hub-primary-600 shadow-lg ring-1 ring-white/10 p-3 space-y-1">
+        <div className="rounded-t-xl bg-hub-primary-400 text-white shadow-lg ring-1 ring-white/10 p-3 space-y-1">
           {bottomNavigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-x-3 rounded-md px-4 py-2 text-sm font-medium hover:bg-white/10 ${
+              className={`flex items-center  gap-x-3 rounded-md px-4 py-2 text-sm font-medium hover:bg-white/10 ${
                 item.isLogout
-                  ? "text-red-400 hover:bg-red-500/10 font-bold"
+                  ? "text-orange-500 font-bold bg-white border hover:bg-white hover:text-white"
                   : ""
               } ${collapsed ? "justify-center" : ""}`}
             >
               <item.icon
-                className={`size-4 ${
+                className={`size-4   ${
                   item.isLogout
-                    ? "text-red-400 font-bold"
-                    : "text-gray-300"
+                    ? "text-red-500 hover:text-white font-bold"
+                    : "text-white"
                 }`}
               />
               {!collapsed && <span>{item.name}</span>}

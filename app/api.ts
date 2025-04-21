@@ -3,7 +3,7 @@
 
 import { API_URL } from "@/app/setting";
 
-import axios from 'axios';
+import axios from "axios";
 
 /**
  * Sends a POST request to save application settings.
@@ -15,7 +15,7 @@ import axios from 'axios';
 export async function saveAppSettings(data: FormData) {
   const response = await axios.post(`${API_URL}/app-settings`, data);
   return response.data;
-} 
+}
 
 /**
  * Fetches the current application settings from the server.
@@ -24,9 +24,9 @@ export async function saveAppSettings(data: FormData) {
  */
 export async function getAppSettings() {
   const response = await axios.get(`${API_URL}/app-setting`);
-   return response.data;
+  return response.data;
 }
- 
+
 /**
  * Fetches the policy content for a given type from the server.
  *
@@ -43,11 +43,8 @@ export async function getPolicy(type: string) {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 404) {
-        console.warn(`Policy for type "${type}" not found.`);
         return { content: "" }; // Return empty content instead of failing
       }
-
-      console.error("API error:", error.response?.data || error.message);
       throw new Error(error.response?.data?.error || "Failed to fetch policy.");
     } else {
       throw new Error("Unexpected error occurred.");
@@ -63,4 +60,37 @@ export async function getPolicy(type: string) {
 export async function savePolicy(formData: FormData) {
   const response = await axios.post(`${API_URL}/policy`, formData);
   return response.data;
-} 
+}
+
+/**
+ * Fetches tickets for a given type from the server.
+ *
+ * @param type - The type of tickets to fetch, e.g., "open", "close".
+ * @returns A promise that resolves to an object containing the tickets data.
+ *          If the type is not supported, resolves to an empty array.
+ * @throws An error if the API call fails.
+ */
+export async function getTickets(type: string) {
+  const response = await axios.get(`${API_URL}/tickets/${type}`);
+  return response.data;
+}
+
+export async function getTicketDetail(ticketId: string) {
+  const response = await axios.get(`${API_URL}/ticket/detail/${ticketId}`);
+  return response.data.data;
+}
+export async function replyTicket(formData: FormData) {
+  console.log("FormData entries:");
+  for (const pair of formData.entries()) {
+    console.log(pair[0], pair[1]);
+  }
+
+  const response = await axios.post(`${API_URL}/ticket/reply`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Accept: "application/json",
+    },
+  });
+
+  return response.data;
+}

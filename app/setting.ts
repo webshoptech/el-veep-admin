@@ -126,8 +126,8 @@ export const bottomNavigation = [
     icon: BriefcaseIcon,
   },
   {
-    name: "Notifications",
-    href: "#",
+    name: "Tickets",
+    href: "/settings/tickets",
     icon: BellAlertIcon,
   },
   {
