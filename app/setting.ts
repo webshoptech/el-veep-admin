@@ -24,6 +24,9 @@ export const navigation = [
     name: "Dashboard",
     href: "/",
     icon: HomeIcon,
+    children: [
+      { name: "Home", href: "/" }, 
+    ],
   },
   {
     name: "Users & Customers",

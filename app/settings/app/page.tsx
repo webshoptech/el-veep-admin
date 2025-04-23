@@ -25,8 +25,7 @@ export default function AppSettings() {
     const fetchSettings = async () => {
       try {
         const response = await getAppSettings();
-        console.log("data is", response);
-        const data = response.data?.[0]; // Access the first (and likely only) item in the array
+         const data = response.data?.[0]; // Access the first (and likely only) item in the array
         if (!data) return;
         setFormData({
           app_name: data["app_name"] || "",
@@ -47,8 +46,7 @@ export default function AppSettings() {
   }, []);
 
   const [imageUrl, setImageUrl] = useState("");
-console.log("imageUrl is", imageUrl);
-
+ 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -64,8 +62,7 @@ console.log("imageUrl is", imageUrl);
 
     try {
       const payload = new FormData();
-      console.log("formData is", formData);
-
+ 
       Object.entries(formData).forEach(([key, value]) => {
         if (value !== null) {
           payload.append(key, value);
@@ -73,8 +70,7 @@ console.log("imageUrl is", imageUrl);
       });
 
       const data = await saveAppSettings(payload);
-      console.log("data is", data);
-
+ 
       // Check if there's an error message from the API
       if (data?.error_detail) {
         setToastMessage(data.error_detail);

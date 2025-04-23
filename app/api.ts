@@ -80,11 +80,6 @@ export async function getTicketDetail(ticketId: string) {
   return response.data.data;
 }
 export async function replyTicket(formData: FormData) {
-  console.log("FormData entries:");
-  for (const pair of formData.entries()) {
-    console.log(pair[0], pair[1]);
-  }
-
   const response = await axios.post(`${API_URL}/ticket/reply`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

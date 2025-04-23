@@ -48,7 +48,7 @@ const NavMenu = () => {
             </button>
 
             {item.children && isOpen && (
-              <ul className="ml-8 mt-1 space-y-1">
+              <ul className="ml-8 mt-1 space-y-2">
                 {item.children.map((subItem) => {
                   const isActiveSub = pathname === subItem.href;
                   return (
@@ -56,7 +56,7 @@ const NavMenu = () => {
                       <Link
                         href={subItem.href}
                         className={clsx(
-                          "block px-3 py-1 text-sm rounded-md",
+                          "block px-3 py-1.5 text-sm rounded-md",
                           isActiveSub
                             ? "bg-orange-50 text-orange-600"
                             : "text-gray-500 hover:text-orange-500 hover:bg-orange-50"

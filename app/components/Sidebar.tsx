@@ -4,7 +4,7 @@ import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
-   Popover,
+  Popover,
   PopoverButton,
   PopoverPanel,
   TransitionChild,
@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { bottomNavigation } from "@/app/setting";
 import { Bars3Icon } from "@heroicons/react/24/solid";
- 
+
 type SidebarProps = {
   sidebarOpen: boolean;
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,7 +25,7 @@ type SidebarProps = {
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
-  const [collapsed, setCollapsed] = useState(false);  
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <>
@@ -109,7 +109,7 @@ function BottomMenu({
   collapsed: boolean;
   setCollapsed: (v: boolean) => void;
 }) {
- return (
+  return (
     <Popover className="relative w-1/2">
       <div className="fixed bottom-0 z-50 bg-hub-primary-400 text-white rounded-xl shadow-inner px-4 py-3 flex items-center justify-between mb-2">
         {/* Profile */}
@@ -154,7 +154,7 @@ function BottomMenu({
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center  gap-x-3 rounded-md px-4 py-2 text-sm font-medium hover:bg-white/10 ${
+               className={`flex items-center cursor-pointer  gap-x-3 rounded-md px-4 py-2 text-sm font-medium hover:bg-white/10 ${
                 item.isLogout
                   ? "text-orange-500 font-bold bg-white border hover:bg-white hover:text-white"
                   : ""
