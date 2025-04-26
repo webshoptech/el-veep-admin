@@ -12,7 +12,7 @@ import {
 import { getTicketDetail, replyTicket } from "@/app/api";
 import { formatHumanReadableDate } from "@/app/components/commons/formatHumanReadableDate";
 import Image from "next/image";
-import GlobalSkeleton from "@/app/components/commons/GlobalSkeleton";
+import GlobalSkeleton from "@/app/components/Skeletons/GlobalSkeleton";
 import TicketType from "@/types/TicketType";
 import MessageEntry from "@/types/MessageEntry";
 

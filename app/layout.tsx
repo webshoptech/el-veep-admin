@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: process.env.NEXT_PUBLIC_APP_NAME || "My App",
   description: process.env.NEXT_PUBLIC_APP_DESCRIPTION || "Welcome to my app",
 };
+ 
 
 export default function RootLayout({
   children,

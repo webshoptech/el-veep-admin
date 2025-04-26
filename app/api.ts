@@ -89,3 +89,24 @@ export async function replyTicket(formData: FormData) {
 
   return response.data;
 }
+
+export async function getUsers(type: string) {
+  const response = await axios.get(`${API_URL}/users/${type}`);
+  return response.data.users;
+}
+
+export async function getStats(period: string) {
+  const response = await axios.get(`${API_URL}/stats?start_date=${period}`);
+  return response.data;
+}
+export async function getSalesGraph(period: string) {
+  const response = await axios.get(
+    `${API_URL}/stats/graph?start_date=${period}`
+  );
+  return response;
+}
+
+export async function getRecentReview() {
+  const response = await axios.get(`${API_URL}/stats/review`);
+  return response.data;
+}

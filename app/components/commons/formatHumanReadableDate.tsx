@@ -12,8 +12,8 @@ export function formatHumanReadableDate(dateString: string): string {
   }
 
   if (isThisWeek(date, { weekStartsOn: 1 })) {
-    return `${format(date, 'EEEE')} ${format(date, 'h:mma')}`; // e.g. Friday 12:12am
+    return `${format(date, 'EEE')} ${format(date, 'h:mma')}`;  
   }
 
-  return format(date, 'EEEE do, MMMM yyyy'); // e.g. Monday 12th, September 2025
+  return format(date, 'do, MMMM yyyy');  
 }
