@@ -3,7 +3,8 @@ import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
 import { getSalesGraph } from "@/app/api";
 import AreaChartSkeleton from "../Skeletons/AreaChartSkeleton";
-
+import { formatDate } from "./formatHumanReadableDate";
+ 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
@@ -26,9 +27,9 @@ function AreaChart() {
       if (
         response?.data.status === "success" &&
         Array.isArray(response.data.data)
-      ) {
-        const categories = response.data.data.map(
-          (item: { day: string }) => item.day
+      ) { 
+        const categories = response.data.data.map((item: { day: string }) =>
+          formatDate(new Date(item.day)) 
         );
         const series = response.data.data.map((item: { total: string }) =>
           parseFloat(item.total)

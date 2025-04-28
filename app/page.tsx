@@ -5,6 +5,8 @@ import AreaChart from "@/app/components/commons/AreaChart";
 import { RecentReviews } from "./components/Review";
 import { getStats } from "./api";
 import StatsDashboardSkeleton from "./components/Skeletons/StatsDashboardSkeleton";
+import ProductTable from "./products/page";
+import OrderTable from "./orders/page";
 
 interface GreetingsProps {
   userName: string; // Make userName required and provide a default in the parent component
@@ -67,7 +69,7 @@ const StatsDashboard: React.FC<StatsDashboardProps> = ({ period }) => {
 
   const fetchStats = useCallback(async (selectedPeriod: string) => {
     try {
-      const response = await getStats(selectedPeriod);      
+      const response = await getStats(selectedPeriod);
       if (response?.status === "success") {
         return response.data;
       }
@@ -89,11 +91,20 @@ const StatsDashboard: React.FC<StatsDashboardProps> = ({ period }) => {
 
   return (
     <div className="flex items-center justify-between gap-4">
-      <StatCard title="Total Revenue" value={`$${Number(stats.total_revenue).toLocaleString()}`} />
+      <StatCard
+        title="Total Revenue"
+        value={`$${Number(stats.total_revenue).toLocaleString()}`}
+      />
       <StatCard title="Total Orders" value={stats.total_orders.toString()} />
-      <StatCard title="Total Products" value={stats.total_products.toString()} />
+      <StatCard
+        title="Total Products"
+        value={stats.total_products.toString()}
+      />
       <StatCard title="Total Vendors" value={stats.total_vendors.toString()} />
-      <StatCard title="Total Customers" value={stats.total_customers.toString()} />
+      <StatCard
+        title="Total Customers"
+        value={stats.total_customers.toString()}
+      />
     </div>
   );
 };
@@ -132,6 +143,9 @@ const Home: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Recent Orders */}
+      <OrderTable />
     </div>
   );
 };

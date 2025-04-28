@@ -110,3 +110,11 @@ export async function getRecentReview() {
   const response = await axios.get(`${API_URL}/stats/review`);
   return response.data;
 }
+export async function getRecentProducts() {
+  const response = await axios.get(`${API_URL}/stats/products`);
+  return response.data;
+}
+export async function getRecentOrders() {
+  const response = await axios.get(`${API_URL}/stats/orders`);
+  return response.data;
+}

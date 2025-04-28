@@ -33,7 +33,7 @@ export const navigation = [
     href: "/customers",
     icon: UserCircleIcon,
     children: [
-      { name: "Customer List", href: "/customers/list" },
+      { name: "Customer List", href: "/customers" },
       { name: "Customer Activity", href: "/customers/activity" },
       { name: "Customer Support", href: "/customers/support" },
     ],
@@ -43,7 +43,7 @@ export const navigation = [
     href: "/vendors",
     icon: ShoppingBagIcon,
     children: [
-      { name: "Vendor List", href: "/vendors/list" },
+      { name: "Vendor List", href: "/vendors" },
       { name: "Vendor Performance", href: "/vendors/performance" },
       { name: "Vendor Compliance", href: "/vendors/compliance" },
     ],
@@ -53,7 +53,8 @@ export const navigation = [
     href: "/products",
     icon: TruckIcon,
     children: [
-      { name: "All Products", href: "/products/all" },
+      { name: "All Products", href: "/products" },
+      { name: "Create Product", href: "/products/create" },
       { name: "Pending Approvals", href: "/products/pending" },
       { name: "Flagged Products", href: "/products/flagged" },
       { name: "Product Analytics", href: "/products/analytics" },
@@ -64,7 +65,7 @@ export const navigation = [
     href: "/orders",
     icon: CreditCardIcon,
     children: [
-      { name: "All Orders", href: "/orders/all" },
+      { name: "All Orders", href: "/orders" },
       { name: "Returns & Refunds", href: "/orders/returns" },
       { name: "Disputes", href: "/orders/disputes" },
     ],
