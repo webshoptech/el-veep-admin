@@ -118,3 +118,7 @@ export async function getRecentOrders() {
   const response = await axios.get(`${API_URL}/stats/orders`);
   return response.data;
 }
+export async function getCategories() {
+  const response = await axios.get(`${API_URL}/categories`);
+  return response.data;
+}

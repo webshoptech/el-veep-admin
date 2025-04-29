@@ -1,8 +1,8 @@
 "use client";
 
 import Input from "@/app/components/commons/Fields/Input";
-import { Select } from "@headlessui/react";
- import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
+import Select from "@/app/components/commons/Fields/Select";
+import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
 import { useState } from "react";
 
 export default function CreateProduct() {
@@ -62,14 +62,10 @@ export default function CreateProduct() {
             onEditorChange={(newValue) => setContent(newValue)}
           />
 
-          {/* <Select
-            label="Product category"
-            id="category"
-            options={["Category 1", "Category 2", "Category 3"]}
-          /> */}
           <Select
-             id="category"
-           />
+            label="Product category"
+            options={["Category 1", "Category 2", "Category 3"]}
+          />
         </div>
       </div>
     </div>
