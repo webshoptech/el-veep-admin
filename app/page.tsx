@@ -5,7 +5,6 @@ import AreaChart from "@/app/components/commons/AreaChart";
 import { RecentReviews } from "./components/Review";
 import { getStats } from "./api";
 import StatsDashboardSkeleton from "./components/Skeletons/StatsDashboardSkeleton";
-import ProductTable from "./products/page";
 import OrderTable from "./orders/page";
 
 interface GreetingsProps {
