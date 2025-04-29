@@ -1,9 +1,7 @@
-'use client';
+"use client";
 import React, { useEffect, useState } from "react";
- import { Product } from "@/types/Product";
+import { Product } from "@/types/Product";
 
-
-import CommonTable from "../components/commons/Table";
 import { getRecentProducts } from "../api";
 import Image from "next/image";
 import TableSkeleton from "../components/Skeletons/TableSkeleton";
@@ -14,11 +12,11 @@ const ProductTable: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => { 
+  useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await getRecentProducts(); 
-        const data = response;        
+        const response = await getRecentProducts();
+        const data = response;
         if (data.status === "success") {
           setProducts(data.data);
         } else {
@@ -97,8 +95,13 @@ const ProductTable: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-medium mb-4 text-hub-primary-50">Product List</h2>
-      <Table columns={columns} data={products.map(product => ({ ...product }))} />
+      <h2 className="text-2xl font-medium mb-4 text-hub-primary-50">
+        Product List
+      </h2>
+      <Table
+        columns={columns}
+        data={products.map((product) => ({ ...product }))}
+      />
     </div>
   );
 };

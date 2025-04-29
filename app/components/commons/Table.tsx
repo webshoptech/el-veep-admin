@@ -10,16 +10,18 @@ import {
   ChevronRightIcon,
 } from "@heroicons/react/24/solid";
 
-export interface Column {
-  key: string;
+// Column Definition
+export interface Column<T> {
+  key: keyof T;
   label: string;
-  render?: (value: any, row: any) => React.ReactNode;
+  render?: (value: T[keyof T], row: T) => React.ReactNode;
 }
 
-interface TableProps {
-  data: any[];
-  columns: Column[];
-  onRowClick?: (row: any) => void;
+// TableProps Interface
+interface TableProps<T> {
+  data: T[];
+  columns: Column<T>[];
+  onRowClick?: (row: T) => void;
   itemsPerPage?: number;
   title?: string;
   showPagination?: boolean;
@@ -27,30 +29,40 @@ interface TableProps {
   viewAllRoute?: string;
 }
 
+// Parse Date Helper
 const parseDate = (dateString: string) => new Date(dateString).getTime();
 
-const sortData = (data: any[], column: string, order: string) => {
+// Sort Data Helper
+const sortData = <T,>(
+  data: T[],
+  column: keyof T,
+  order: "asc" | "desc"
+): T[] => {
   return [...data].sort((a, b) => {
-    let valueA = a[column];
-    let valueB = b[column];
+    const valueA = a[column];
+    const valueB = b[column];
 
-    if (column === "date") {
-      valueA = parseDate(valueA);
-      valueB = parseDate(valueB);
-    }
+    const parsedValueA =
+      column === "date" && typeof valueA === "string"
+        ? parseDate(valueA)
+        : valueA;
+    const parsedValueB =
+      column === "date" && typeof valueB === "string"
+        ? parseDate(valueB)
+        : valueB;
 
-    if (typeof valueA === "string") {
-      valueA = valueA.toLowerCase();
-      valueB = valueB.toLowerCase();
-    }
+    const normalizedValueA =
+      typeof parsedValueA === "string" ? parsedValueA.toLowerCase() : parsedValueA;
+    const normalizedValueB =
+      typeof parsedValueB === "string" ? parsedValueB.toLowerCase() : parsedValueB;
 
-    if (valueA < valueB) return order === "asc" ? -1 : 1;
-    if (valueA > valueB) return order === "asc" ? 1 : -1;
+    if (normalizedValueA < normalizedValueB) return order === "asc" ? -1 : 1;
+    if (normalizedValueA > normalizedValueB) return order === "asc" ? 1 : -1;
     return 0;
   });
 };
 
-export default function Table({
+export default function Table<T>({
   data,
   columns,
   onRowClick,
@@ -59,20 +71,24 @@ export default function Table({
   showPagination = false,
   showViewAllButton = false,
   viewAllRoute,
-}: TableProps) {
+}: TableProps<T>) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortColumn, setSortColumn] = useState<string | null>(null);
+  const [sortColumn, setSortColumn] = useState<keyof T | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-  const handleSort = (column: string) => {
+  const handleSort = (column: keyof T) => {
     const newOrder =
       sortColumn === column && sortOrder === "asc" ? "desc" : "asc";
     setSortColumn(column);
     setSortOrder(newOrder);
   };
+
   const router = useRouter();
 
-  const sortedData = sortColumn ? sortData(data, sortColumn, sortOrder) : data;
+  const sortedData = sortColumn
+    ? sortData(data, sortColumn, sortOrder)
+    : data;
+
   const totalPages = Math.ceil(sortedData.length / itemsPerPage);
   const paginatedData =
     showPagination || showViewAllButton
@@ -111,9 +127,9 @@ export default function Table({
             <tr>
               {columns.map(({ key, label }) => (
                 <th
-                  key={key}
+                  key={String(key)}
                   onClick={() => handleSort(key)}
-                  className="p-3 border-r border-hub-primary-400 cursor-pointer"
+                  className="p-3 cursor-pointer"
                 >
                   <div className="flex items-center justify-between">
                     {label}
@@ -141,8 +157,10 @@ export default function Table({
                 }`}
               >
                 {columns.map(({ key, render }) => (
-                  <td key={key} className="p-3 border-r border-hub-primary-400">
-                    {render ? render(row[key], row) : row[key]}
+                  <td key={`${String(key)}-${index}`} className="p-3">
+                    {render
+                      ? render(row[key], row)
+                      : (row[key] as React.ReactNode) ?? null}
                   </td>
                 ))}
               </tr>
@@ -153,7 +171,7 @@ export default function Table({
       {/* Pagination Info & Controls */}
       {showPagination && (
         <div className="mt-6 flex justify-between items-center text-lg text-gray-500">
-          <span className="">
+          <span>
             Showing {itemsPerPage * (currentPage - 1) + 1} to{" "}
             {Math.min(itemsPerPage * currentPage, data.length)} of {data.length}{" "}
             entries
