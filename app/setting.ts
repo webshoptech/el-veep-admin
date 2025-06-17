@@ -17,6 +17,8 @@ import {
   BriefcaseIcon,
   BellAlertIcon,
   ArrowRightStartOnRectangleIcon,
+  CurrencyDollarIcon,
+  MegaphoneIcon,
 } from "@heroicons/react/24/outline";
 
 export const navigation = [
@@ -73,7 +75,7 @@ export const navigation = [
   {
     name: "Financial Management",
     href: "/finance",
-    icon: ChartBarIcon,
+    icon: CurrencyDollarIcon,
     children: [
       { name: "Revenue Overview", href: "/finance/overview" },
       { name: "Vendor Commissions", href: "/finance/commissions" },
@@ -82,33 +84,43 @@ export const navigation = [
     ],
   },
   {
-    name: "Platform Settings",
-    href: "/settings",
-    icon: Cog6ToothIcon,
-    children: [
-      { name: "General Settings", href: "/settings/general" },
-      { name: "Shipping Configuration", href: "/settings/shipping" },
-      { name: "Notifications", href: "/settings/notifications" },
-    ],
-  },
-  {
     name: "Reports & Analytics",
     href: "/reports",
     icon: ChartBarIcon,
     children: [
       { name: "Sales Reports", href: "/reports/sales" },
-      { name: "Platform Health", href: "/reports/platform" },
       { name: "Vendor Reports", href: "/reports/vendors" },
+      { name: "Notifications", href: "/settings/notifications" },
+    ],
+  },
+  {
+    name: "Support Tickets",
+    href: "/reports",
+    icon: MegaphoneIcon,
+    children: [
+      { name: "Tickets", href: "/tickets" },
+      { name: "Notifications", href: "/notifications" },
+    ],
+  },
+  {
+    name: "Platform Settings",
+    href: "/settings",
+    icon: Cog6ToothIcon,
+    children: [
+      { name: "General Settings", href: "/settings/general" },
+      { name: "Clik2Pay Configuration", href: "/settings/clik2pay" },
+      { name: "EasyPost Configuration", href: "/settings/easypost" },
+      { name: "SMS Configuration", href: "/settings/sms" },
+      { name: "Email Configuration", href: "/settings/email" },
+      { name: "Payment methods", href: "/settings/payments" },
     ],
   },
   {
     name: "Security & Compliance",
     href: "/security",
     icon: QuestionMarkCircleIcon,
-    children: [
-      { name: "User Access Control", href: "/security/access" },
-      { name: "Audit Logs", href: "/security/logs" },
-      { name: "Privacy & Compliance", href: "/security/privacy" },
+    children: [ 
+      { name: "Privacy & Compliance", href: "/security/policies" },
     ],
   },
 ];
