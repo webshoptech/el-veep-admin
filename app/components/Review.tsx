@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Review from "@/types/Review";
 import { getRecentReview } from "@/app/api";
-import { formatHumanReadableDate } from "./commons/formatHumanReadableDate";
+import { formatHumanReadableDate } from "../../utils/formatHumanReadableDate";
 import RecentReviewsSkeleton from "./Skeletons/RecentReviewsSkeleton";
 
 function StarRating({ rating }: { rating: number }) {

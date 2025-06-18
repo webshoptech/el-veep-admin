@@ -7,52 +7,20 @@ import type { Order } from "@/types/Order";
 import User from "@/types/User";
 import type { Product } from "@/types/Product";
 import TableSkeleton from "../components/Skeletons/TableSkeleton";
-import { formatHumanReadableDate } from "../components/commons/formatHumanReadableDate";
+import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import Table, { Column } from "../components/commons/Table";
+import StatusBadge from "@/utils/StatusBadge";
+import Avatar from "@/utils/Avatar";
 
-// Avatar Component
-const Avatar: React.FC<{ src?: string; alt: string }> = ({ src, alt }) => (
-  src ? (
-    <Image
-      src={src}
-      alt={alt}
-      width={40}
-      height={40}
-      className="w-10 h-10 object-cover rounded-full"
-    />
-  ) : (
-    <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600">
-      ?
-    </div>
-  )
-);
+interface OrderTableProps {
+  limit: number;
+}
 
-// Status Tag Component
-const StatusTag: React.FC<{ status: string; type: "payment" | "shipping" }> = ({ status, type }) => {
-  const colors =
-    type === "payment"
-      ? status === "paid"
-        ? "bg-green-100 text-green-600"
-        : "bg-red-100 text-red-600"
-      : status === "delivered"
-      ? "bg-green-100 text-green-600"
-      : status === "ongoing"
-      ? "bg-yellow-100 text-yellow-600"
-      : "bg-red-100 text-red-600";
-
-  return (
-    <span className={`px-2 py-1 rounded text-sm ${colors}`}>
-      {status.charAt(0).toUpperCase() + status.slice(1)}
-    </span>
-  );
-};
-
-const OrderTable: React.FC = () => {
+const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Define Columns
   const columns: Column<Order>[] = useMemo(
     () => [
       {
@@ -63,16 +31,17 @@ const OrderTable: React.FC = () => {
             const user = value as User;
             return (
               <div className="flex items-center space-x-2">
-                <Avatar src={user.profile_photo} alt={user.last_name || "User"} />
+                <Avatar
+                  src={user.profile_photo}
+                  alt={user.last_name || "User"}
+                />
                 <span>{user.last_name ?? "N/A"}</span>
               </div>
             );
           }
           return (
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600">
-                ?
-              </div>
+              <Avatar alt="Unknown User" />
               <span>N/A</span>
             </div>
           );
@@ -99,9 +68,7 @@ const OrderTable: React.FC = () => {
           }
           return (
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-gray-600">
-                ?
-              </div>
+              <Avatar alt="Unknown Product" />
               <span>N/A</span>
             </div>
           );
@@ -111,41 +78,39 @@ const OrderTable: React.FC = () => {
         label: "Subtotal",
         key: "subtotal",
         render: (value) => {
-          if (typeof value === "string") {
-            const numericValue = parseFloat(value);
-            return isNaN(numericValue) ? "Invalid" : `$${numericValue.toFixed(2)}`;
-          }
-          return "Invalid";
+          const numericValue = parseFloat(value as string);
+          return isNaN(numericValue)
+            ? "Invalid"
+            : `$${numericValue.toFixed(2)}`;
         },
       },
       { label: "Quantity", key: "quantity" },
-      
       {
         label: "Shipping Status",
-        key: "order",  
+        key: "order",
         render: (_value, row) => (
-          <StatusTag status={row.order.shipping_status} type="shipping" />
+          <StatusBadge
+            status={row.order.shipping_status}
+            type="shipping"
+          />
         ),
       },
       {
         label: "Created At",
         key: "created_at",
-        render: (value) => {
-          if (typeof value === "string") {
-            return formatHumanReadableDate(value);
-          }
-          return null;
-        },
+        render: (value) =>
+          typeof value === "string"
+            ? formatHumanReadableDate(value)
+            : null,
       },
     ],
     []
   );
 
-  // Fetch Orders
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await getRecentOrders();
+        const response = await getRecentOrders(limit);
         if (response.status === "success") {
           setOrders(response.data);
         } else {
@@ -162,11 +127,11 @@ const OrderTable: React.FC = () => {
     fetchOrders();
   }, []);
 
-  // Render States
-  if (loading) return <TableSkeleton />;
-  if (error) return <p className="text-red-500">{error}</p>;
-
-  return (
+  return loading ? (
+    <TableSkeleton />
+  ) : error ? (
+    <p className="text-red-500">{error}</p>
+  ) : (
     <Table<Order>
       data={orders}
       columns={columns}
@@ -175,6 +140,7 @@ const OrderTable: React.FC = () => {
       showPagination
     />
   );
+
 };
 
 export default OrderTable;

@@ -10,7 +10,7 @@ import {
   PaperClipIcon,
 } from "@heroicons/react/24/outline";
 import { getTicketDetail, replyTicket } from "@/app/api";
-import { formatHumanReadableDate } from "@/app/components/commons/formatHumanReadableDate";
+import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import Image from "next/image";
 import GlobalSkeleton from "@/app/components/Skeletons/GlobalSkeleton";
 import TicketType from "@/types/TicketType";

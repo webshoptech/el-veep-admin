@@ -144,7 +144,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Recent Orders */}
-      <OrderTable />
+      <OrderTable limit={10} />
     </div>
   );
 };

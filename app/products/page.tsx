@@ -15,7 +15,7 @@ const ProductTable: React.FC = () => {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const response = await getRecentProducts();
+        const response = await getRecentProducts(10);
         const data = response;
         if (data.status === "success") {
           setProducts(data.data);

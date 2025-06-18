@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
 import { getSalesGraph } from "@/app/api";
 import AreaChartSkeleton from "../Skeletons/AreaChartSkeleton";
-import { formatDate } from "./formatHumanReadableDate";
+import { formatDate } from "../../../utils/formatHumanReadableDate";
  
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,

@@ -9,7 +9,7 @@ import {
 import { getTickets } from "@/app/api";
 import Ticket from "@/types/Ticket";
 import Image from "next/image";
-import { formatHumanReadableDate } from "@/app/components/commons/formatHumanReadableDate";
+import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import Link from "next/link";
 
 const menu = [
