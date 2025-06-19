@@ -5,10 +5,10 @@ import AreaChart from "@/app/components/commons/AreaChart";
 import { RecentReviews } from "./components/Review";
 import { getStats } from "./api";
 import StatsDashboardSkeleton from "./components/Skeletons/StatsDashboardSkeleton";
-import OrderTable from "./orders/page";
+// import OrderTable from "./orders/page";
 
 interface GreetingsProps {
-  userName: string; // Make userName required and provide a default in the parent component
+  userName: string;  
 }
 
 const Greetings: React.FC<GreetingsProps> = ({ userName }) => {
@@ -144,7 +144,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Recent Orders */}
-      <OrderTable limit={10} />
+      {/* <OrderTable limit={10} /> */}
     </div>
   );
 };
