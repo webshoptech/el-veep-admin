@@ -104,16 +104,39 @@ export async function getSalesGraph(period: string) {
 }
 
 export async function getRecentReview() {
-  const response = await axios.get(`${API_URL}/stats/review`);
+  const response = await axios.get(`${API_URL}/review`);
   return response.data;
 }
 export async function getRecentProducts(limit: number) {
-  const response = await axios.get(`${API_URL}/stats/products?limit=${limit}`);
+  const response = await axios.get(`${API_URL}/products?limit=${limit}`);
   return response.data;
 }
-export async function getRecentOrders(limit: number) {
-  const response = await axios.get(`${API_URL}/stats/orders?limit=${limit}`);
-  return response.data;
+export async function getRecentOrders(
+  limit: number, 
+  offset: number, 
+  search: string
+) {
+  try {
+    const response = await axios.get(`${API_URL}/orders`, {
+      params: {
+        limit,
+        offset,
+        search,
+      }
+    });
+    return {
+      status: 'success',
+      data: response.data.orders,
+      total: response.data.total,
+    };
+  } catch (error) {
+    console.error('Error fetching orders:', error);
+    return {
+      status: 'error',
+      data: [],
+      total: 0,
+    };
+  }
 }
 export async function getCategories() {
   const response = await axios.get(`${API_URL}/categories`);
