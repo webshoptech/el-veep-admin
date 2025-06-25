@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Product } from "@/types/Product";
+import { Product } from "@/types/ProductType";
 import { getRecentProducts } from "../api";
 import Image from "next/image";
 import TableSkeleton from "../components/Skeletons/TableSkeleton";

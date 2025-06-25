@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "@/app/setting";
-import { UserAdminType } from "@/types/User";
+import { UserAdminType } from "@/types/UserType";
 
 export async function loginAdmin(email: string, password: string) {
   const { data } = await axios.post<UserAdminType>(

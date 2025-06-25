@@ -3,22 +3,22 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
 import { getRecentOrders } from "../api";
-import type { Order } from "@/types/Order";
-import User from "@/types/User";
-import type { Product } from "@/types/Product";
+import User from "@/types/UserType";
+import type { Product } from "@/types/ProductType";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import StatusBadge from "@/utils/StatusBadge";
 import Avatar from "@/utils/Avatar";
 import TanStackTable from "../components/commons/TanStackTable";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
+import OrderType from "@/types/OrderType";
 
 interface OrderTableProps {
   limit: number;
 }
 
 const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<OrderType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState<string>("");
@@ -28,7 +28,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
   });
   const [totalOrders, setTotalOrders] = useState(0);
 
-  const columns: ColumnDef<Order>[] = useMemo(() => [
+  const columns: ColumnDef<OrderType>[] = useMemo(() => [
     {
       header: "Customer",
       accessorKey: "user",
@@ -100,7 +100,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
       accessorKey: "order",
       cell: ({ row }) => {
         const data = row.original;
-        return <StatusBadge status={data.order.shipping_status} type="shipping" />;
+        return <StatusBadge status={data.shipping_status} type="shipping" />;
       },
     },
     {
@@ -117,15 +117,11 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
   const fetchOrders = async (pageIndex: number, search: string) => {
     try {
       setLoading(true);
-      const offset = pageIndex * pagination.pageSize;
+      const offset = limit;
       const response = await getRecentOrders(pagination.pageSize, offset, search);
-      
-      if (response.status === "success") {
-        setOrders(response.data);
-        setTotalOrders(response.total || 0);
-      } else {
-        setError("Failed to fetch orders.");
-      }
+      console.log(response.orders);
+      setOrders(response.orders);
+      setTotalOrders(response.total || 0); 
     } catch (err) {
       console.error(err);
       setError("An error occurred while fetching orders.");
@@ -144,12 +140,12 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
 
   useEffect(() => {
     debouncedFetchOrders(pagination.pageIndex, search);
-    
+
     return () => {
       debouncedFetchOrders.cancel();
     };
   }, [pagination.pageIndex, debouncedFetchOrders, search]);
- // Handle search input
+  // Handle search input
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     setPagination(prev => ({ ...prev, pageIndex: 0 })); // Reset to first page on search
