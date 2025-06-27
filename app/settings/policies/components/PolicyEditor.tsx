@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
 import { getPolicy, savePolicy } from "@/app/api";
-import Toast from "@/app/components/commons/Toast";
+import toast from "react-hot-toast";
 
 interface PolicyEditorProps {
   type: string;
@@ -25,29 +25,15 @@ export default function PolicyEditor({ type }: PolicyEditorProps) {
     fetchPolicy();
   }, [type]);
 
-  const [toastOpen, setToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState<"success" | "error">("success");
-
   const handleSave = async () => {
     const formData = new FormData();
     formData.append("type", type);
     formData.append("content", content);
 
     try {
-      const data = await savePolicy(formData);
-      setToastMessage(data?.message || "Policy saved successfully!");
-      setToastType("success");
-      setToastOpen(true);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      console.error("Submission error:", error);
-      setToastMessage(
-        error?.response?.data?.error_detail ||
-          "Something went wrong while saving settings!"
-      );
-      setToastType("error");
-      setToastOpen(true);
+      await savePolicy(formData);
+    } catch {
+      toast.error(error?.response?.data?.error_detail || "Something went wrong while saving settings!");
     }
   };
 
@@ -75,12 +61,7 @@ export default function PolicyEditor({ type }: PolicyEditorProps) {
           </button>
         </div>
       </div>
-      <Toast
-        message={toastMessage}
-        type={toastType}
-        show={toastOpen}
-        onClose={() => setToastOpen(false)}
-      />
+
     </div>
   );
 }

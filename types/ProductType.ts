@@ -1,21 +1,42 @@
+export interface ProductResponse {
+  status: string;
+  data: Product[];
+  total: number;
+  limit: number | string;
+  offset: number;
+}
+
 export interface Product {
   id: number;
   title: string;
   slug: string;
   description: string;
-  views: number;
-  features: string;
   sales_price: string;
   regular_price: string;
   quantity: number;
+  notify_user: number;
   images: string[];
   image_public_ids: string[];
-  status: string;
-  type: string;
+  status: 'active' | 'inactive';
+  type: string;  
   shop_id: number;
   category_id: number;
-  created_at: string;
+  available_from: string;
+  available_to: string;
+  available_days: string[];  
+  estimated_delivery_time: string;
+  delivery_method: string;
+  pricing_model: string;
+  views: number;
+  created_at: string; 
   updated_at: string;
-  reviews: string[];
+  category: {
+    id: number;
+    name: string;
+  };
+  vendor: {
+    id: number;
+    name: string;
+  };
   average_rating: number;
 }

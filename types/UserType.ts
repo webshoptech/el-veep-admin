@@ -1,4 +1,4 @@
-export default interface User {
+export type User = {
   id: number;
   name: string;
   last_name: string;
@@ -13,10 +13,21 @@ export default interface User {
   country: string;
   profile_photo: string;
   google_id: string | null;
-  created_at: string;
+  fcm_token: string | null;
   deleted_at: string | null;
+  created_at: string;
   updated_at: string;
-}
+};
+
+
+export default interface UserResponse  {
+  status: "success";
+  data: User[];
+  total: number;
+  limit: number;
+  offset: number;
+};
+
 export interface UserAdminType {
   id: number;
   name: string;

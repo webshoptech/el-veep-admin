@@ -65,7 +65,7 @@ function AreaChart() {
     stroke: {
       curve: "smooth",
       width: 3,
-      colors: ["#F97316"], // Orange color
+      colors: ["#F97316"], 
     },
     fill: {
       type: "gradient",
@@ -75,7 +75,7 @@ function AreaChart() {
         opacityTo: 0.1,
         stops: [0, 90, 100],
       },
-      colors: ["#F97316"],
+      colors: ["#FFF"],
     },
     series: [
       {
@@ -87,7 +87,7 @@ function AreaChart() {
       categories: chartData.categories,
       labels: {
         style: {
-          colors: "#9CA3AF", // Gray text color
+          colors: "#FFF",  
         },
       },
       axisBorder: {
@@ -100,7 +100,7 @@ function AreaChart() {
     yaxis: {
       labels: {
         style: {
-          colors: "#9CA3AF",
+          colors: "#FFF",
         },
         formatter: (value) => Math.round(value).toLocaleString(),
       },
@@ -131,8 +131,8 @@ function AreaChart() {
   }
 
   return (
-    <div className="p-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-6 text-white">
+      <div className="flex items-center justify-between mb-6 text-white">
         <h2 className="text-lg font-medium text-white">Sales Graph</h2>
         <div className="card p-1">
           <select defaultValue="January" onChange={handlePeriodChange}>
@@ -152,12 +152,13 @@ function AreaChart() {
         </div>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 text-white">
         <ReactApexChart
           options={options}
           series={options.series}
           type="area"
           height={300}
+          className="text-white"
         />
       </div>
     </div>

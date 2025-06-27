@@ -87,10 +87,7 @@ export async function replyTicket(formData: FormData) {
   return response.data;
 }
 
-export async function getUsers(type: string) {
-  const response = await axios.get(`${API_URL}/users/${type}`);
-  return response.data.users;
-}
+
 
 export async function getStats(period: string) {
   const response = await axios.get(`${API_URL}/stats?start_date=${period}`);
@@ -107,16 +104,13 @@ export async function getRecentReview() {
   const response = await axios.get(`${API_URL}/review`);
   return response.data;
 }
-export async function getRecentProducts(limit: number) {
-  const response = await axios.get(`${API_URL}/products?limit=${limit}`);
-  return response.data;
-}
-export async function getRecentOrders(limit: number, offset: number, search: string) {
-  const response = await axios.get(`${API_URL}/orders`, {
+export async function getRecentProducts(limit: number, offset: number, search: string) {
+  const response = await axios.get(`${API_URL}/products`,{
     params: {  limit, offset,  search,  },
   });
   return response.data;
 }
+
 
 export async function getCategories() {
   const response = await axios.get(`${API_URL}/categories`);

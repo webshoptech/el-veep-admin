@@ -45,3 +45,21 @@ export interface OrderDetails {
   created_at: string;
   updated_at: string;
 }
+
+
+export interface OrderResponse {
+  id: number;
+  user: {
+    name: string;
+    photo: string;
+  };
+  product: {
+    title: string;
+    image: string;
+  };
+  subtotal: string;
+  quantity: number;
+  shipping_status: string;
+  payment_status: string;
+  created_at: string;
+}

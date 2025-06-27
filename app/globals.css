@@ -104,5 +104,5 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 .card {
-  @apply border border-hub-primary-50 rounded-lg bg-hub-primary-50/10;
+  @apply border border-hub-primary-50 rounded-lg bg-hub-primary-900;
 }
