@@ -16,7 +16,4 @@ export async function getOrderDetail(orderId: string) {
     const response = await axios.get(`${API_URL}/order/${orderId}`);
     return response.data;
 }
-export async function getUserOrder(orderId: string) {
-    const response = await axios.get(`${API_URL}/order/${orderId}`);
-    return response.data;
-}
+

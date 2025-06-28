@@ -2,7 +2,7 @@ import React from "react";
 
 interface StatusBadgeProps {
   status: string;
-  type: "payment" | "shipping";
+  type?: "payment" | "shipping";
 }
 
 const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {

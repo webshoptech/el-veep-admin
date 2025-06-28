@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { useRouter } from "next/navigation"; // or "next/router" in older versions
+import { useRouter } from "next/navigation";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";

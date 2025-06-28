@@ -64,105 +64,100 @@ function TanStackTable<T>({
     });
 
 
-    return loading ? (
-        <TableSkeleton columns={columns.length} rows={pagination?.pageSize} />
-    ) : error ? (
-        <div className="text-red-500">Error: {error}</div>
-    ) : data.length === 0 ? (
-        <div>No data available</div>
-    ) : (
-        <div className="overflow-x-auto w-full bg-white rounded-lg">
-            <table className="min-w-full table-auto text-left border border-gray-200">
-                <thead className="bg-yellow-50">
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <tr key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => (
-                                <th
-                                    key={header.id}
-                                    className="px-4 py-2 text-sm font-medium border-l-yellow-700 border-l text-gray-600"
-                                >
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(header.column.columnDef.header, header.getContext())}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
-                </thead>
-                <tbody>
-                    {table.getRowModel().rows.map((row) => (
-                        <tr
-                            key={row.id}
-                            className="border-t hover:bg-yellow-50 transition-colors duration-150"
-                        >
-                            {row.getVisibleCells().map((cell) => (
-                                <td key={cell.id} className="px-4 py-2 text-sm text-gray-700">
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                </td>
-                            ))}
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+   return loading ? (
+  <TableSkeleton columns={columns.length} rows={pagination?.pageSize} />
+) : error ? (
+  <div className="text-red-500">Error: {error}</div>
+) : data.length === 0 ? (
+  <div className="text-gray-600 text-sm py-6 text-center">No data available</div>
+) : (
+  <div className="w-full overflow-x-auto rounded-xl border border-amber-200 bg-white shadow-md">
+    <table className="min-w-full divide-y divide-gray-200 text-sm">
+      <thead className="bg-yellow-50 text-xs font-semibold text-gray-700 uppercase">
+        {table.getHeaderGroups().map((headerGroup) => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map((header) => (
+              <th
+                key={header.id}
+                className="px-4 py-3 whitespace-nowrap text-left"
+              >
+                {header.isPlaceholder
+                  ? null
+                  : flexRender(header.column.columnDef.header, header.getContext())}
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody className="divide-y divide-gray-100 text-gray-800">
+        {table.getRowModel().rows.map((row) => (
+          <tr key={row.id} className="hover:bg-yellow-50 transition">
+            {row.getVisibleCells().map((cell) => (
+              <td key={cell.id} className="px-4 py-3 whitespace-nowrap">
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
 
-
-            {pagination && (
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-4  gap-2 sm:gap-0">
-                    {/* Summary text */}
-                    <div className="text-sm text-gray-700 font-semibold">
-                        Showing{" "}
-                        <span className="text-yellow-900">
-                            {pagination.pageIndex * pagination.pageSize + 1}
-                        </span>{" "}
-                        to{" "}
-                        <span className="text-yellow-900">
-                            {Math.min((pagination.pageIndex + 1) * pagination.pageSize, pagination.totalRows)}
-                        </span>{" "}
-                        of <span className="text-yellow-900">{pagination.totalRows}</span> total
-                    </div>
-
-                    {/* Page controls */}
-                    <div className="flex items-center space-x-4">
-                        <button
-                            className="px-4 py-2 bg-yellow-900 rounded-lg disabled:opacity-50 font-bold flex items-center text-white"
-                            onClick={() =>
-                                onPaginationChange?.({
-                                    pageIndex: pagination.pageIndex - 1,
-                                    pageSize: pagination.pageSize,
-                                })
-                            }
-                            disabled={pagination.pageIndex === 0}
-                        >
-                            <ArrowLeftIcon className="w-4 h-4 mr-2" />
-                            Previous
-                        </button>
-
-                        <span className="text-sm text-gray-600 font-bold">
-                            Page {pagination.pageIndex + 1} of{" "}
-                            {Math.max(Math.ceil(pagination.totalRows / pagination.pageSize), 1)}
-                        </span>
-
-                        <button
-                            className="px-4 py-2 bg-yellow-900 rounded-lg disabled:opacity-50 font-bold flex items-center text-white"
-                            onClick={() =>
-                                onPaginationChange?.({
-                                    pageIndex: pagination.pageIndex + 1,
-                                    pageSize: pagination.pageSize,
-                                })
-                            }
-                            disabled={
-                                pagination.pageIndex >=
-                                Math.ceil(pagination.totalRows / pagination.pageSize) - 1
-                            }
-                        >
-                            Next <ArrowRightIcon className="w-4 h-4 ml-2" />
-                        </button>
-                    </div>
-                </div>
-            )}
-
+    {pagination && (
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between px-4 py-4 border-t border-gray-200 bg-gray-50 gap-4">
+        <div className="text-sm text-gray-600">
+          Showing{" "}
+          <span className="font-semibold text-gray-800">
+            {pagination.pageIndex * pagination.pageSize + 1}
+          </span>{" "}
+          to{" "}
+          <span className="font-semibold text-gray-800">
+            {Math.min((pagination.pageIndex + 1) * pagination.pageSize, pagination.totalRows)}
+          </span>{" "}
+          of <span className="font-semibold text-gray-800">{pagination.totalRows}</span> entries
         </div>
-    );
+
+        <div className="flex items-center space-x-3">
+          <button
+            onClick={() =>
+              onPaginationChange?.({
+                pageIndex: pagination.pageIndex - 1,
+                pageSize: pagination.pageSize,
+              })
+            }
+            disabled={pagination.pageIndex === 0}
+            className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-yellow-800 text-white rounded-md disabled:opacity-40 transition"
+          >
+            <ArrowLeftIcon className="w-4 h-4 mr-1" />
+            Previous
+          </button>
+
+          <span className="text-sm font-medium text-gray-700">
+            Page {pagination.pageIndex + 1} of{" "}
+            {Math.max(Math.ceil(pagination.totalRows / pagination.pageSize), 1)}
+          </span>
+
+          <button
+            onClick={() =>
+              onPaginationChange?.({
+                pageIndex: pagination.pageIndex + 1,
+                pageSize: pagination.pageSize,
+              })
+            }
+            disabled={
+              pagination.pageIndex >=
+              Math.ceil(pagination.totalRows / pagination.pageSize) - 1
+            }
+            className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-yellow-800 text-white rounded-md disabled:opacity-40 transition"
+          >
+            Next
+            <ArrowRightIcon className="w-4 h-4 ml-1" />
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+);
+
 
 }
 
