@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { useRouter } from "next/navigation"; // or "next/router" in older versions
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
@@ -10,11 +9,11 @@ import TanStackTable from "@/app/components/commons/TanStackTable";
 import { User } from "@/types/UserType";
 import { getRecentUsers } from "@/app/api_/users";
 
-interface UsersTableProps {
+interface VendorsTableProps {
     limit: number;
 }
 
-const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
+const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -24,8 +23,6 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
         pageSize: limit,
     });
     const [totalUsers, setTotalUsers] = useState(0);
-
-    const router = useRouter();
 
     const columns: ColumnDef<User>[] = useMemo(
         () => [
@@ -83,7 +80,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
                         <button
                             className="px-3 py-1 bg-amber-600 text-white rounded hover:bg-amber-700 cursor-pointer"
                             onClick={() => {
-                                router.push(`/customers/${userId}`);
+                                window.location.href = `/users/${userId}`;
                             }}
                         >
                             View
@@ -92,10 +89,10 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
                 },
             },
         ],
-        [router]
+        []
     );
 
-    const fetchUsers = useCallback(async (pageIndex: number, search: string, type = "customer") => {
+    const fetchUsers = useCallback(async (pageIndex: number, search: string, type = "vendor") => {
         try {
             setLoading(true);
             const offset = pageIndex * pagination.pageSize;
@@ -110,12 +107,13 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
         }
     }, [pagination.pageSize]);
 
-    const debouncedFetchUsers = useMemo(() => {
-        return debounce((pageIndex: number, search: string) => {
-            fetchUsers(pageIndex, search);
-        }, 300);
-    }, [fetchUsers]);
-
+    const debouncedFetchUsers = useMemo(
+        () =>
+            debounce((pageIndex: number, search: string) => {
+                fetchUsers(pageIndex, search);
+            }, 300),
+        [fetchUsers]
+    );
 
     useEffect(() => {
         debouncedFetchUsers(pagination.pageIndex, search);
@@ -161,4 +159,4 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
     );
 };
 
-export default UsersTable;
+export default VendorsTable;

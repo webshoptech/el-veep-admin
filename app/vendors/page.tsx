@@ -1,5 +1,5 @@
 import { APP_NAME } from "@/app/setting";
-import UsersTable from "./components/page";
+import UsersTable from "./components/VendorsTable";
 export const generateMetadata = () => {
 
     return {

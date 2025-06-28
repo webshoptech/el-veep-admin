@@ -3,6 +3,10 @@ export const APP_DESCRIPTION = "Your go to marketplace for African products";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+export const MONTHS = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
 import {
   HomeIcon,
   ShoppingBagIcon,

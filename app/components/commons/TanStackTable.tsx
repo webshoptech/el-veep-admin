@@ -65,21 +65,21 @@ function TanStackTable<T>({
 
 
     return loading ? (
-        <TableSkeleton />
+        <TableSkeleton columns={columns.length} rows={pagination?.pageSize} />
     ) : error ? (
         <div className="text-red-500">Error: {error}</div>
     ) : data.length === 0 ? (
         <div>No data available</div>
     ) : (
-        <div className="overflow-x-auto w-full rounded-lg">
+        <div className="overflow-x-auto w-full bg-white rounded-lg">
             <table className="min-w-full table-auto text-left border border-gray-200">
-                <thead className="bg-gray-100">
+                <thead className="bg-yellow-50">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => (
                                 <th
                                     key={header.id}
-                                    className="px-4 py-2 text-sm font-medium text-gray-600"
+                                    className="px-4 py-2 text-sm font-medium border-l-yellow-700 border-l text-gray-600"
                                 >
                                     {header.isPlaceholder
                                         ? null

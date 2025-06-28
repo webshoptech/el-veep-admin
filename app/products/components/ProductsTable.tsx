@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Image from "next/image";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import { ColumnDef } from "@tanstack/react-table";
@@ -109,7 +109,7 @@ const ProductsTable: React.FC<ProductTableProps> = ({ limit }) => {
   );
 
 
-  const fetchProducts = async (pageIndex: number, search: string) => {
+  const fetchProducts = useCallback(async (pageIndex: number, search: string) => {
     try {
       setLoading(true);
       const offset = pageIndex * pagination.pageSize;
@@ -126,15 +126,15 @@ const ProductsTable: React.FC<ProductTableProps> = ({ limit }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [pagination.pageSize]);
 
-  const debouncedFetchProducts = useMemo(
-    () =>
-      debounce((pageIndex: number, search: string) => {
-        fetchProducts(pageIndex, search);
-      }, 300),
-    []
-  );
+
+  const debouncedFetchProducts = useMemo(() => {
+    return debounce((pageIndex: number, search: string) => {
+      fetchProducts(pageIndex, search);
+    }, 300);
+  }, [fetchProducts]);
+
 
   useEffect(() => {
     debouncedFetchProducts(pagination.pageIndex, search);

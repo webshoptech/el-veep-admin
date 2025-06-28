@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Image from "next/image";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import Avatar from "@/utils/Avatar";
@@ -74,7 +74,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
         header: "Quantity",
         accessorKey: "quantity",
       },
-     
+
       {
         header: "Shipping",
         accessorKey: "shipping_status",
@@ -106,7 +106,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
           );
         },
       },
-       {
+      {
         header: "Date",
         accessorKey: "created_at",
         cell: ({ getValue }) => {
@@ -119,7 +119,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
     []
   );
 
-  const fetchOrders = async (pageIndex: number, search: string) => {
+  const fetchOrders = useCallback(async (pageIndex: number, search: string) => {
     try {
       setLoading(true);
       const offset = pageIndex * pagination.pageSize;
@@ -136,14 +136,14 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [pagination.pageSize]);
 
   const debouncedFetchOrders = useMemo(
     () =>
       debounce((pageIndex: number, search: string) => {
         fetchOrders(pageIndex, search);
       }, 300),
-    []
+    [fetchOrders]
   );
 
   useEffect(() => {
