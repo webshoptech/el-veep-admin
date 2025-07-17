@@ -35,8 +35,8 @@ export default function WalletSummary({
 
                 {summaries.map(({ label, value }) => (
                     <div key={label} className="card p-4 bg-gray-100 rounded">
-                        <p className="text-sm text-gray-200 font-bold">{label}</p>
-                        <p className="text-3xl font-bold text-white">
+                        <p className="text-sm text-gray-800 font-bold">{label}</p>
+                        <p className="text-3xl font-bold text-black">
                             {loading ? <Skeleton width={80} /> : `$${value}`}
                         </p>
                     </div>

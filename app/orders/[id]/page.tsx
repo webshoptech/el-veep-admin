@@ -2,25 +2,160 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getOrderDetail } from "@/app/api_/orders";
+import { changeOrderStatus, getOrderDetail } from "@/app/api_/orders";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
-import { CheckCircleIcon, MapPinIcon, UserIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/solid";
-import { OrderItem } from "@/types/OrderType";
+import { MapPinIcon } from "@heroicons/react/24/solid";
+import { OrderItem, OrderResponse, Shop } from "@/types/OrderType";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
+import { User } from "@/types/UserType";
+import dayjs from "dayjs";
+import Address from "@/types/AddressType";
+import { formatAmount } from "@/utils/formatCurrency";
+import PrintableOrderTable from "../components/PrintableOrderTable";
+import { renderToStaticMarkup } from "react-dom/server";
+import { Html } from "react-pdf-html";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
+import toast from "react-hot-toast";
 
+
+const statusOptions = [
+    { label: "Ongoing", value: "ongoing" },
+    { label: "Processing", value: "processing" },
+    { label: "Returned", value: "returned" },
+    { label: "Delivered", value: "delivered" },
+    { label: "Cancelled", value: "cancelled" },
+];
+
+function CustomerSummary({ customer, address, stats }: { customer: User; address: Address; stats?: OrderResponse["data"]["stats"] }) {
+    return (
+        <div className="bg-white rounded-xl p-6 flex items-center justify-between shadow-sm  border border-gray-200 text-sm text-gray-700">
+            <div className="flex items-center gap-4 min-w-[200px]">
+                <div className="relative w-14 h-14 rounded-full border-4 border-orange-500 overflow-hidden">
+                    <Image
+                        src={customer.profile_photo}
+                        alt={`${customer.name}'s profile`}
+                        fill
+                        className="object-cover"
+                    />
+                </div>
+                <div>
+                    <p className="font-medium text-gray-800">
+                        {customer.name} {customer.last_name}
+                    </p>
+                    <p className="text-gray-500 text-sm">{customer.email}</p>
+                </div>
+            </div>
+
+            <div className="w-px h-16 bg-gray-200 mx-6" />
+
+            <div className="space-y-1 min-w-[200px]">
+                <p className="text-xs text-gray-500 font-medium uppercase mb-1">Personal Information</p>
+                <div className="flex justify-between">
+                    <span className="font-medium text-gray-700">Phone no</span>
+                    <span className="text-gray-600">{customer.phone}</span>
+                </div>
+                <div className="flex justify-between">
+                    <span className="font-medium text-gray-700">Member Since</span>
+                    <span className="text-gray-600"> {dayjs(customer.created_at).format("DD MMM. YYYY")}</span>
+                </div>
+            </div>
+
+            <div className="w-px h-16 bg-gray-200 mx-6" />
+
+            <div className="flex flex-col gap-2 min-w-[300px]">
+                <div>
+                    <p className="text-xs text-gray-500 font-medium uppercase mb-1">Shipping Address</p>
+                    <p className="text-gray-700">
+                        {[address.street_address, address.zip_code, address.state, address.city, address.country]
+                            .filter(Boolean)
+                            .join(', ')}
+                    </p>
+
+                </div>
+
+                <div className="flex gap-12 mt-1 text-center text-xl text-gray-900">
+                    <div>
+                        <p className="font-bold ">
+                            {formatAmount(stats?.total_revenue || 0)}
+                        </p>
+                        <p className="text-xs text-gray-500">Total Revenue</p>
+                    </div>
+                    <div>
+                        <p className="font-bold ">{stats?.total_orders || 0}</p>
+                        <p className="text-xs text-gray-500">Total orders</p>
+                    </div>
+                    <div>
+                        <p className="font-bold ">{stats?.total_completed || 0}</p>
+                        <p className="text-xs text-gray-500">Completed</p>
+                    </div>
+                    <div>
+                        <p className="font-bold ">{stats?.total_cancelled || 0}</p>
+                        <p className="text-xs text-gray-500">Canceled</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function ShopCover({ shop }: { shop: Shop }) {
+    return (
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            {/* Banner */}
+            <div className="relative h-36 bg-gray-100">
+                <Image
+                    src={shop.banner}
+                    alt="Shop Banner"
+                    fill
+                    className="object-cover w-full h-full"
+                />
+            </div>
+
+            {/* Logo and Info */}
+            <div className="p-4 pt-0">
+                <div className="relative -mt-10 flex items-center gap-4">
+                    <div className="w-20 h-20 rounded-full border-4 border-white shadow-md overflow-hidden relative">
+                        <Image
+                            src={shop.logo}
+                            alt={shop.name}
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
+                    <div>
+                        <h3 className="text-xl font-semibold text-gray-800">{shop.name}</h3>
+                        <p className="text-sm text-gray-500 flex items-center gap-1">
+                            <MapPinIcon className="w-4 h-4 text-gray-400" />
+                            {shop.address}
+                        </p>
+                    </div>
+                </div>
+
+                <p className="text-sm text-gray-600 mt-4">{shop.description}</p>
+            </div>
+        </div>
+    );
+}
 export default function OrderDetail() {
     const params = useParams();
     const orderId = params?.id as string | undefined;
     const [order, setOrder] = useState<OrderItem | null>(null);
     const [loading, setLoading] = useState(true);
+    const [stats, setStats] = useState<OrderResponse["data"]["stats"] | null>(null);
 
+    const [updating, setUpdating] = useState(false);
+    const [selectedStatus, setSelectedStatus] = useState(() =>
+        statusOptions.find((opt) => opt.value === order?.order?.shipping_status) || statusOptions[0]
+    );
     useEffect(() => {
         const fetchOrder = async () => {
             if (!orderId) return;
 
             try {
                 const response = await getOrderDetail(orderId);
+                setStats(response.data.stats);
                 setOrder(response.data.order_item);
             } catch (err) {
                 console.error("Failed to load order detail", err);
@@ -37,10 +172,44 @@ export default function OrderDetail() {
     const { product, quantity, price, subtotal, order: orderMeta } = order;
     const { shop } = product;
     const customer = orderMeta.customer;
+    const address = orderMeta.address;
 
+
+
+    const handleStatusChange = async (status: { label: string; value: string }) => {
+        if (!order) return;
+
+        setSelectedStatus(status);
+        setUpdating(true);
+
+        try {
+            const response = await changeOrderStatus(order?.order?.id, status.value);
+
+            if (response?.success || response?.status === "success") {
+                setOrder((prev) =>
+                    prev
+                        ? {
+                            ...prev,
+                            order: {
+                                ...prev.order,
+                                shipping_status: status.value,
+                            },
+                        }
+                        : prev
+                );
+                toast.success("Status updated successfully");
+            } else {
+                console.error("Unexpected response:", response);
+            }
+        } catch (error) {
+            console.error("Failed to update status", error);
+        } finally {
+            setUpdating(false);
+        }
+    };
 
     return (
-        <div className="bg-white p-6 rounded-xl shadow-md text-gray-600 space-y-8">
+        <div className="p-6 text-gray-600 space-y-4">
             {/* Header */}
             <div className="flex justify-between items-center">
                 <h1 className="text-xl font-semibold text-gray-800">
@@ -52,139 +221,65 @@ export default function OrderDetail() {
                             Cancel Order
                         </button>
                     )}
-                    <button className="bg-yellow-500 text-white px-4 py-1 rounded-md text-sm font-medium flex items-center gap-1"><ArrowDownTrayIcon className="w-4 h-4" /> Download</button>
+                    <PDFDownloadLink
+                        document={
+                            <Html>
+                                {renderToStaticMarkup(
+                                    <PrintableOrderTable
+                                        product={product}
+                                        quantity={quantity}
+                                        price={price}
+                                        subtotal={subtotal}
+                                        orderMeta={orderMeta}
+                                    />
+                                )}
+                            </Html>
+                        }
+                        fileName={`Order-${orderMeta.id}.pdf`}
+                    >
+                        {({ loading }: { loading: boolean }) =>
+                            loading ? (
+                                <button
+                                    disabled
+                                    className="cursor-not-allowed bg-orange-200 text-white px-4 py-1.5 rounded-2xl text-sm font-medium flex items-center gap-1"
+                                >
+                                    <ArrowDownTrayIcon className="w-4 h-4" />
+                                    Generating...
+                                </button>
+                            ) : (
+                                <button className="cursor-pointer bg-orange-400 text-white px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-1">
+                                    <ArrowDownTrayIcon className="w-4 h-4" />
+                                    Download
+                                </button>
+                            )
+                        }
+                    </PDFDownloadLink>
+                    <div className="w-40">
+                        <SelectDropdown
+                            options={statusOptions}
+                            value={selectedStatus}
+                            onChange={handleStatusChange}
+                            disabled={updating}
+                        />
+                    </div>
                 </div>
             </div>
 
-            {/* Customer + Order Meta Info */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Customer Info */}
-                <div className="bg-amber-50 rounded-lg p-4 space-y-2">
-                    <h2 className="text-sm font-semibold text-gray-700 mb-2">Customer Info</h2>
-                    <div className="flex items-center gap-2">
-                        <UserIcon className="w-4 h-4 text-gray-400" />
-                        <span>{customer.name}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <EnvelopeIcon className="w-4 h-4 text-gray-400" />
-                        <span>{customer.email}</span> {/* mock email */}
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <PhoneIcon className="w-4 h-4 text-gray-400" />
-                        <span>{customer.phone}</span> {/* mock phone */}
-                    </div>
-                </div>
+            <CustomerSummary customer={customer} address={address} stats={stats} />
 
-                {/* Shipping Info */}
-                <div className="border rounded-lg p-4 space-y-2">
-                    <h2 className="text-sm font-semibold text-gray-700 mb-2">Shipping Info</h2>
-                    <p className="flex items-center gap-2 text-sm">
-                        <MapPinIcon className="w-4 h-4 text-gray-400" />
-                        <span>Address ID #{orderMeta.address_id}</span>
-                    </p>
-                    <p className="text-xs text-gray-400">Shipping Method: {orderMeta.shipping_method}</p>
-                    <p className="text-xs text-gray-400">Status: {orderMeta.shipping_status}</p>
-                </div>
-
-                {/* Payment Info */}
-                <div className="border rounded-lg p-4 space-y-2">
-                    <h2 className="text-sm font-semibold text-gray-700 mb-2">Payment Info</h2>
-                    <p className="text-sm">Status: <span className="text-green-600 font-medium">{orderMeta.payment_status}</span></p>
-                    <p className="text-xs text-gray-400">Method: {orderMeta.payment_method}</p>
-                    <p className="text-xs text-gray-400">Reference: {orderMeta.payment_reference}</p>
-                </div>
-            </div>
 
             {/* Shop Info */}
-            <div className="flex items-center gap-4 border p-4 rounded-lg">
-                <Image
-                    src={shop.logo}
-                    alt={shop.name}
-                    width={64}
-                    height={64}
-                    className="rounded-full border object-cover w-16 h-16"
-                />
-                <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-800">{shop.name}</h3>
-                    <p className="text-sm text-gray-500 flex items-center gap-1">
-                        <MapPinIcon className="w-4 h-4 text-gray-400" />
-                        {shop.address}
-                    </p>
-                    <p className="text-xs text-gray-400 mt-1">{shop.description}</p>
-                </div>
-            </div>
+            <ShopCover shop={shop} />
 
-            {/* Order Items */}
-            <div className="overflow-x-auto">
-                <table className="w-full table-auto border-collapse">
-                    <thead className="bg-gray-100 text-sm">
-                        <tr>
-                            <th className="p-2 text-left">S/N</th>
-                            <th className="p-2 text-left">Products</th>
-                            <th className="p-2 text-left">Qty</th>
-                            <th className="p-2 text-left">Price</th>
-                            <th className="p-2 text-left">Discount</th>
-                            <th className="p-2 text-left">Total</th>
-                            <th className="p-2 text-left">Shipping Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr className="border-t">
-                            <td className="p-2">1</td>
-                            <td className="p-2 flex items-center gap-2">
-                                <Image
-                                    src={product.images?.[0] || "/no-image.png"}
-                                    width={40}
-                                    height={40}
-                                    alt={product.title}
-                                    className="rounded-md object-cover"
-                                />
-                                <span>{product.title}</span>
-                            </td>
-                            <td className="p-2">{quantity}</td>
-                            <td className="p-2">{parseFloat(price).toFixed(2)}CAD</td>
-                            <td className="p-2">20.00CAD</td>
-                            <td className="p-2">{parseFloat(subtotal).toFixed(2)}CAD</td>
-                            <td className="p-2">
-                                <span className="bg-orange-100 text-orange-600 px-2 py-1 rounded-md text-xs capitalize">
-                                    {orderMeta.shipping_status ?? "N/A"}
-                                </span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
 
-            {/* Totals */}
-            <div className="grid gap-1 text-sm text-right max-w-sm ml-auto">
-                <p>
-                    <span className="text-gray-500">Subtotal</span>{" "}
-                    <span className="ml-4 text-gray-700 font-medium">100.00CAD</span>
-                </p>
-                <p>
-                    <span className="text-gray-500">Shipping</span>{" "}
-                    <span className="ml-4 text-gray-700 font-medium">
-                        {parseFloat(orderMeta.shipping_fee).toFixed(2)}CAD
-                    </span>
-                </p>
-                <p>
-                    <span className="text-gray-500">Tax</span>{" "}
-                    <span className="ml-4 text-gray-700 font-medium">15.15CAD</span>
-                </p>
-                <p className="text-lg font-semibold mt-2">
-                    <span>Grand Total</span>{" "}
-                    <span className="ml-6">
-                        {parseFloat(orderMeta.total).toFixed(2)}CAD
-                    </span>
-                </p>
-            </div>
+            <PrintableOrderTable
+                product={product}
+                quantity={quantity}
+                price={price}
+                subtotal={subtotal}
+                orderMeta={orderMeta}
+            />
 
-            {/* Payment Status */}
-            <div className="flex justify-end">
-                <span className="flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full">
-                    <CheckCircleIcon className="w-5 h-5" /> Paid
-                </span>
-            </div>
         </div>
     );
 }

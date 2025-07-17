@@ -31,3 +31,22 @@ export async function getUserDetail(userId: string, type?: string) {
     });
     return response.data;
 }
+
+export async function changeUserStatus(userId: string, isActive: boolean) {
+    const response = await axios.patch(`${API_URL}/user/${userId}/status`, {
+        is_active: isActive,
+    });
+    return response.data;
+}
+
+export async function userStats(customer?: string) {
+    const response = await axios.get(`${API_URL}/stats?type=${customer}`);
+    return response.data;
+}
+
+export async function getUserGraph(role?: string, selectedPeriod?: string) {
+    const response = await axios.get(
+        `${API_URL}/user-graph?role=${role}&start_date=${selectedPeriod}`
+    );
+    return response;
+}

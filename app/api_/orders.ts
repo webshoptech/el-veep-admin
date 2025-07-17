@@ -17,3 +17,10 @@ export async function getOrderDetail(orderId: string): Promise<OrderResponse> {
   const response = await axios.get<OrderResponse>(`${API_URL}/orders/${orderId}`);
   return response.data;
 }
+
+export async function changeOrderStatus(orderId: number, status: string) {
+  const response = await axios.put(`${API_URL}/orders/${orderId}/status`, {
+    status,
+  });
+  return response.data;
+}

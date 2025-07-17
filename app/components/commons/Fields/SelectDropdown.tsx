@@ -11,6 +11,7 @@ type SelectDropdownProps = {
     value: Option;
     onChange: (value: Option) => void;
     className?: string;
+    disabled?: boolean;
 };
 
 export default function SelectDropdown({
