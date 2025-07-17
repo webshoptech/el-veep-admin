@@ -1,7 +1,7 @@
 "use client";
 
 import Input from "@/app/components/commons/Fields/Input";
-import Select from "@/app/components/commons/Fields/Select";
+import Select from "@/app/components/commons/Fields/SelectDropdown";
 import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
 import { useState } from "react";
 

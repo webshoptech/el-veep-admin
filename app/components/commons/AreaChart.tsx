@@ -7,17 +7,23 @@ import { getSalesGraph } from "@/app/api";
 import AreaChartSkeleton from "../Skeletons/AreaChartSkeleton";
 import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
+import SelectDropdown from "./Fields/SelectDropdown";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
-function AreaChart() {
+
+const AreaChart = () => {
     const [chartData, setChartData] = useState<{ categories: string[]; series: number[] }>({
         categories: [],
         series: [],
     });
 
-    const [period, setPeriod] = useState<string>(new Date().toLocaleString("default", { month: "long" }));
     const [loading, setLoading] = useState<boolean>(true);
     const [hasData, setHasData] = useState<boolean>(false);
+
+    const monthOptions = MONTHS.map((m) => ({ label: m, value: m }));
+    const [selected, setSelected] = useState<{ label: string; value: string }>(
+        monthOptions.find((m) => m.value === new Date().toLocaleString("default", { month: "long" })) || monthOptions[0]
+    );
 
     const fetchChartData = useCallback(async (selectedPeriod: string) => {
         setLoading(true);
@@ -43,91 +49,110 @@ function AreaChart() {
     }, []);
 
     useEffect(() => {
-        fetchChartData(period);
-    }, [fetchChartData, period]);
+        fetchChartData(selected.value);
+    }, [fetchChartData, selected]);
 
-    const options: ApexOptions = useMemo(() => ({
-        chart: {
-            type: "area",
-            height: 350,
-            toolbar: { show: false },
-            background: "transparent",
-        },
-        dataLabels: { enabled: false },
-        stroke: {
-            curve: "smooth",
-            width: 3,
-            colors: ["#F97316"],
-        },
-        fill: {
-            type: "gradient",
-            gradient: {
-                shadeIntensity: 1,
-                opacityFrom: 0.3,
-                opacityTo: 0.1,
-                stops: [0, 90, 100],
+    const options: ApexOptions = useMemo(
+        () => ({
+            chart: {
+                type: "area",
+                height: 350,
+                toolbar: { show: false },
+                background: "transparent",
+                zoom: { enabled: true },
             },
-            colors: ["#FFF"],
-        },
-        series: [{ name: "Sales", data: chartData.series }],
-        xaxis: {
-            categories: chartData.categories,
-            labels: { style: { colors: "#FFF" } },
-            axisBorder: { show: false },
-            axisTicks: { show: false },
-        },
-        yaxis: {
-            labels: {
-                style: { colors: "#FFF" },
-                formatter: (val) => Math.round(val).toLocaleString(),
+            grid: {
+                show: true,
+                gradientToColors: ["rgba(249, 115, 22, 0.15)"],
+                strokeDashArray: 4,
+                padding: {
+                    top: 10,
+                    bottom: 0,
+                    left: 10,
+                    right: 10,
+                },
             },
-        },
-        tooltip: {
-            y: { formatter: (val) => val.toLocaleString() },
-            theme: "dark",
-        },
-        markers: {
-            size: 4,
-            colors: ["#F97316"],
-            strokeColors: "#fff",
-            strokeWidth: 2,
-            hover: { size: 6 },
-        },
-    }), [chartData]);
+            dataLabels: { enabled: false },
+            stroke: {
+                curve: "smooth",
+                width: 1.5,
+                colors: ["#F97316"],
+            },
+            fill: {
+                type: "gradient",
+                gradient: {
+                    shade: "light",
+                    type: "vertical",
+                    shadeIntensity: 0.4,
+                    inverseColors: false,
+                    opacityFrom: 0.4,
+                    opacityTo: 0.05,
+                    stops: [0, 90, 100],
+                    colorStops: [
+                        {
+                            offset: 0,
+                            color: "rgba(249, 115, 22, 0.4)",
+                            opacity: 0.4,
+                        },
+                        {
+                            offset: 100,
+                            color: "rgba(249, 115, 22, 0.05)",
+                            opacity: 0.05,
+                        },
+                    ],
+                },
+                colors: ["#F97316"],
 
-    const handlePeriodChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setPeriod(event.target.value);
-    };
-
+            },
+            series: [{ name: "Sales", data: chartData.series }],
+            xaxis: {
+                categories: chartData.categories,
+                labels: {
+                    style: { colors: "#a1a1aa" },
+                },
+                axisBorder: { show: false },
+                axisTicks: { show: false },
+            },
+            yaxis: {
+                labels: {
+                    style: { colors: "#a1a1aa" },
+                    formatter: (val) => Math.round(val).toLocaleString(),
+                },
+            },
+            tooltip: {
+                theme: "dark",
+                y: {
+                    formatter: (val) => val.toLocaleString(),
+                },
+            },
+            markers: {
+                size: 4,
+                colors: ["#F97316"],
+                strokeColors: "#ffffff",
+                strokeWidth: 2,
+                hover: { size: 6 },
+            },
+        }),
+        [chartData]
+    );
     return (
-        <div className="p-6 text-white">
+        <div className="p-6 text-gray-950">
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-medium">Sales Graph</h2>
-                <div className="card p-1">
-                    <select value={period} onChange={handlePeriodChange}>
-                        {MONTHS.map((month) => (
-                            <option key={month} value={month}>
-                                {month}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <SelectDropdown options={monthOptions} value={selected} onChange={setSelected} />
             </div>
 
             {loading ? (
                 <AreaChartSkeleton />
             ) : hasData ? (
-                <ReactApexChart
-                    options={options}
-                    series={options.series}
-                    type="area"
-                    height={300}
-                />
+                <ReactApexChart options={options} series={options.series} type="area" height={300} />
             ) : (
-                <div className="text-center text-white/70 py-10">No data available for {period}.</div>
+                <div className="text-center text-black py-10">
+                    No data available for {selected.label}.
+                </div>
             )}
         </div>
     );
-}
+};
 
 export default AreaChart;

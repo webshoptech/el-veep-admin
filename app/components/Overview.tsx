@@ -12,10 +12,10 @@ interface StatCardProps {
 }
 
 const StatCard: React.FC<StatCardProps> = ({ title, value, loading }) => (
-    <div className="card w-full p-6">
-        <div className="text-sm font-medium text-white/60">{title}</div>
+    <div className="card w-full p-4">
+        <div className="text-sm font-medium text-gray-500">{title}</div>
         <div className="mt-2 flex items-baseline gap-2">
-            <div className="text-4xl font-bold text-white">
+            <div className="text-4xl font-bold text-black">
                 {loading ? <Skeleton width={80} height={28} baseColor="#444" highlightColor="#666" /> : value}
             </div>
         </div>

@@ -1,14 +1,14 @@
-import { Product } from "./ProductType";
-import User from "./UserType";
+import { User } from "./UserType";
 
-export default interface OrderType {
-  orders: Order[];
-  total: number;
-  limit: number;
-  offset: number;
-}
+export type OrderResponse = {
+  status: 'success';
+  data: {
+    order_item: OrderItem;
+    shop: Shop;
+  };
+};
 
-export interface Order {
+export type OrderItem = {
   id: number;
   order_id: number;
   user_id: number;
@@ -18,48 +18,80 @@ export interface Order {
   subtotal: string;
   created_at: string;
   updated_at: string;
-  user: User;
+  order: Order;
   product: Product;
-  order: OrderDetails;
-}
+};
 
-export interface OrderDetails {
+export type Order = {
   id: number;
   customer_id: number;
-  vendor_id: number[];
+  vendor_id: number;
   total: string;
   payment_method: string;
   shipping_status: string;
-  shipping_method: string | null;
+  shipping_method: string;
   shipping_fee: string;
   tracking_number: string | null;
   tracking_url: string | null;
   shipping_date: string | null;
   delivery_date: string | null;
-  payment_date: string | null;
-  payment_reference: string | null;
+  payment_date: string;
+  payment_reference: string;
   payment_status: string;
   vendor_payment_settlement_status: string;
   cancel_reason: string | null;
-  address_id: number | null;
+  address_id: number;
   created_at: string;
   updated_at: string;
-}
+  customer: User
+};
 
-
-export interface OrderResponse {
+export type Product = {
   id: number;
-  user: {
-    name: string;
-    photo: string;
-  };
-  product: {
-    title: string;
-    image: string;
-  };
-  subtotal: string;
+  title: string;
+  slug: string;
+  description: string;
+  sales_price: string;
+  regular_price: string;
   quantity: number;
-  shipping_status: string;
-  payment_status: string;
+  notify_user: number;
+  images: string[];
+  image_public_ids: string[];
+  status: string;
+  type: string;
+  shop_id: number;
+  category_id: number;
+  available_from: string | null;
+  available_to: string | null;
+  available_days: string | null;
+  estimated_delivery_time: string | null;
+  delivery_method: string | null;
+  pricing_model: string | null;
+  views: number;
   created_at: string;
-}
+  updated_at: string;
+  shop: Shop;
+  average_rating: number;
+};
+
+export type Shop = {
+  id: number;
+  name: string;
+  slug: string;
+  address: string;
+  type: string;
+  logo: string;
+  logo_public_id: string;
+  banner: string;
+  banner_public_id: string;
+  description: string;
+  subscription_id: number;
+  state_id: string;
+  city_id: string;
+  country_id: string;
+  vendor_id: number;
+  category_id: number;
+  status: string;
+  created_at: string;
+  updated_at: string;
+};

@@ -9,7 +9,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono); 
+  --font-mono: var(--font-geist-mono);
   /* === Primary === */
   --color-hub-primary-900: #7a5015;
   --color-hub-primary-800: #8f5717;
@@ -20,7 +20,7 @@
   --color-hub-primary-300: #f9b324;
   --color-hub-primary-200: #fcd76a;
   --color-hub-primary-100: #fee9a6;
-  --color-hub-primary-50:  #fff4d0;
+  --color-hub-primary-50: #fff4d0;
 
   /* === Secondary === */
   --color-hub-secondary-900: #79412c;
@@ -32,7 +32,7 @@
   --color-hub-secondary-300: #eab68b;
   --color-hub-secondary-200: #f3d2ac;
   --color-hub-secondary-100: #f9e2c9;
-  --color-hub-secondary-50:  #fef6ee;
+  --color-hub-secondary-50: #fef6ee;
 
   /* === Lightening Yellow === */
   --color-hub-lightening-900: #8f5a13;
@@ -44,7 +44,7 @@
   --color-hub-lightening-300: #f6dd7f;
   --color-hub-lightening-200: #f8e7a8;
   --color-hub-lightening-100: #f9efcd;
-  --color-hub-lightening-50:  #fef8ec;
+  --color-hub-lightening-50: #fef8ec;
 
   /* === Grey === */
   --color-hub-grey-900: #2d2d2d;
@@ -56,7 +56,7 @@
   --color-hub-grey-300: #b7b7b7;
   --color-hub-grey-200: #d6d6d6;
   --color-hub-grey-100: #eaeaea;
-  --color-hub-grey-50:  #f9f9f9;
+  --color-hub-grey-50: #f9f9f9;
 
   /* === Green === */
   --color-hub-green-900: #025f07;
@@ -68,7 +68,7 @@
   --color-hub-green-300: #73ff73;
   --color-hub-green-200: #a8ffad;
   --color-hub-green-100: #d6ffdb;
-  --color-hub-green-50:  #f1fff3;
+  --color-hub-green-50: #f1fff3;
 
   /* === Cinnabar === */
   --color-hub-cinnabar-900: #8f2a26;
@@ -80,16 +80,15 @@
   --color-hub-cinnabar-300: #f78f8c;
   --color-hub-cinnabar-200: #fbbcbc;
   --color-hub-cinnabar-100: #fddede;
-  --color-hub-cinnabar-50:  #fef5f5;
+  --color-hub-cinnabar-50: #fef5f5;
 
   /* === Unique Brand Colors === */
   --color-hub-warning: #f6cd46;
   --color-hub-success: #04b504;
-  --color-hub-danger:  #f44336;
-  --color-hub-white:   #f5f5f5;
-  --color-hub-black:   #000000;
+  --color-hub-danger: #f44336;
+  --color-hub-white: #f5f5f5;
+  --color-hub-black: #000000;
 }
-
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -104,5 +103,5 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 .card {
-  @apply border border-hub-primary-50 rounded-lg bg-hub-primary-900;
+  @apply border border-gray-200 rounded-xl bg-white text-gray-950 shadow-md;
 }

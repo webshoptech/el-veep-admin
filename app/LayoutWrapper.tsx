@@ -8,7 +8,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
     return (
-        <div className="flex bg-[#EEEEEE] h-screen overflow-auto">
+        <div className="flex bg-white/95 h-screen overflow-auto">
             <Sidebar
                 sidebarOpen={sidebarOpen}
                 setSidebarOpen={setSidebarOpen}
@@ -16,7 +16,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                 setSidebarCollapsed={setSidebarCollapsed}
             />
             <div className="flex flex-col flex-1 lg:pl-70">
-                <main className="py-10 px-4 sm:px-6 lg:px-8">{children}</main>
+                <main className="py-8 px-2 sm:px-4 lg:px-6">{children}</main>
             </div>
         </div>
     );
