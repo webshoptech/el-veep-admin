@@ -80,19 +80,19 @@ function CustomerSummary({ customer, address, stats }: { customer: User; address
                         <p className="font-bold ">
                             {formatAmount(stats?.total_revenue || 0)}
                         </p>
-                        <p className="text-xs text-gray-500">Total Revenue</p>
+                        <p className="text-xs text-gray-500">Overall spent</p>
                     </div>
                     <div>
                         <p className="font-bold ">{stats?.total_orders || 0}</p>
-                        <p className="text-xs text-gray-500">Total orders</p>
+                        <p className="text-xs text-gray-500">Overall orders</p>
                     </div>
                     <div>
                         <p className="font-bold ">{stats?.total_completed || 0}</p>
-                        <p className="text-xs text-gray-500">Completed</p>
+                        <p className="text-xs text-gray-500">Overall completed</p>
                     </div>
                     <div>
                         <p className="font-bold ">{stats?.total_cancelled || 0}</p>
-                        <p className="text-xs text-gray-500">Canceled</p>
+                        <p className="text-xs text-gray-500">Overall canceled</p>
                     </div>
                 </div>
             </div>

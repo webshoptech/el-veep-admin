@@ -40,7 +40,7 @@ export async function changeUserStatus(userId: string, isActive: boolean) {
 }
 
 export async function userStats(customer?: string) {
-    const response = await axios.get(`${API_URL}/stats?type=${customer}`);
+    const response = await axios.get(`${API_URL}/user-stats?type=${customer}`);
     return response.data;
 }
 

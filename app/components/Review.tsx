@@ -44,12 +44,12 @@ function ReviewCard({ review }: { review: Review }) {
           <h3 className="text-sm font-medium text-white truncate">
             {review.user?.name || "Anonymous"}
           </h3>
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-500">
             {formatHumanReadableDate(review.created_at)}
           </p>{" "}
         </div>
         <StarRating rating={review.rating} />
-        <p className="mt-1 text-sm text-gray-300 truncate w-56">
+        <p className="mt-1 text-sm text-gray-500 truncate w-56">
           {review.comment}
         </p>
       </div>
@@ -92,12 +92,12 @@ export function RecentReviews() {
 
   return (
     <div className="p-0">
-      <h2 className="text-lg font-medium text-white mb-4">Recent Review</h2>
+      <h2 className="text-lg font-medium text-gray-950 mb-4">Recent Review</h2>
       <div className="divide-y divide-white/10">
         {reviews.map((review) => (
           <div
             key={review.id}
-            className="cursor-pointer hover:bg-hub-secondary-50/10 rounded-lg p-1"
+            className="cursor-pointer hover:bg-hub-secondary-50/50 rounded-lg p-1"
           >
             <ReviewCard review={review} />
           </div>
