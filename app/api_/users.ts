@@ -50,6 +50,12 @@ export async function getUserGraph(role?: string, selectedPeriod?: string) {
     );
     return response;
 }
+export async function getActivityGraph(selectedPeriod?: string, role?: string,) {
+    const response = await axios.get(
+        `${API_URL}/user-activities-graph?role=${role}&start_date=${selectedPeriod}`
+    );
+    return response.data;
+}
 
 export async function getUserActivities(limit = 10, offset = 0, role = "customer") {
   const response = await axios.get(`${API_URL}/user-activities`, {

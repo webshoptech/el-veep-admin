@@ -7,16 +7,15 @@ import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { productGraph } from "@/app/api_/products";
+import { getActivityGraph } from "@/app/api_/users";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface AreaChartProps {
     type: string;
-    status: string;
 }
 
-const AreaChart = ({ type, status }: AreaChartProps) => {
+const AreaChart = ({ type }: AreaChartProps) => {
     const [chartData, setChartData] = useState<{ categories: string[]; series: number[] }>({
         categories: [],
         series: [],
@@ -33,8 +32,8 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
     const fetchChartData = useCallback(async (selectedPeriod: string) => {
         setLoading(true);
         try {
-            const response = await productGraph(selectedPeriod, type, status);
-            const raw = response?.data ?? [];
+            const response = await getActivityGraph(selectedPeriod, type);
+            const raw = response.data ?? [];
             if (response?.status === "success" && Array.isArray(raw) && raw.length > 0) {
                 const categories = raw.map((item: { day: string }) => formatDate(new Date(item.day)));
                 const series = raw.map((item: { total: string }) => parseFloat(item.total));
@@ -50,7 +49,7 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
         } finally {
             setLoading(false);
         }
-    }, [type, status]);
+    }, [type]);
 
     useEffect(() => {
         fetchChartData(selected.value);
@@ -108,7 +107,7 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
                 colors: ["#F97316"],
 
             },
-            series: [{ name: "Products", data: chartData.series }],
+            series: [{ name: "Activity", data: chartData.series }],
             xaxis: {
                 categories: chartData.categories,
                 labels: {
@@ -142,7 +141,7 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
     return (
         <div className="p-6 card text-gray-950">
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-medium">Product Graph</h2>
+                <h2 className="text-lg font-medium">Activities Graph</h2>
                 <SelectDropdown options={monthOptions} value={selected} onChange={setSelected} />
             </div>
 

@@ -34,7 +34,7 @@ export default function Products() {
 
 
       {/* Products Table */}
-      <ProductsTable limit={10} type={selectedType.value} />
+      <ProductsTable limit={10} type={selectedType.value} status="active" />
     </div>
   );
 }

@@ -17,9 +17,10 @@ import ProductAreaChart from "./ProductAreaChart";
 interface ProductTableProps {
     limit: number;
     type: string;
+    status: string;
 }
 
-const ProductsTable: React.FC<ProductTableProps> = ({ limit, type }) => {
+const ProductsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -207,7 +208,8 @@ const ProductsTable: React.FC<ProductTableProps> = ({ limit, type }) => {
                     pagination.pageSize,
                     offset,
                     search,
-                    type
+                    type,
+                    status
                 );
                 setProducts(response.data);
                 setTotalProducts(response.total || 0);
@@ -219,7 +221,7 @@ const ProductsTable: React.FC<ProductTableProps> = ({ limit, type }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize, type]
+        [pagination.pageSize, type, status]
     );
 
     const debouncedFetchProducts = useMemo(() => {
@@ -244,7 +246,7 @@ const ProductsTable: React.FC<ProductTableProps> = ({ limit, type }) => {
         <div className="space-y-6">
             <ItemSummary loading={loading} stats={itemStats} />
 
-            <ProductAreaChart type={type} />
+            <ProductAreaChart type={type} status={status} />
 
 
             <div className="mb-4">

@@ -33,6 +33,7 @@ import {
     ArrowRightStartOnRectangleIcon,
     CurrencyDollarIcon,
     MegaphoneIcon,
+    BuildingStorefrontIcon,
 } from "@heroicons/react/24/outline";
 
 export const navigation = [
@@ -43,13 +44,12 @@ export const navigation = [
         children: [{ name: "Home", href: "/" }],
     },
     {
-        name: "Users & Customers",
+        name: "Customers",
         href: "/customers",
         icon: UserCircleIcon,
         children: [
             { name: "Customer List", href: "/customers" },
             { name: "Customer Activity", href: "/customers/activities" },
-            //   { name: "Customer Support", href: "/customers/support" },
         ],
     },
     {
@@ -59,7 +59,15 @@ export const navigation = [
         children: [
             { name: "Vendor List", href: "/vendors" },
             { name: "Vendor Performance", href: "/vendors/activities" },
-            //   { name: "Vendor Compliance", href: "/vendors/compliance" },
+        ],
+    },
+    {
+        name: "Shop Management",
+        href: "/shops",
+        icon: BuildingStorefrontIcon,
+        children: [
+            { name: "Shop List", href: "/shops" },
+            { name: "Shop Performance", href: "/vendors/activities" },
         ],
     },
     {
@@ -68,7 +76,7 @@ export const navigation = [
         icon: TruckIcon,
         children: [
             { name: "All Products", href: "/products" },
-            { name: "Create Product", href: "/products/create" },
+            // { name: "Create Product", href: "/products/create" },
             { name: "Pending Approvals", href: "/products/pending" },
             { name: "Flagged Products", href: "/products/flagged" },
             { name: "Product Analytics", href: "/products/analytics" },
