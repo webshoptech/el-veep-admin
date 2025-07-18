@@ -31,6 +31,8 @@ export default function Products() {
         </div>
       </div>
 
+
+
       {/* Products Table */}
       <ProductsTable limit={10} type={selectedType.value} />
     </div>

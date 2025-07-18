@@ -12,6 +12,7 @@ import StatusBadge from "@/utils/StatusBadge";
 import ItemSummary from "./ItemSummary";
 import { getStockBadgeClass } from "@/utils/StockBadge";
 import { BuildingStorefrontIcon, EyeIcon, StarIcon } from "@heroicons/react/24/outline";
+import ProductAreaChart from "./ProductAreaChart";
 
 interface ProductTableProps {
     limit: number;
@@ -240,8 +241,11 @@ const ProductsTable: React.FC<ProductTableProps> = ({ limit, type }) => {
     };
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-6">
             <ItemSummary loading={loading} stats={itemStats} />
+
+            <ProductAreaChart type={type} />
+
 
             <div className="mb-4">
                 <input
