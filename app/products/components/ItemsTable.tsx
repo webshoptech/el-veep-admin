@@ -31,9 +31,11 @@ const statusOptions: Option[] = [
 function ProductActionCell({
     productId,
     initialStatus,
+    onStatusUpdate,
 }: {
     productId: number;
     initialStatus: string;
+    onStatusUpdate: (newStatus: string) => void;
 }) {
     const [status, setStatus] = useState<Option>(
         statusOptions.find((opt) => opt.value === initialStatus) || statusOptions[0]
@@ -44,18 +46,19 @@ function ProductActionCell({
         setStatus(selected);
         try {
             await updateItemStatus(productId, selected.value);
-            toast.success('Status updated');
+            toast.success("Status updated");
+            onStatusUpdate(selected.value); // 🔁 update parent state
         } catch {
             setStatus(previous);
-            toast.error('Failed to update status');
+            toast.error("Failed to update status");
         }
     };
 
     return (
-        <div className="flex flex-col gap-2 w-44">
+        <div className="flex flex-col gap-2">
             <SelectDropdown value={status} options={statusOptions} onChange={handleStatusChange} />
             <button
-                className="text-sm bg-yellow-500 text-white px-2.5 py-1 rounded hover:bg-yellow-600"
+                className="text-sm bg-yellow-500 text-white px-2 py-1 rounded-xl hover:bg-yellow-600"
                 onClick={() => (window.location.href = `/products/${productId}`)}
             >
                 View product
@@ -63,6 +66,7 @@ function ProductActionCell({
         </div>
     );
 }
+
 
 const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -81,6 +85,13 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
         total_service: 0,
         total_product: 0,
     });
+
+    const updateProductStatusInState = (id: number, newStatus: "active" | "inactive") => {
+        setProducts((prev) =>
+            prev.map((p) => (p.id === id ? { ...p, status: newStatus } : p))
+        );
+    };
+
 
     const columns: ColumnDef<Product>[] = useMemo(
         () => [
@@ -229,6 +240,9 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                     <ProductActionCell
                         productId={row.original.id}
                         initialStatus={row.original.status}
+                        onStatusUpdate={(newStatus) =>
+                            updateProductStatusInState(row.original.id, newStatus as "active" | "inactive")
+                        }
                     />
                 ),
             },
