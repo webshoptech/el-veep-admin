@@ -10,9 +10,10 @@ import { getUserActivities } from "@/app/api_/users";
 
 interface ActivitiesTableProps {
     limit: number;
+    role: string;
 }
 
-const ActivitiesTable: React.FC<ActivitiesTableProps> = ({ limit = 10 }) => {
+const ActivitiesTable: React.FC<ActivitiesTableProps> = ({ limit = 10, role }) => {
     const [activities, setActivities] = useState<Activities[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -62,7 +63,7 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({ limit = 10 }) => {
         []
     );
 
-    const fetchUserActivities = useCallback(async (pageIndex: number, role = "customer") => {
+    const fetchUserActivities = useCallback(async (pageIndex: number, role: string) => {
         try {
             setLoading(true);
             const offset = pageIndex * pagination.pageSize;
@@ -78,8 +79,8 @@ const ActivitiesTable: React.FC<ActivitiesTableProps> = ({ limit = 10 }) => {
     }, [pagination.pageSize]);
 
     useEffect(() => {
-        fetchUserActivities(pagination.pageIndex);
-    }, [fetchUserActivities, pagination.pageIndex]);
+        fetchUserActivities(pagination.pageIndex, role);
+    }, [fetchUserActivities, pagination.pageIndex, role]);
 
     return (
         <div className="mt-6">
