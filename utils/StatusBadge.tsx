@@ -22,7 +22,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
     };
 
     return (
-        <span className={`flex items-center gap-2 px-3 py-1 rounded-full font-medium text-sm ${getColorClasses()}`}>
+        <span className={`flex items-center gap-2 px-3 py-1 rounded-full w-30 font-medium text-sm ${getColorClasses()}`}>
             {type === "payment" && status === "paid" && <CheckCircleIcon className="w-4 h-4" />}
             {type === "payment" && status !== "paid" && <XCircleIcon className="w-4 h-4" />}
             {status.charAt(0).toUpperCase() + status.slice(1)}

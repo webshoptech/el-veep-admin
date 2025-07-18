@@ -40,7 +40,7 @@ export const navigation = [
     icon: UserCircleIcon,
     children: [
       { name: "Customer List", href: "/customers" },
-      { name: "Customer Activity", href: "/customers/activity" },
+      { name: "Customer Activity", href: "/customers/activities" },
       { name: "Customer Support", href: "/customers/support" },
     ],
   },

@@ -21,8 +21,8 @@ import toast from "react-hot-toast";
 
 
 const statusOptions = [
-    { label: "Ongoing", value: "ongoing" },
     { label: "Processing", value: "processing" },
+    { label: "Ongoing", value: "ongoing" },
     { label: "Returned", value: "returned" },
     { label: "Delivered", value: "delivered" },
     { label: "Cancelled", value: "cancelled" },
@@ -67,13 +67,17 @@ function CustomerSummary({ customer, address, stats }: { customer: User; address
             <div className="flex flex-col gap-2 min-w-[300px]">
                 <div>
                     <p className="text-xs text-gray-500 font-medium uppercase mb-1">Shipping Address</p>
-                    <p className="text-gray-700">
-                        {[address.street_address, address.zip_code, address.state, address.city, address.country]
-                            .filter(Boolean)
-                            .join(', ')}
-                    </p>
-
+                    {address ? (
+                        <p className="text-gray-700">
+                            {[address.street_address, address.zip_code, address.state, address.city, address.country]
+                                .filter(Boolean)
+                                .join(", ")}
+                        </p>
+                    ) : (
+                        <p className="text-gray-500 italic">Not provided</p>
+                    )}
                 </div>
+
 
                 <div className="flex gap-12 mt-1 text-center text-xl text-gray-900">
                     <div>

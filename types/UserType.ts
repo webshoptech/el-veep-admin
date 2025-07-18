@@ -70,5 +70,27 @@ export interface UserDetailResponse {
     created_at: string;
     updated_at: string;
     address: Address;
-    wallet: Wallet; 
+    wallet: Wallet;
+}
+
+export interface Activities {
+    id: number;
+    user_id: number;
+    role: string;
+    login_time: string;
+    activity: string;
+    ip: string;
+    location: string;
+    device: string;
+    created_at: string;
+    updated_at: string;
+    user: User;
+}
+
+export interface ActivityResponse {
+    status: "success";
+    data: Activities[];
+    total: number;
+    limit: number;
+    offset: number;
 }
