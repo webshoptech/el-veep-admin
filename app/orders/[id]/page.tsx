@@ -5,20 +5,15 @@ import { useParams } from "next/navigation";
 import { changeOrderStatus, getOrderDetail } from "@/app/api_/orders";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
-import { MapPinIcon } from "@heroicons/react/24/solid";
-import { OrderItem, OrderResponse, Shop } from "@/types/OrderType";
+import { OrderItem, OrderResponse } from "@/types/OrderType";
 import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { User } from "@/types/UserType";
 import dayjs from "dayjs";
 import Address from "@/types/AddressType";
 import { formatAmount } from "@/utils/formatCurrency";
 import PrintableOrderTable from "../components/PrintableOrderTable";
-import { renderToStaticMarkup } from "react-dom/server";
-import { Html } from "react-pdf-html";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
-
 
 const statusOptions = [
     { label: "Processing", value: "processing" },
@@ -77,8 +72,6 @@ function CustomerSummary({ customer, address, stats }: { customer: User; address
                         <p className="text-gray-500 italic">Not provided</p>
                     )}
                 </div>
-
-
                 <div className="flex gap-12 mt-1 text-center text-xl text-gray-900">
                     <div>
                         <p className="font-bold ">
@@ -104,44 +97,8 @@ function CustomerSummary({ customer, address, stats }: { customer: User; address
     );
 }
 
-function ShopCover({ shop }: { shop: Shop }) {
-    return (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            {/* Banner */}
-            <div className="relative h-36 bg-gray-100">
-                <Image
-                    src={shop.banner}
-                    alt="Shop Banner"
-                    fill
-                    className="object-cover w-full h-full"
-                />
-            </div>
 
-            {/* Logo and Info */}
-            <div className="p-4 pt-0">
-                <div className="relative -mt-10 flex items-center gap-4">
-                    <div className="w-20 h-20 rounded-full border-4 border-white shadow-md overflow-hidden relative">
-                        <Image
-                            src={shop.logo}
-                            alt={shop.name}
-                            fill
-                            className="object-cover"
-                        />
-                    </div>
-                    <div>
-                        <h3 className="text-xl font-semibold text-gray-800">{shop.name}</h3>
-                        <p className="text-sm text-gray-500 flex items-center gap-1">
-                            <MapPinIcon className="w-4 h-4 text-gray-400" />
-                            {shop.address}
-                        </p>
-                    </div>
-                </div>
 
-                <p className="text-sm text-gray-600 mt-4">{shop.description}</p>
-            </div>
-        </div>
-    );
-}
 export default function OrderDetail() {
     const params = useParams();
     const orderId = params?.id as string | undefined;
@@ -150,9 +107,11 @@ export default function OrderDetail() {
     const [stats, setStats] = useState<OrderResponse["data"]["stats"] | null>(null);
 
     const [updating, setUpdating] = useState(false);
-    const [selectedStatus, setSelectedStatus] = useState(() =>
-        statusOptions.find((opt) => opt.value === order?.order?.shipping_status) || statusOptions[0]
-    );
+    // const [selectedStatus, setSelectedStatus] = useState(() =>
+    //     statusOptions.find((opt) => opt.value === order?.order?.shipping_status) || statusOptions[0]
+    // );
+    const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]);
+
     useEffect(() => {
         const fetchOrder = async () => {
             if (!orderId) return;
@@ -177,6 +136,7 @@ export default function OrderDetail() {
     const { shop } = product;
     const customer = orderMeta.customer;
     const address = orderMeta.address;
+
 
 
 
@@ -225,39 +185,11 @@ export default function OrderDetail() {
                             Cancel Order
                         </button>
                     )}
-                    <PDFDownloadLink
-                        document={
-                            <Html>
-                                {renderToStaticMarkup(
-                                    <PrintableOrderTable
-                                        product={product}
-                                        quantity={quantity}
-                                        price={price}
-                                        subtotal={subtotal}
-                                        orderMeta={orderMeta}
-                                    />
-                                )}
-                            </Html>
-                        }
-                        fileName={`Order-${orderMeta.id}.pdf`}
-                    >
-                        {({ loading }: { loading: boolean }) =>
-                            loading ? (
-                                <button
-                                    disabled
-                                    className="cursor-not-allowed bg-orange-200 text-white px-4 py-1.5 rounded-2xl text-sm font-medium flex items-center gap-1"
-                                >
-                                    <ArrowDownTrayIcon className="w-4 h-4" />
-                                    Generating...
-                                </button>
-                            ) : (
-                                <button className="cursor-pointer bg-orange-400 text-white px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-1">
-                                    <ArrowDownTrayIcon className="w-4 h-4" />
-                                    Download
-                                </button>
-                            )
-                        }
-                    </PDFDownloadLink>
+                    <button className="cursor-pointer bg-orange-400 text-white px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-1">
+                        <ArrowDownTrayIcon className="w-4 h-4" />
+                        Download
+                    </button>
+
                     <div className="w-40">
                         <SelectDropdown
                             options={statusOptions}
@@ -271,17 +203,13 @@ export default function OrderDetail() {
 
             <CustomerSummary customer={customer} address={address} stats={stats} />
 
-
-            {/* Shop Info */}
-            <ShopCover shop={shop} />
-
-
             <PrintableOrderTable
                 product={product}
                 quantity={quantity}
                 price={price}
                 subtotal={subtotal}
                 orderMeta={orderMeta}
+                shop={shop}
             />
 
         </div>

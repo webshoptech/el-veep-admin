@@ -18,6 +18,10 @@ interface Props {
         total: string | number;
         payment_status: string;
     };
+    shop?: {
+        name: string;
+        logo: string;
+    };
 }
 
 const PrintableOrderTable = ({
@@ -25,6 +29,7 @@ const PrintableOrderTable = ({
     quantity,
     price,
     orderMeta,
+    shop,
 }: Props) => {
     const productSubtotal = Number(price) * Number(quantity);
     const shippingFee = Number(orderMeta.shipping_fee);
@@ -39,6 +44,7 @@ const PrintableOrderTable = ({
                             <th className="py-3 px-4 text-left">#</th>
                             <th className="py-3 px-4 text-left">Product</th>
                             <th className="py-3 px-4 text-left">Qty</th>
+                            <th className="py-3 px-4 text-left">Vendor</th>
                             <th className="py-3 px-4 text-left">Unit Price</th>
                             <th className="py-3 px-4 text-left">Total</th>
                             <th className="py-3 px-4 text-left">Shipping Status</th>
@@ -66,6 +72,7 @@ const PrintableOrderTable = ({
                                 </div>
                             </td>
                             <td className="py-3 px-4 align-top">{quantity}</td>
+                            <td className="py-3 px-4 align-top">{shop?.name || "N/A"}</td>
                             <td className="py-3 px-4 align-top font-medium">
                                 {parseFloat(String(price)).toFixed(2)} CAD
                             </td>
@@ -73,15 +80,7 @@ const PrintableOrderTable = ({
                                 {productSubtotal.toFixed(2)} CAD
                             </td>
                             <td className="py-3 px-4 align-top">
-                                <span
-                                    className={`px-3 py-1 rounded-full text-xs font-medium 
-                  ${orderMeta.shipping_status === "delivered"
-                                            ? "bg-green-100 text-green-700"
-                                            : "bg-orange-100 text-orange-600"
-                                        }`}
-                                >
-                                    {orderMeta.shipping_status ?? "N/A"}
-                                </span>
+                                <StatusBadge status={orderMeta.shipping_status} type="shipping" />
                             </td>
                         </tr>
                     </tbody>
