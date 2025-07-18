@@ -73,7 +73,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
 
     const columns: ColumnDef<Order>[] = [
         {
-            header: "Product",
+            header: "Item",
             accessorKey: "product.title",
             cell: ({ row }) => {
                 const product = row.original?.product;

@@ -26,4 +26,16 @@ export async function productGraph(selectedPeriod?: string, type?: string, statu
     );
     return response.data;
 }
+export async function mostSellingProducts(limit?: number, offset?: number) {
+    const response = await axios.get(
+        `${API_URL}/most-selling-products?limit=${limit}&offset=${offset}`
+    );
+    return response.data;
+}
+export async function mostSellingProductGraph(selectedPeriod?: string) {
+    const response = await axios.get(
+        `${API_URL}/most-selling-products-graph?start_date=${selectedPeriod}`
+    );
+    return response.data;
+}
  

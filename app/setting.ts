@@ -71,13 +71,13 @@ export const NAVIGATION = [
         ],
     },
     {
-        name: "Product Management",
+        name: "Items Management",
         href: "/products",
         icon: TruckIcon,
         children: [
-            { name: "All Products", href: "/products" },
+            { name: "All items", href: "/products" },
             { name: "Pending Approvals", href: "/products/pending" },
-            { name: "Product Analytics", href: "/products/analytics" },
+            { name: "Item Analytics", href: "/products/analytics" },
         ],
     },
     {

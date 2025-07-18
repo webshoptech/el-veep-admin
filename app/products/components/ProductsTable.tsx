@@ -41,7 +41,7 @@ const ProductsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => 
     const columns: ColumnDef<Product>[] = useMemo(
         () => [
             {
-                header: "Product",
+                header: "Item",
                 accessorKey: "title",
                 cell: ({ row }) => {
                     const image = row.original.images?.[0];

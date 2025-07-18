@@ -41,7 +41,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
         },
       },
       {
-        header: "Product",
+        header: "Item",
         accessorKey: "product",
         cell: ({ getValue }) => {
           const value = getValue() as { title: string; image: string } | null;
