@@ -1,6 +1,5 @@
 import { API_URL } from "@/app/setting";
-
-import axios from "axios";
+import axios from "./lib/axios";
 
 /**
  * Sends a POST request to save application settings.
@@ -10,8 +9,8 @@ import axios from "axios";
  */
 
 export async function saveAppSettings(data: FormData) {
-  const response = await axios.post(`${API_URL}/app-settings`, data);
-  return response.data;
+    const response = await axios.post(`${API_URL}/app-settings`, data);
+    return response.data;
 }
 
 /**
@@ -20,8 +19,8 @@ export async function saveAppSettings(data: FormData) {
  * @returns A promise that resolves to an object containing the current application settings.
  */
 export async function getAppSettings() {
-  const response = await axios.get(`${API_URL}/app-setting`);
-  return response.data;
+    const response = await axios.get(`${API_URL}/app-setting`);
+    return response.data;
 }
 
 /**
@@ -34,19 +33,8 @@ export async function getAppSettings() {
  */
 
 export async function getPolicy(type: string) {
-  try {
     const response = await axios.get(`${API_URL}/policy/${type}`);
     return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response?.status === 404) {
-        return { content: "" }; // Return empty content instead of failing
-      }
-      throw new Error(error.response?.data?.error || "Failed to fetch policy.");
-    } else {
-      throw new Error("Unexpected error occurred.");
-    }
-  }
 }
 /**
  * Saves policy information to the server.
@@ -55,8 +43,8 @@ export async function getPolicy(type: string) {
  * @returns A promise that resolves to the response data from the server.
  */
 export async function savePolicy(formData: FormData) {
-  const response = await axios.post(`${API_URL}/policy`, formData);
-  return response.data;
+    const response = await axios.post(`${API_URL}/policy`, formData);
+    return response.data;
 }
 
 /**
@@ -68,46 +56,42 @@ export async function savePolicy(formData: FormData) {
  * @throws An error if the API call fails.
  */
 export async function getTickets(type: string) {
-  const response = await axios.get(`${API_URL}/tickets/${type}`);
-  return response.data;
+    const response = await axios.get(`${API_URL}/tickets/${type}`);
+    return response.data;
 }
 
 export async function getTicketDetail(ticketId: string) {
-  const response = await axios.get(`${API_URL}/ticket/detail/${ticketId}`);
-  return response.data.data;
+    const response = await axios.get(`${API_URL}/ticket/detail/${ticketId}`);
+    return response.data.data;
 }
 export async function replyTicket(formData: FormData) {
-  const response = await axios.post(`${API_URL}/ticket/reply`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-      Accept: "application/json",
-    },
-  });
+    const response = await axios.post(`${API_URL}/ticket/reply`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+            Accept: "application/json",
+        },
+    });
 
-  return response.data;
+    return response.data;
 }
-
-
 
 export async function getStats(period: string) {
-  const response = await axios.get(`${API_URL}/stats?start_date=${period}`);
-  return response.data;
+    const response = await axios.get(`${API_URL}/stats?start_date=${period}`);
+    return response.data;
 }
 export async function getSalesGraph(period: string) {
-  const response = await axios.get(
-    `${API_URL}/stats/graph?start_date=${period}`
-  );
-  return response;
+    const response = await axios.get(
+        `${API_URL}/stats/graph?start_date=${period}`
+    );
+    return response;
 }
 
 export async function getRecentReview() {
-  const response = await axios.get(`${API_URL}/review`);
-  return response.data;
+    const response = await axios.get(`${API_URL}/review`);
+    return response.data;
 }
 
-
-
 export async function getCategories() {
-  const response = await axios.get(`${API_URL}/categories`);
-  return response.data;
+    const response = await axios.get(`${API_URL}/categories`);
+    return response.data;
 }
