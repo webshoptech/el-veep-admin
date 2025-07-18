@@ -104,12 +104,7 @@ export async function getRecentReview() {
   const response = await axios.get(`${API_URL}/review`);
   return response.data;
 }
-export async function getRecentProducts(limit: number, offset: number, search: string) {
-  const response = await axios.get(`${API_URL}/products`,{
-    params: {  limit, offset,  search,  },
-  });
-  return response.data;
-}
+
 
 
 export async function getCategories() {

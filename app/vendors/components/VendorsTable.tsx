@@ -8,6 +8,7 @@ import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { User } from "@/types/UserType";
 import { getRecentUsers } from "@/app/api_/users";
+import StatusBadge from "@/utils/StatusBadge";
 
 interface VendorsTableProps {
     limit: number;
@@ -51,15 +52,10 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
                 header: "Status",
                 accessorKey: "is_active",
                 cell: ({ getValue }) => {
-                    const isActive = getValue() === 1;
-                    return (
-                        <span
-                            className={`px-2 py-1 rounded text-xs font-semibold ${isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                                }`}
-                        >
-                            {isActive ? "Active" : "Inactive"}
-                        </span>
-                    );
+                    const raw = getValue();  
+                    const status = raw === 1 ? "active" : "inactive";
+
+                    return <StatusBadge status={status} />;
                 },
             },
             {

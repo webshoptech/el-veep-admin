@@ -9,6 +9,7 @@ import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { User } from "@/types/UserType";
 import { getRecentUsers } from "@/app/api_/users";
+import StatusBadge from "@/utils/StatusBadge";
 
 interface UsersTableProps {
     limit: number;
@@ -54,15 +55,10 @@ const UsersTable: React.FC<UsersTableProps> = ({ limit }) => {
                 header: "Status",
                 accessorKey: "is_active",
                 cell: ({ getValue }) => {
-                    const isActive = getValue() === 1;
-                    return (
-                        <span
-                            className={`px-2 py-1 rounded text-xs font-semibold ${isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                                }`}
-                        >
-                            {isActive ? "Active" : "Inactive"}
-                        </span>
-                    );
+                    const raw = getValue(); // should be 1 or 0
+                    const status = raw === 1 ? "active" : "inactive";
+
+                    return <StatusBadge status={status} />;
                 },
             },
             {

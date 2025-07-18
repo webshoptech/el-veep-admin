@@ -10,6 +10,7 @@ import TanStackTable from "@/app/components/commons/TanStackTable";
 import Image from "next/image";
 import StatusBadge from "@/utils/StatusBadge";
 import { debounce } from "lodash";
+import TableSkeleton from "@/app/components/Skeletons/TableSkeleton";
 
 interface UserOrdersProps {
     userId: string;
@@ -116,7 +117,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
             accessorKey: "order.shipping_status",
             cell: ({ getValue }) => {
                 const value = String(getValue() ?? "N/A");
-                return <StatusBadge status={value}  />;
+                return <StatusBadge status={value} />;
             },
         },
 
@@ -167,43 +168,51 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
         <div className="mt-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Recent Orders</h2>
 
-            <div className="mb-4">
-                <input
-                    type="text"
-                    placeholder="Search by name, or order id..."
-                    value={searchInput}
-                    onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900 focus:outline-none focus:ring-0 focus:border-amber-400"
-                />
-            </div>
+            {loading && <TableSkeleton columns={columns.length} rows={5} />}
 
-            {loading ? null : cartItems.length > 0 ? (
-                <TanStackTable
-                    data={cartItems}
-                    columns={columns}
-                    loading={loading}
-                    error={error}
-                    pagination={{
-                        pageIndex: pagination.pageIndex,
-                        pageSize: pagination.pageSize,
-                        totalRows: totalOrders,
-                    }}
-                    onPaginationChange={(updatedPagination) => {
-                        setPagination({
-                            pageIndex: updatedPagination.pageIndex,
-                            pageSize: updatedPagination.pageSize,
-                        });
-                    }}
-                />
-            ) : (
-                <p className="flex items-center justify-center w-full text-yellow-900 p-4 border border-amber-500 bg-amber-50 rounded-xl text-sm text-center">
-                    {searchInput
-                        ? `No orders found for “${searchInput}”.`
-                        : "This customer has not placed any orders yet."}
-                </p>
+            {!loading && (
+                <>
+                    {cartItems && cartItems.length > 0 ? (
+                        <>
+                            <div className="mb-4">
+                                <input
+                                    type="text"
+                                    placeholder="Search by name, or order id..."
+                                    value={searchInput}
+                                    onChange={handleSearchChange}
+                                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900 focus:outline-none focus:ring-0 focus:border-amber-400"
+                                />
+                            </div>
 
+                            <TanStackTable
+                                data={cartItems}
+                                columns={columns}
+                                loading={loading}
+                                error={error}
+                                pagination={{
+                                    pageIndex: pagination.pageIndex,
+                                    pageSize: pagination.pageSize,
+                                    totalRows: totalOrders,
+                                }}
+                                onPaginationChange={(updatedPagination) => {
+                                    setPagination({
+                                        pageIndex: updatedPagination.pageIndex,
+                                        pageSize: updatedPagination.pageSize,
+                                    });
+                                }}
+                            />
+                        </>
+                    ) : (
+                        <p className="flex items-center justify-center w-full text-yellow-900 p-4 border border-amber-500 bg-amber-50 rounded-xl text-sm text-center">
+                            {searchInput
+                                ? `No orders found for “${searchInput}”.`
+                                : `This ${type} does not have any orders yet.`}
+                        </p>
+                    )}
+                </>
             )}
         </div>
+
     );
 
 

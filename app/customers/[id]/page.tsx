@@ -48,6 +48,7 @@ export default function UserDetail() {
                 loading={loading}
                 totalSpent={user?.wallet?.total_earning ?? 0}
                 totalRefunded={user?.wallet?.available_to_withdraw ?? 0}
+                totalPending={user?.wallet?.pending ?? 0}
             />
 
             <ProfileCard user={user} loading={loading} />

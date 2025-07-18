@@ -1,18 +1,38 @@
-import { APP_NAME } from "../setting";
+'use client';
+
+import SelectDropdown from "../components/commons/Fields/SelectDropdown";
 import ProductsTable from "./components/ProductsTable";
+import { useState } from "react";
 
-export const generateMetadata = () => {
-
-  return {
-    title: "Products - " + APP_NAME,
-  };
-}
 export default function Products() {
+  const [selectedType, setSelectedType] = useState({
+    label: "Product Items",
+    value: "products",
+  });
+
   return (
-    <div className="space-y-2 text-gray-800">
-      <h1 className="text-2xl font-bold">Products</h1>
-      <p>Manage your products here.</p>
-      <ProductsTable limit={10} />
+    <div className="space-y-6 text-gray-800">
+      {/* Header Row */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">Products</h1>
+          <p className="text-sm text-gray-600">Manage your products here.</p>
+        </div>
+
+        <div className="w-48">
+          <SelectDropdown
+            options={[
+              { label: "Product Items", value: "products" },
+              { label: "Service Items", value: "services" },
+            ]}
+            value={selectedType}
+            onChange={setSelectedType}
+          />
+        </div>
+      </div>
+
+      {/* Products Table */}
+      <ProductsTable limit={10} type={selectedType.value} />
     </div>
   );
 }

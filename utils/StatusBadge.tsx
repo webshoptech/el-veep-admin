@@ -41,11 +41,13 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
         return "bg-orange-100 text-orange-600";
       case "ongoing":
         return "bg-yellow-100 text-yellow-600";
+      case "active":
       case "delivered":
         return "bg-green-100 text-green-600";
       case "returned":
         return "bg-blue-100 text-blue-600";
       case "cancelled":
+      case "inactive":
         return "bg-red-100 text-red-600";
       default:
         return "bg-gray-100 text-gray-600";
@@ -78,11 +80,13 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
         return <ClockIcon className="w-4 h-4" />;
       case "ongoing":
         return <TruckIcon className="w-4 h-4" />;
+      case "active":
       case "delivered":
         return <CheckCircleIcon className="w-4 h-4" />;
       case "returned":
         return <ArrowPathIcon className="w-4 h-4" />;
       case "cancelled":
+      case "inactive":
         return <XCircleIcon className="w-4 h-4" />;
       default:
         return <ExclamationCircleIcon className="w-4 h-4" />;

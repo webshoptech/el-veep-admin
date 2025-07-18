@@ -4,6 +4,23 @@ export interface ProductResponse {
   total: number;
   limit: number | string;
   offset: number;
+  stats: [
+    {
+      total_items: number;
+      total_active: number;
+      total_inactive: number;
+      total_service: number;
+      total_product: number;
+    }
+  ];
+
+}
+export interface Stats {
+    total_items: number;
+    total_active: number;
+    total_inactive: number;
+    total_service: number;
+    total_product: number;
 }
 
 export interface Product {
