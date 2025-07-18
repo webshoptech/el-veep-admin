@@ -38,4 +38,7 @@ export async function mostSellingProductGraph(selectedPeriod?: string) {
     );
     return response.data;
 }
- 
+ export async function updateItemStatus(productId: number, status: string) {
+  const response = await axios.patch(`${API_URL}/product/${productId}/status/${status}`);
+  return response.data;
+}

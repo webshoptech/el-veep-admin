@@ -1,7 +1,7 @@
 'use client';
 
 import SelectDropdown from "../components/commons/Fields/SelectDropdown";
-import ProductsTable from "./components/ProductsTable";
+import ProductsTable from "./components/ItemsTable";
 import { useState } from "react";
 
 export default function Products() {

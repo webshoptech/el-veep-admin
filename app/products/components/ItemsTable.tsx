@@ -7,20 +7,64 @@ import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import { Product, Stats } from "@/types/ProductType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { getRecentProducts } from "@/app/api_/products";
+import { getRecentProducts, updateItemStatus } from "@/app/api_/products";
 import StatusBadge from "@/utils/StatusBadge";
 import ItemSummary from "./ItemSummary";
 import { getStockBadgeClass } from "@/utils/StockBadge";
 import { BuildingStorefrontIcon, EyeIcon, StarIcon } from "@heroicons/react/24/outline";
 import ProductAreaChart from "./ProductAreaChart";
+import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
+import toast from "react-hot-toast";
 
 interface ProductTableProps {
     limit: number;
     type: string;
     status: string;
 }
+type Option = { label: string; value: string };
 
-const ProductsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
+const statusOptions: Option[] = [
+    { label: 'Active', value: 'active' },
+    { label: 'Inactive', value: 'inactive' },
+];
+
+function ProductActionCell({
+    productId,
+    initialStatus,
+}: {
+    productId: number;
+    initialStatus: string;
+}) {
+    const [status, setStatus] = useState<Option>(
+        statusOptions.find((opt) => opt.value === initialStatus) || statusOptions[0]
+    );
+
+    const handleStatusChange = async (selected: Option) => {
+        const previous = status;
+        setStatus(selected);
+        try {
+            await updateItemStatus(productId, selected.value);
+            toast.success('Status updated');
+        } catch {
+            setStatus(previous);
+            toast.error('Failed to update status');
+        }
+    };
+
+    return (
+        <div className="flex flex-col gap-2 w-44">
+            <SelectDropdown value={status} options={statusOptions} onChange={handleStatusChange} />
+            <button
+                className="text-sm bg-yellow-500 text-white px-2.5 py-1 rounded hover:bg-yellow-600"
+                onClick={() => (window.location.href = `/products/${productId}`)}
+            >
+                View product
+            </button>
+        </div>
+    );
+}
+
+const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -181,19 +225,12 @@ const ProductsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => 
             {
                 header: "Action",
                 accessorKey: "id",
-                cell: ({ getValue }) => {
-                    const productId = getValue();
-                    return (
-                        <button
-                            className="px-3 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700 cursor-pointer"
-                            onClick={() => {
-                                window.location.href = `/products/${productId}`;
-                            }}
-                        >
-                            View product
-                        </button>
-                    );
-                },
+                cell: ({ row }) => (
+                    <ProductActionCell
+                        productId={row.original.id}
+                        initialStatus={row.original.status}
+                    />
+                ),
             },
         ],
         []
@@ -280,4 +317,4 @@ const ProductsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => 
     );
 };
 
-export default ProductsTable;
+export default ItemsTable;

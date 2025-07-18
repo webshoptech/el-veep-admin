@@ -21,7 +21,6 @@ import {
     HomeIcon,
     ShoppingBagIcon,
     CreditCardIcon,
-    TruckIcon,
     ChartBarIcon,
     Cog6ToothIcon,
     QuestionMarkCircleIcon,
@@ -34,6 +33,8 @@ import {
     CurrencyDollarIcon,
     MegaphoneIcon,
     BuildingStorefrontIcon,
+    Squares2X2Icon,
+    CubeIcon,
 } from "@heroicons/react/24/outline";
 
 export const NAVIGATION = [
@@ -61,15 +62,23 @@ export const NAVIGATION = [
             { name: "Vendor Performance", href: "/vendors/activities" },
         ],
     },
-
     {
         name: "Items Management",
         href: "/products",
-        icon: TruckIcon,
+        icon: CubeIcon,
         children: [
             { name: "All items", href: "/products" },
             { name: "Pending Approvals", href: "/products/pending" },
             { name: "Item Analytics", href: "/products/analytics" },
+        ],
+    },
+    {
+        name: "Category Management",
+        href: "/categories",
+        icon: Squares2X2Icon,
+        children: [
+            { name: "All categories", href: "/categories" },
+            { name: "Category Analytics", href: "/categories/analytics" },
         ],
     },
     {
