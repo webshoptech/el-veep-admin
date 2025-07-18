@@ -36,7 +36,7 @@ import {
     BuildingStorefrontIcon,
 } from "@heroicons/react/24/outline";
 
-export const navigation = [
+export const NAVIGATION = [
     {
         name: "Dashboard",
         href: "/",
@@ -76,9 +76,7 @@ export const navigation = [
         icon: TruckIcon,
         children: [
             { name: "All Products", href: "/products" },
-            // { name: "Create Product", href: "/products/create" },
             { name: "Pending Approvals", href: "/products/pending" },
-            { name: "Flagged Products", href: "/products/flagged" },
             { name: "Product Analytics", href: "/products/analytics" },
         ],
     },
