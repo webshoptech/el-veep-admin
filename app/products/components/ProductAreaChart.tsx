@@ -49,7 +49,7 @@ const AreaChart = ({ type }: AreaChartProps) => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [type]);
 
     useEffect(() => {
         fetchChartData(selected.value);
