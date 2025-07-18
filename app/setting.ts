@@ -44,7 +44,7 @@ export const NAVIGATION = [
         children: [{ name: "Home", href: "/" }],
     },
     {
-        name: "Customers",
+        name: "Customer Management",
         href: "/customers",
         icon: UserCircleIcon,
         children: [
@@ -61,15 +61,7 @@ export const NAVIGATION = [
             { name: "Vendor Performance", href: "/vendors/activities" },
         ],
     },
-    {
-        name: "Shop Management",
-        href: "/shops",
-        icon: BuildingStorefrontIcon,
-        children: [
-            { name: "Shop List", href: "/shops" },
-            { name: "Shop Performance", href: "/vendors/activities" },
-        ],
-    },
+
     {
         name: "Items Management",
         href: "/products",
@@ -78,6 +70,15 @@ export const NAVIGATION = [
             { name: "All items", href: "/products" },
             { name: "Pending Approvals", href: "/products/pending" },
             { name: "Item Analytics", href: "/products/analytics" },
+        ],
+    },
+    {
+        name: "Shop Management",
+        href: "/shops",
+        icon: BuildingStorefrontIcon,
+        children: [
+            { name: "Shop List", href: "/shops" },
+            { name: "Shop Performance", href: "/vendors/activities" },
         ],
     },
     {
