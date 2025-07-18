@@ -80,7 +80,7 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
                         <button
                             className="px-3 py-1 bg-amber-600 text-white rounded hover:bg-amber-700 cursor-pointer"
                             onClick={() => {
-                                window.location.href = `/users/${userId}`;
+                                window.location.href = `/vendors/${userId}`;
                             }}
                         >
                             View

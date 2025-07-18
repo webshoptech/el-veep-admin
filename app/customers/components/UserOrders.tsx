@@ -76,7 +76,6 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
             accessorKey: "product.title",
             cell: ({ row }) => {
                 const product = row.original?.product;
-                const vendor = product?.vendor;
 
                 return (
                     <div className="flex items-center gap-3">
@@ -90,9 +89,6 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                         <div>
                             <div className="font-medium text-sm text-gray-800">
                                 {product?.title ?? "Unnamed Product"}
-                            </div>
-                            <div className="text-xs text-gray-500">
-                                Vendor: {vendor?.name ?? "Unknown"}
                             </div>
                         </div>
                     </div>
@@ -120,27 +116,16 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
             accessorKey: "order.shipping_status",
             cell: ({ getValue }) => {
                 const value = String(getValue() ?? "N/A");
-                return <StatusBadge status={value} type={"payment"} />;
+                return <StatusBadge status={value}  />;
             },
         },
 
         {
-            header: "Payment",
+            header: "Payment Status",
             accessorKey: "order.payment_status",
-            cell: ({ row }) => {
-                const { payment_status } = row.original || {};
-                return (
-                    <div>
-                        <span
-                            className={`px-2 py-1 rounded text-sm capitalize ${payment_status === "paid"
-                                ? "bg-green-100 text-green-700"
-                                : "bg-yellow-100 text-yellow-700"
-                                }`}
-                        >
-                            {payment_status ?? "N/A"}
-                        </span>
-                    </div>
-                );
+            cell: ({ getValue }) => {
+                const value = String(getValue() ?? "N/A");
+                return <StatusBadge status={value} type={"payment"} />;
             },
         },
         {
@@ -148,16 +133,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
             accessorKey: "order.vendor_payment_settlement_status",
             cell: ({ getValue }) => {
                 const value = String(getValue() ?? "N/A");
-                return (
-                    <span
-                        className={`px-2 py-1 rounded text-sm capitalize ${value === "paid"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
-                            }`}
-                    >
-                        {value}
-                    </span>
-                );
+                return <StatusBadge status={value} type={"payment"} />;
             },
         },
         {
@@ -166,7 +142,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
             cell: ({ getValue }) => {
                 const val = getValue();
                 return (
-                    <span className="text-xs text-gray-500">
+                    <span className="text-sm text-gray-500">
                         {typeof val === "string" ? formatHumanReadableDate(val) : "N/A"}
                     </span>
                 );
