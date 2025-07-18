@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import clsx from "clsx";
@@ -14,17 +14,18 @@ interface ProfileCardProps {
     loading: boolean;
 }
 
-export default function ProfileCard({ user, loading }: ProfileCardProps) {
-    const [selectedStatus, setSelectedStatus] = useState<{
-        label: string;
-        value: string;
-    }>(
-        user?.is_active
-            ? { label: "Active", value: "true" }
-            : { label: "Inactive", value: "false" }
-    );
-
+export default function ProfileCard({ user: initialUser, loading }: ProfileCardProps) {
+    const [user, setUser] = useState<UserDetailResponse | null>(initialUser);
     const [updating, setUpdating] = useState(false);
+
+    useEffect(() => {
+        setUser(initialUser);
+    }, [initialUser]);
+
+    const [selectedStatus, setSelectedStatus] = useState({
+        label: initialUser?.is_active ? "Active" : "Inactive",
+        value: initialUser?.is_active ? "true" : "false",
+    });
 
     const handleStatusChange = async (option: { label: string; value: string }) => {
         if (!user?.id) return;
@@ -35,29 +36,32 @@ export default function ProfileCard({ user, loading }: ProfileCardProps) {
         try {
             const isActiveBoolean = option.value === "true";
             await changeUserStatus(user.id.toString(), isActiveBoolean);
+
+            setUser((prev) =>
+                prev ? { ...prev, is_active: isActiveBoolean } : prev
+            );
+
             toast.success("Status updated successfully");
         } catch (error) {
             console.error("Failed to update user status", error);
+            toast.error("Failed to update status");
         } finally {
             setUpdating(false);
         }
     };
-
 
     const statusOptions = [
         { label: "Active", value: "true" },
         { label: "Inactive", value: "false" },
     ];
 
+
     return (
         <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
-            {/* Banner Background */}
             <div className="relative h-24 bg-gradient-to-r from-orange-400 to-yellow-400" />
 
-            {/* Profile Section */}
-            <div className="relative -mt-10 px-6 pb-6">
+            <div className="relative -mt-10 px-6 pb-24">
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
-                    {/* Avatar */}
                     {loading ? (
                         <Skeleton circle width={80} height={80} />
                     ) : (
@@ -71,7 +75,6 @@ export default function ProfileCard({ user, loading }: ProfileCardProps) {
                         </div>
                     )}
 
-                    {/* User Details */}
                     <div className="flex-1">
                         <h3 className="text-xl font-bold text-gray-800">
                             {loading ? <Skeleton width={120} /> : `${user?.name} ${user?.last_name}`}
@@ -84,25 +87,22 @@ export default function ProfileCard({ user, loading }: ProfileCardProps) {
                             {loading ? (
                                 <Skeleton width={100} height={30} />
                             ) : (
-                                <div className="w-40">
-                                    <SelectDropdown
-                                        options={statusOptions}
-                                        value={selectedStatus}
-                                        onChange={handleStatusChange}
-                                        disabled={updating}
-                                    />
-                                </div>
+                                <span
+                                    className={clsx(
+                                        "px-2 py-0.5 text-xs rounded-full font-semibold",
+                                        user?.is_active ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                                    )}
+                                >
+                                    {user?.is_active ? "Active" : "Inactive"}
+                                </span>
                             )}
-
                             {loading ? (
                                 <Skeleton width={80} />
                             ) : (
                                 <span
                                     className={clsx(
                                         "px-2 py-0.5 text-xs rounded-full font-semibold",
-                                        user?.email_verified_at
-                                            ? "bg-green-100 text-green-700"
-                                            : "bg-gray-200 text-gray-600"
+                                        user?.email_verified_at ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-600"
                                     )}
                                 >
                                     {user?.email_verified_at ? "Email Verified" : "Email Unverified"}
@@ -112,12 +112,9 @@ export default function ProfileCard({ user, loading }: ProfileCardProps) {
                     </div>
                 </div>
 
-                {/* Personal Info & Address */}
-                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-700">
                     <div>
-                        <p className="text-gray-400 font-semibold uppercase text-xs mb-1">
-                            Personal Info
-                        </p>
+                        <p className="text-gray-400 font-semibold uppercase text-xs mb-1">Personal Info</p>
                         <p>
                             <span className="font-medium">Phone:</span>{" "}
                             {loading ? <Skeleton width={100} /> : user?.phone ?? "N/A"}
@@ -139,9 +136,7 @@ export default function ProfileCard({ user, loading }: ProfileCardProps) {
                     </div>
 
                     <div>
-                        <p className="text-gray-400 font-semibold uppercase text-xs mb-1">
-                            Shipping Address
-                        </p>
+                        <p className="text-gray-400 font-semibold uppercase text-xs mb-1">Shipping Address</p>
                         {loading ? (
                             <Skeleton width={180} />
                         ) : user?.address ? (
@@ -153,6 +148,20 @@ export default function ProfileCard({ user, loading }: ProfileCardProps) {
                         ) : (
                             <p className="text-gray-500">Not provided</p>
                         )}
+                    </div>
+
+                    <div>
+                        <p className="text-gray-400 font-semibold uppercase text-xs mb-1">User Status</p>
+                        <div className="w-40">
+                            {selectedStatus && (
+                                <SelectDropdown
+                                    options={statusOptions}
+                                    value={selectedStatus}
+                                    onChange={handleStatusChange}
+                                    disabled={updating}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

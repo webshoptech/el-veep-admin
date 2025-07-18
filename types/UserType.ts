@@ -59,7 +59,7 @@ export interface UserDetailResponse {
     email_verified_at: string | null;
     phone_verified_at: string | null;
     role: "customer" | "vendor" | string;
-    is_active: number;
+    is_active: boolean;
     city: string;
     state: string;
     country: string;
