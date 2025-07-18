@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "@/app/lib/axios";  
 import { API_URL } from "../setting";
 export async function getRecentUsers(
     limit?: number,

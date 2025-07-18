@@ -2,40 +2,45 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import LayoutWrapper from './LayoutWrapper';
-import toast from 'react-hot-toast';
+import LayoutWrapper from './LayoutWrapper'; // your shell
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const [checkingToken, setCheckingToken] = useState(true);
-  const [hasToken, setHasToken] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname();
+    const [isChecking, setIsChecking] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-  const token = localStorage.getItem('token');
-  const user = localStorage.getItem('user');
-  const parsedUser = user ? JSON.parse(user) : null;
+    useEffect(() => {
+        const cookies = document.cookie
+            .split('; ')
+            .reduce((acc: Record<string, string>, cookie) => {
+                const [key, val] = cookie.split('=');
+                acc[key] = decodeURIComponent(val);
+                return acc;
+            }, {});
 
-  if (token) {
-    if (parsedUser?.must_change_password === true && pathname !== '/change-password') {
-      toast.error("Please change your password");
-      router.replace('/change-password');
-    } else {
-      setHasToken(true);
-    }
-  } else if (pathname !== '/login') {
-    router.replace('/login');
-  }
+        const token = cookies['token'];
+        const user = cookies['user'];
 
-  setCheckingToken(false);
-}, [pathname, router]);
+        if (!token || !user) {
+            if (pathname !== '/login') {
+                router.replace('/login');
+            }
+            setIsAuthenticated(false);
+        } else {
+            if (pathname === '/login') {
+                router.replace('/');
+            } else {
+                setIsAuthenticated(true);
+            }
+        }
 
+        setIsChecking(false);
+    }, [pathname, router]);
 
-  if (checkingToken) return null;
+    if (isChecking) return null;
+    if (!isAuthenticated && pathname !== '/login') return null;
+    if (pathname === '/login') return children;
 
-if (pathname === '/login' || pathname === '/change-password') return children;
-
-  if (!hasToken) return null;
-
-  return <LayoutWrapper>{children}</LayoutWrapper>;
+    return <LayoutWrapper>{children}</LayoutWrapper>;
 }

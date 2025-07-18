@@ -19,8 +19,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
         <AuthLayout>{children}</AuthLayout>
-      </body>
       <Toaster/>
+      </body>
     </html>
   );
 }

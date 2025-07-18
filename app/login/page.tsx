@@ -1,52 +1,36 @@
 'use client';
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { login } from "../api_/login";
-import Image from "next/image";
-import toast from "react-hot-toast";
 
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { login } from '../api_/login';
+import toast from 'react-hot-toast';
+import Image from 'next/image';
 
-type LoginErrorResponse = {
-    message?: string;
-    status?: string;
-    error_detail?: string;
-};
 export default function LoginScreen() {
-    const router = useRouter();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-        const formData = new FormData();
-        formData.append("email", email);
-        formData.append("password", password);
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
 
-        try {
-            const result = await login(formData);
-            localStorage.setItem("token", result.token);
-            localStorage.setItem("user", JSON.stringify(result.data));
+    try {
+      const result = await login(formData);
 
-            if (result?.must_change_password === true) {
-                toast.error("Please change your password");
-                router.push("/change-password");
-            } else {
-                toast.success("Login successful");
-                router.push("/");
-            }
-        } catch (err) {
-            const error = err as { response?: { data?: LoginErrorResponse } };
+      // Set cookies (24 hours)
+      document.cookie = `token=${result.token}; path=/; max-age=86400; Secure; SameSite=Strict`;
+      document.cookie = `user=${encodeURIComponent(JSON.stringify(result.data))}; path=/; max-age=86400; Secure; SameSite=Strict`;
 
-            const errorDetail =
-                error.response?.data?.error_detail ||
-                error.response?.data?.message ||
-                "Login failed";
-
-            toast.error(errorDetail);
-        }
-    };
-
+      toast.success('Login successful');
+      router.push('/');
+    } catch {
+      toast.error('Login failed');
+    }
+  };
 
     return (
         <div className="flex h-screen">
