@@ -33,7 +33,7 @@ export default function PolicyEditor({ type }: PolicyEditorProps) {
     try {
       await savePolicy(formData);
     } catch {
-      toast.error(error?.response?.data?.error_detail || "Something went wrong while saving settings!");
+      toast.error("Something went wrong while saving settings!");
     }
   };
 

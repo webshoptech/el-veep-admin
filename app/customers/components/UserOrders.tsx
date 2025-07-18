@@ -75,7 +75,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
             header: "Product",
             accessorKey: "product.title",
             cell: ({ row }) => {
-                const product = row.original.product;
+                const product = row.original?.product;
                 const vendor = product?.vendor;
 
                 return (
@@ -128,7 +128,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
             header: "Payment",
             accessorKey: "order.payment_status",
             cell: ({ row }) => {
-                const { payment_status } = row.original.order || {};
+                const { payment_status } = row.original || {};
                 return (
                     <div>
                         <span

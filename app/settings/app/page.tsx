@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 
 interface AppSettingsData {
     app_name: string;
-    app_logo: File | string | null;  
+    app_logo: File | string | null;
     app_description: string;
     support_email: string;
     support_phone: string;
@@ -31,7 +31,7 @@ const useAppSettingsForm = () => {
     const [values, setValues] = useState<AppSettingsData>(initialData);
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    
+
     useEffect(() => {
         const fetchSettings = async () => {
             setIsLoading(true);
@@ -47,7 +47,7 @@ const useAppSettingsForm = () => {
                         support_phone: data.support_phone || "",
                     };
                     setValues(settings);
-                    setOriginalSettings(settings) 
+                    setOriginalSettings(settings)
                 }
             } catch (error) {
                 console.error("Failed to fetch settings", error);
@@ -82,14 +82,14 @@ const useAppSettingsForm = () => {
     const handleReset = useCallback(() => {
         setValues(originalSettings);
     }, [originalSettings]);
-    
+
     // Handle the form submission
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        const payload = new FormData(); 
-        Object.entries(values).forEach(([key, value]) => { 
+        const payload = new FormData();
+        Object.entries(values).forEach(([key, value]) => {
             if (key === 'app_logo') {
                 if (value instanceof File) {
                     payload.append(key, value);
@@ -105,7 +105,7 @@ const useAppSettingsForm = () => {
                 toast.error(data.error_detail);
                 return;
             }
-            
+
             // Re-sync the state with the response from the server
             const updatedSettings = {
                 app_name: data.app_name || "",
@@ -118,9 +118,10 @@ const useAppSettingsForm = () => {
             setOriginalSettings(updatedSettings);
 
             toast.success("Settings saved successfully!");
-        } catch (error: any) {
-            console.error("Submission error:", error);
-            toast.error(error?.response?.data?.error_detail || "Failed to save settings.");
+        } catch (error: unknown) {
+            const err = error as { response?: { data?: { error_detail?: string } } };
+            console.error("Submission error:", err);
+            toast.error(err?.response?.data?.error_detail || "Failed to save settings.");
         } finally {
             setIsSubmitting(false);
         }
@@ -152,7 +153,7 @@ export default function AppSettings() {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     if (isLoading) {
-        return <Skeleton count={5} />;  
+        return <Skeleton count={5} />;
     }
 
     return (

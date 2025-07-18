@@ -1,7 +1,7 @@
 import Address from "./AddressType";
 import Wallet from "./WalletType";
 
-export type User = {
+export interface User  {
     id: number;
     name: string;
     last_name: string;
@@ -22,7 +22,7 @@ export type User = {
     updated_at: string;
 };
 
-export default interface UserResponse {
+export interface UserResponse {
     status: "success";
     data: User[];
     total: number;

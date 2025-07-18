@@ -1,7 +1,6 @@
 "use client";
 
 import Input from "@/app/components/commons/Fields/Input";
-import Select from "@/app/components/commons/Fields/SelectDropdown";
 import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
 import { useState } from "react";
 
@@ -62,10 +61,10 @@ export default function CreateProduct() {
             onEditorChange={(newValue) => setContent(newValue)}
           />
 
-          <Select
+          {/* <Select
             label="Product category"
             options={["Category 1", "Category 2", "Category 3"]}
-          />
+          /> */}
         </div>
       </div>
     </div>

@@ -51,6 +51,9 @@ export type Order = {
     updated_at: string;
     customer: User;
     address: Address;
+    order_items: OrderItem[];
+    vendor: User;
+    product: Product;
 };
 
 export type Product = {
@@ -79,6 +82,7 @@ export type Product = {
     updated_at: string;
     shop: Shop;
     average_rating: number;
+    vendor: User;
 };
 
 export type Shop = {

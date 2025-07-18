@@ -19,7 +19,6 @@ import MessageEntry from "@/types/MessageEntry";
 export default function TicketDetailPage() {
   const params = useParams();
   const ticketId = params?.ticketId as string;
-
   const [ticket, setTicket] = useState<TicketType | null>(null);
   const [loading, setLoading] = useState(true);
 

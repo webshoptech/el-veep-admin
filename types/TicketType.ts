@@ -1,4 +1,4 @@
-import User from "./UserType";
+import { User } from "./UserType";
 
 export default interface TicketType {
     title: string;
