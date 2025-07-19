@@ -15,6 +15,9 @@ import CategorySummary from "./CategorySummary";
 import { CategoryType } from "@/types/CategoryType";
 import { useCategoryStore } from "@/app/store/CategoryStore";
 import { Transition, Dialog, TransitionChild, DialogPanel, DialogTitle } from "@headlessui/react";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import Drawer from "@/app/components/commons/Drawer";
+import CategoryForm from "./CategoryForm";
 
 interface CategoryTableProps {
     limit: number;
@@ -30,25 +33,27 @@ const statusOptions: Option[] = [
 ];
 
 function CategoryActionCell({
-    categoryId,
-    initialStatus,
+    category,
     onStatusUpdate,
+    onEdit,
 }: {
-    categoryId: number;
-    initialStatus: "active" | "inactive";
+    category: CategoryType;
     onStatusUpdate: (newStatus: "active" | "inactive") => void;
+    onEdit: (cat: CategoryType) => void;
 }) {
     const [status, setStatus] = useState<Option>(
-        statusOptions.find((opt) => opt.value === initialStatus) || statusOptions[0]
+        statusOptions.find((opt) => opt.value === category.status) || statusOptions[0]
     );
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
+    const [editingCategory, setEditingCategory] = useState<CategoryType | null>(null);
 
     const handleStatusChange = async (selected: Option) => {
         const previous = status;
         setStatus(selected);
         try {
-            await updateItemStatus(categoryId, selected.value);
+            await updateItemStatus(category.id, selected.value);
             onStatusUpdate(selected.value as "active" | "inactive");
             toast.success("Category status updated.");
         } catch {
@@ -59,7 +64,7 @@ function CategoryActionCell({
 
     const handleDelete = async () => {
         try {
-            await deleteCategory(categoryId);
+            await deleteCategory(category.id);
             toast.success("Category deleted.");
             setIsModalOpen(false);
             window.location.reload();
@@ -70,27 +75,32 @@ function CategoryActionCell({
 
     return (
         <>
-            <div className="flex flex-col gap-2">
-                <SelectDropdown value={status} options={statusOptions} onChange={handleStatusChange} />
+            <div className="flex items-center gap-2">
+                <SelectDropdown
+                    value={status}
+                    options={statusOptions}
+                    onChange={handleStatusChange}
+                    className="w-auto min-w-[140px]"
+                />
 
                 <button
-                    className="text-sm bg-yellow-500 text-white px-2.5 py-1 rounded hover:bg-yellow-600"
+                    title="Update"
+                    className="bg-yellow-500 text-white p-1.5 rounded-md hover:bg-yellow-600"
                     onClick={() => {
-                        window.location.href = `/categories/${categoryId}`;
+                         onEdit(category); // Pass full category object here
                     }}
                 >
-                    View
+                    <PencilSquareIcon className="w-4 h-4" />
                 </button>
 
                 <button
-                    className="text-sm bg-red-500 text-white px-2.5 py-1 rounded hover:bg-red-600"
+                    title="Delete"
+                    className="bg-red-500 text-white p-1.5 rounded-md hover:bg-red-600"
                     onClick={() => setIsModalOpen(true)}
                 >
-                    Delete
+                    <TrashIcon className="w-4 h-4" />
                 </button>
             </div>
-
-            {/* Modal */}
             <Transition appear show={isModalOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-50" onClose={() => setIsModalOpen(false)}>
                     <TransitionChild
@@ -151,6 +161,22 @@ function CategoryActionCell({
                     </div>
                 </Dialog>
             </Transition>
+            <Drawer
+                isOpen={isDrawerOpen}
+                onClose={() => {
+                    setDrawerOpen(false);
+                    setEditingCategory(null);
+                }}
+                title={editingCategory ? 'Edit Category' : 'Create Category'}
+            >
+                <CategoryForm
+                    category={editingCategory ?? undefined}
+                    onClose={() => {
+                        setDrawerOpen(false);
+                        setEditingCategory(null);
+                    }}
+                />
+            </Drawer>
         </>
     );
 }
@@ -171,9 +197,9 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
         total_service: 0,
         total_product: 0,
     });
-    const { setCategories: saveToStore } = useCategoryStore();
-
-
+    const { setCategories: saveToStore } = useCategoryStore(); 
+const [isDrawerOpen, setDrawerOpen] = useState(false);
+const [editingCategory, setEditingCategory] = useState<CategoryType | null>(null);
 
     const updateCategoryStatusInState = (id: number, newStatus: "active" | "inactive") => {
         setCategories((prev) =>
@@ -244,11 +270,14 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                     const category = row.original;
                     return (
                         <CategoryActionCell
-                            categoryId={category.id}
-                            initialStatus={category.status}
+                            category={category}
                             onStatusUpdate={(newStatus) =>
                                 updateCategoryStatusInState(category.id, newStatus)
                             }
+                            onEdit={(cat) => {
+                                setEditingCategory(cat);
+                                setDrawerOpen(true);
+                            }}
                         />
                     );
                 },
@@ -295,6 +324,8 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
         setPagination((prev) => ({ ...prev, pageIndex: 0 }));
     };
 
+
+
     return (
         <div className="space-y-6">
             <CategorySummary loading={loading} stats={itemStats} />
@@ -326,8 +357,31 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                     });
                 }}
             />
+<Drawer
+    isOpen={isDrawerOpen}
+    onClose={() => {
+        setDrawerOpen(false);
+        setEditingCategory(null);
+    }}
+    title={editingCategory ? 'Edit Category' : 'Create Category'}
+>
+    <CategoryForm
+        category={editingCategory ?? undefined}
+        onClose={() => {
+            setDrawerOpen(false);
+            setEditingCategory(null);
+        }}
+    />
+</Drawer>
+
+           
         </div>
+
     );
+
+
 };
+
+
 
 export default CategoriesTable;

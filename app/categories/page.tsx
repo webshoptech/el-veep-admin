@@ -6,7 +6,7 @@ import SelectDropdown from "../components/commons/Fields/SelectDropdown";
 import CategoriesTable from "./components/CategoriesTable";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import Drawer from "../components/commons/Drawer";
-import CreateCategoryForm from "./components/CreateCategoryForm";
+import CategoryForm from "./components/CategoryForm";
 
 const typeOptions = [
     { label: "Product Items", value: "products" },
@@ -57,7 +57,7 @@ export default function Categories() {
                 onClose={() => setDrawerOpen(false)}
                 title="Create Category"
             >
-  <CreateCategoryForm onClose={() => setDrawerOpen(false)} />
+                <CategoryForm onClose={() => setDrawerOpen(false)} />
             </Drawer>
         </div>
     );

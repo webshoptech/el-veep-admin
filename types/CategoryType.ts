@@ -8,6 +8,7 @@ export interface CategoryType {
   description: string;
   status: "active" | "inactive";
   parent_id: number | null;
+  parent_name: string | null;
   created_at: string;
   updated_at: string;
   children?: CategoryType[]; // Recursive structure for subcategories

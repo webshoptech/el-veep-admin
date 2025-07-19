@@ -4,22 +4,30 @@ import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
 import { useCategoryStore } from '@/app/store/CategoryStore';
-import { addCategory, getCategories } from '@/app/api_/categories';
+import { addCategory, updateCategory } from '@/app/api_/categories';
 import toast from 'react-hot-toast';
 import { SubmitButton } from '@/app/components/commons/Buttons';
+import { CategoryType } from '@/types/CategoryType';
 
 interface Props {
     onClose: () => void;
+    category?: CategoryType; // Optional for edit mode
+
 }
 
-export default function CategoryForm({ onClose }: Props) {
-    const [name, setName] = useState('');
-    const [selectedParent, setSelectedParent] = useState<{ label: string; value: string } | null>(null);
-    const [description, setDescription] = useState('');
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
+export default function CategoryForm({ onClose, category }: Props) {
+    const [name, setName] = useState(category?.name || '');
+    const [selectedParent, setSelectedParent] = useState<{ label: string; value: string } | null>(
+        category?.parent_id
+            ? { label: category.parent_name || '', value: String(category.parent_id) }
+            : null
+    );
+    const [description, setDescription] = useState(category?.description || '');
+    const [imagePreview, setImagePreview] = useState<string | null>(category?.image || null);
     const [imageFile, setImageFile] = useState<File | null>(null);
-    const [type, setType] = useState<{ label: string; value: string } | null>(null);
-
+    const [type, setType] = useState<{ label: string; value: string } | null>(
+        category?.type ? { label: category.type, value: category.type } : null
+    );
     const { categories } = useCategoryStore();
 
     const categoryOptions = useMemo(() => {
@@ -53,14 +61,18 @@ export default function CategoryForm({ onClose }: Props) {
         if (imageFile) formData.append('image', imageFile);
 
         try {
-            await addCategory(formData);
-            await getCategories();
+            if (category?.id) {
+                await updateCategory(category.id, formData);
+                toast.success('Category updated successfully');
+            } else {
+                await addCategory(formData);
+                toast.success('Category added successfully');
+            }
             onClose();
-            toast.success('Category added successfully');
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error('Failed to add category');
+            toast.error(`Failed to ${category?.id ? 'update' : 'add'} category`);
         }
     };
 

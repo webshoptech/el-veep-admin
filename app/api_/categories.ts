@@ -33,12 +33,17 @@ export async function addCategory(formData: FormData) {
 
     return response.data;
 }
-
 export async function updateCategory(categoryId: number, formData: FormData) {
-    const response = await axios.put(`${API_URL}/category/${categoryId}`, formData, {
+    console.log('📝 Logging FormData before PATCH request:');
+    for (const [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+    }
+
+    const response = await axios.post(`${API_URL}/category/${categoryId}/update`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
     });
 
     return response.data;
 }
+
 
