@@ -15,8 +15,8 @@ export default function Products() {
       {/* Header Row */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800">Products</h1>
-          <p className="text-sm text-gray-600">Manage your products here.</p>
+          <h1 className="text-2xl font-bold text-gray-800">Items</h1>
+          <p className="text-sm text-gray-600">Manage your items here.</p>
         </div>
 
         <div className="w-48">
@@ -30,8 +30,6 @@ export default function Products() {
           />
         </div>
       </div>
-
-
 
       {/* Products Table */}
       <ProductsTable limit={10} type={selectedType.value} status="active" />
