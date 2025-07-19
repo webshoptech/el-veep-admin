@@ -1,10 +1,12 @@
 'use client';
+
 import { useState } from "react";
 import SubCategoriesTable from "../components/SubCategoriesTable";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import SubCategoryForm from "../components/SubCategoryForm";
+import { FlattenedSubCategory } from "@/types/CategoryType";
 
 const typeOptions = [
     { label: "Product Items", value: "products" },
@@ -14,9 +16,15 @@ const typeOptions = [
 export default function Sub() {
     const [selectedType, setSelectedType] = useState(typeOptions[0]);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
+    const [editingCategory, setEditingCategory] = useState<FlattenedSubCategory | null>(null);
+
+    const handleEdit = (category: FlattenedSubCategory) => {
+        setEditingCategory(category);
+        setDrawerOpen(true);
+    };
+
     return (
         <div className="space-y-6">
-
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800">Sub categories</h1>
@@ -33,7 +41,10 @@ export default function Sub() {
                     </div>
 
                     <button
-                        onClick={() => setDrawerOpen(true)}
+                        onClick={() => {
+                            setEditingCategory(null); // Clear edit mode
+                            setDrawerOpen(true);
+                        }}
                         className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600"
                     >
                         <PlusIcon className="w-4 h-4" />
@@ -41,17 +52,28 @@ export default function Sub() {
                     </button>
                 </div>
             </div>
+
             <SubCategoriesTable
                 limit={10}
                 type={selectedType.value}
+                onEdit={handleEdit} // ✅ Pass it here
             />
 
             <Drawer
                 isOpen={isDrawerOpen}
-                onClose={() => setDrawerOpen(false)}
-                title="Create Sub-category"
+                onClose={() => {
+                    setDrawerOpen(false);
+                    setEditingCategory(null);
+                }}
+                title={editingCategory ? "Edit Sub-category" : "Create Sub-category"}
             >
-                <SubCategoryForm onClose={() => setDrawerOpen(false)} />
+                <SubCategoryForm
+                    onClose={() => {
+                        setDrawerOpen(false);
+                        setEditingCategory(null);
+                    }}
+                    category={editingCategory ?? undefined}
+                />
             </Drawer>
         </div>
     );

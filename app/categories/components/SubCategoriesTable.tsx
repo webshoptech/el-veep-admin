@@ -2,17 +2,29 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
+import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { listSubCategories } from "@/app/api_/categories";
-import { FlattenedSubCategory, CategoryType } from "@/types/CategoryType";
+import { CategoryType, FlattenedSubCategory } from "@/types/CategoryType";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 
 type SubcategoryProps = {
     limit: number;
     type: string;
+    onEdit: (category: FlattenedSubCategory) => void;
+
 };
 
-const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type }) => {
+type FetchArgs = {
+    offset: number;
+    pageSize: number;
+    searchTerm: string;
+    type: string;
+};
+
+const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit }) => {
     const [categories, setSubCategories] = useState<FlattenedSubCategory[]>([]);
+
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -43,51 +55,65 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type }) => {
             {
                 header: "Action",
                 accessorKey: "id",
-                cell: () => (
-                    <button className="text-amber-600 hover:underline">Edit</button>
+                cell: ({ row }) => (
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => onEdit(row.original)}
+                            className="bg-yellow-500 text-white p-1.5 rounded hover:bg-yellow-600"
+                        >
+                            <PencilSquareIcon className="w-4 h-4" />
+                        </button>
+                        {/* You can add delete logic here as well */}
+                    </div>
                 ),
-            },
+            }
         ],
         []
     );
 
+    // ✅ Async fetch function
+    const fetchSubCategories = async ({ offset, pageSize, searchTerm, type }: FetchArgs) => {
+        try {
+            setLoading(true);
+            const response = await listSubCategories(pageSize, offset, searchTerm, type);
+
+            const flattened: FlattenedSubCategory[] = response.data.flatMap((parent: CategoryType) =>
+                (parent.children || []).map((child: CategoryType) => ({
+                    ...child,
+                    parent_name: parent.name,
+                    parent_id: parent.id,
+                    parent_slug: parent.slug,
+                }))
+            );
+
+            setSubCategories(flattened);
+            setTotal(response.total || flattened.length);
+        } catch (err) {
+            console.error(err);
+            setError("Failed to load subcategories");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const debouncedFetch = useMemo(
+        () => debounce((args: FetchArgs) => fetchSubCategories(args), 1000),
+        []
+    );
+
+    const { pageIndex, pageSize } = pagination;
     useEffect(() => {
-        const fetchSubCategories = async () => {
-            try {
-                setLoading(true);
-                const offset = pagination.pageIndex * pagination.pageSize;
+        debouncedFetch({
+            offset: pageIndex * pageSize,
+            pageSize,
+            searchTerm: search,
+            type,
+        });
 
-                const response = await listSubCategories(
-                    pagination.pageSize,
-                    offset,
-                    search,
-                    type
-                );
-
-                const flattened: FlattenedSubCategory[] = response.data.flatMap(
-                    (parent: CategoryType) =>
-                        (parent.children || []).map((child: CategoryType) => ({
-                            id: child.id,
-                            name: child.name,
-                            slug: child.slug,
-                            parent_id: parent.id,
-                            parent_name: parent.name,
-                            parent_slug: parent.slug,
-                        }))
-                );
-
-                setSubCategories(flattened);
-                setTotal(response.total);
-            } catch (err) {
-                console.error(err);
-                setError("Failed to load subcategories");
-            } finally {
-                setLoading(false);
-            }
+        return () => {
+            debouncedFetch.cancel();
         };
-
-        fetchSubCategories();
-    }, [pagination.pageIndex, pagination.pageSize, search, type]);
+    }, [pageIndex, pageSize, search, type, debouncedFetch]);
 
     return (
         <div className="space-y-6">
@@ -108,8 +134,8 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type }) => {
                 loading={loading}
                 error={error}
                 pagination={{
-                    pageIndex: pagination.pageIndex,
-                    pageSize: pagination.pageSize,
+                    pageIndex,
+                    pageSize,
                     totalRows: total,
                 }}
                 onPaginationChange={(newPagination) => setPagination(newPagination)}

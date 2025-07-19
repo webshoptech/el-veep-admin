@@ -6,21 +6,16 @@ import { useCategoryStore } from '@/app/store/CategoryStore';
 import { addCategory, getCategories, updateCategory } from '@/app/api_/categories';
 import toast from 'react-hot-toast';
 import { SubmitButton } from '@/app/components/commons/SubmitButton';
-import { CategoryType } from '@/types/CategoryType';
+import { CategoryType, FlattenedSubCategory } from '@/types/CategoryType';
 
-interface Props {
-    onClose: () => void;
-    category?: CategoryType;
 
-}
-
-export default function SubCategoryForm({ onClose, category }: Props) {
-    const [name, setName] = useState(category?.name || '');
-    const [selectedParent, setSelectedParent] = useState<{ label: string; value: string } | null>(
-        category?.parent_id
-            ? { label: category.parent_name || '', value: String(category.parent_id) }
-            : null
-    );
+export default function SubCategoryForm({ onClose, category }: { onClose: () => void, category?: FlattenedSubCategory }) {
+  const [name, setName] = useState(category?.name ?? '');
+  const [selectedParent, setSelectedParent] = useState<{ label: string, value: string } | null>(
+    category?.parent_id
+      ? { label: category.parent_name ?? '', value: String(category.parent_id) }
+      : null
+  );
     const { categories, setCategories: saveToStore } = useCategoryStore();  
     const [localCategories, setLocalCategories] = useState<CategoryType[]>([]);  
 
