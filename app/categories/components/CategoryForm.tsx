@@ -29,7 +29,6 @@ export default function CategoryForm({ onClose, category }: Props) {
         category?.type ? { label: category.type, value: category.type } : null
     );
     const { categories } = useCategoryStore();
-    const [loading, setLoading] = useState(false);
 
     const categoryOptions = useMemo(() => {
         return categories.map((cat) => ({
@@ -53,7 +52,6 @@ export default function CategoryForm({ onClose, category }: Props) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);
 
         const formData = new FormData();
         formData.append('name', name);
@@ -82,7 +80,7 @@ export default function CategoryForm({ onClose, category }: Props) {
         <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Category Name <span className='text-red-500'>*</span></label>
                 <input
                     type="text"
                     placeholder="Enter category name"
@@ -94,7 +92,7 @@ export default function CategoryForm({ onClose, category }: Props) {
 
             {/* Type */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Type <span className='text-red-500'>*</span></label>
                 <SelectDropdown
                     options={typeOptions}
                     value={type || { label: 'Select type', value: '' }}
@@ -104,7 +102,7 @@ export default function CategoryForm({ onClose, category }: Props) {
             </div>
             {/* Parent Category */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Parent Category <span className='text-red-500'>(optional)</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Parent Category <span className='text-yellow-500'>(optional)</span></label>
                 <SelectDropdown
                     options={categoryOptions}
                     value={selectedParent || { label: 'Select category', value: '' }}
@@ -115,7 +113,7 @@ export default function CategoryForm({ onClose, category }: Props) {
 
             {/* Description */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description <span className='text-red-500'>*</span></label>
                 <textarea
                     rows={4}
                     value={description}
@@ -126,7 +124,7 @@ export default function CategoryForm({ onClose, category }: Props) {
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Cat Image</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Cat Image <span className='text-red-500'>*</span></label>
 
                 <label
                     htmlFor="categoryImage"
@@ -164,7 +162,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                     />
                 </label>
             </div>
-            <SubmitButton loading={loading} />
+            <SubmitButton />
         </form>
     );
 }

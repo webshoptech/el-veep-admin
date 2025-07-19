@@ -12,7 +12,7 @@ type SubcategoryProps = {
     limit: number;
     type: string;
     onEdit: (category: FlattenedSubCategory) => void;
-    onDelete: (category: FlattenedSubCategory) => void;  
+    onDelete: (category: FlattenedSubCategory) => void;
 
 
 };
@@ -76,7 +76,7 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit, o
                 ),
             }
         ],
-        []
+        [onEdit, onDelete]
     );
 
     // ✅ Async fetch function
