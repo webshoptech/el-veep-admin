@@ -87,7 +87,7 @@ function CategoryActionCell({
                     title="Update"
                     className="bg-yellow-500 text-white p-1.5 rounded-md hover:bg-yellow-600"
                     onClick={() => {
-                         onEdit(category); // Pass full category object here
+                        onEdit(category); // Pass full category object here
                     }}
                 >
                     <PencilSquareIcon className="w-4 h-4" />
@@ -197,9 +197,9 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
         total_service: 0,
         total_product: 0,
     });
-    const { setCategories: saveToStore } = useCategoryStore(); 
-const [isDrawerOpen, setDrawerOpen] = useState(false);
-const [editingCategory, setEditingCategory] = useState<CategoryType | null>(null);
+    const { setCategories: saveToStore } = useCategoryStore();
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
+    const [editingCategory, setEditingCategory] = useState<CategoryType | null>(null);
 
     const updateCategoryStatusInState = (id: number, newStatus: "active" | "inactive") => {
         setCategories((prev) =>
@@ -357,24 +357,24 @@ const [editingCategory, setEditingCategory] = useState<CategoryType | null>(null
                     });
                 }}
             />
-<Drawer
-    isOpen={isDrawerOpen}
-    onClose={() => {
-        setDrawerOpen(false);
-        setEditingCategory(null);
-    }}
-    title={editingCategory ? 'Edit Category' : 'Create Category'}
->
-    <CategoryForm
-        category={editingCategory ?? undefined}
-        onClose={() => {
-            setDrawerOpen(false);
-            setEditingCategory(null);
-        }}
-    />
-</Drawer>
+            <Drawer
+                isOpen={isDrawerOpen}
+                onClose={() => {
+                    setDrawerOpen(false);
+                    setEditingCategory(null);
+                }}
+                title={editingCategory ? 'Edit Category' : 'Create Category'}
+            >
+                <CategoryForm
+                    category={editingCategory ?? undefined}
+                    onClose={() => {
+                        setDrawerOpen(false);
+                        setEditingCategory(null);
+                    }}
+                />
+            </Drawer>
 
-           
+
         </div>
 
     );

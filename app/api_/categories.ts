@@ -3,13 +3,15 @@ import { API_URL } from "../setting";
 
 export async function getCategories(limit?: number, offset?: number, search?: string, type?: string) {
     const response = await axios.get(`${API_URL}/categories`, {
-        params: { limit, offset, type },
+        params: { limit, offset, type, search },
     });
     return response.data;
 }
 
-export async function listCategories() {
-    const response = await axios.get(`${API_URL}/category-list`);
+export async function listSubCategories(limit?: number, offset?: number, search?: string, type?: string) {
+    const response = await axios.get(`${API_URL}/subcategories`, {
+        params: { limit, offset, type, search },
+    });
     return response.data;
 }
 

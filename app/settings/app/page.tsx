@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import Input from "@/app/components/commons/Fields/Input";
 import Textarea from "@/app/components/commons/Fields/TextArea";
-import { SubmitButton } from "@/app/components/commons/Buttons";
+import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import Skeleton from 'react-loading-skeleton'
 import { getAppSettings, saveAppSettings } from "@/app/api";
 import toast from "react-hot-toast";
