@@ -6,12 +6,14 @@ import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { listSubCategories } from "@/app/api_/categories";
 import { CategoryType, FlattenedSubCategory } from "@/types/CategoryType";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 type SubcategoryProps = {
     limit: number;
     type: string;
     onEdit: (category: FlattenedSubCategory) => void;
+    onDelete: (category: FlattenedSubCategory) => void;  
+
 
 };
 
@@ -22,7 +24,7 @@ type FetchArgs = {
     type: string;
 };
 
-const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit }) => {
+const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit, onDelete }) => {
     const [categories, setSubCategories] = useState<FlattenedSubCategory[]>([]);
 
     const [total, setTotal] = useState(0);
@@ -33,6 +35,7 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit })
         pageIndex: 0,
         pageSize: limit,
     });
+
 
     const columns: ColumnDef<FlattenedSubCategory>[] = useMemo(
         () => [
@@ -63,7 +66,12 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit })
                         >
                             <PencilSquareIcon className="w-4 h-4" />
                         </button>
-                        {/* You can add delete logic here as well */}
+                        <button
+                            onClick={() => onDelete(row.original)}
+                            className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
+                        >
+                            <TrashIcon className="w-4 h-4" />
+                        </button>
                     </div>
                 ),
             }
