@@ -78,6 +78,8 @@ export const NAVIGATION = [
         icon: Squares2X2Icon,
         children: [
             { name: "All categories", href: "/categories" },
+            { name: "Sub-categories", href: "/categories/sub" },
+            { name: "Category Banners", href: "/categories/banners" },
             { name: "Category Analytics", href: "/categories/analytics" },
         ],
     },

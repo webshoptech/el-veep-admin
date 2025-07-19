@@ -11,8 +11,8 @@ export function SubmitButton({ label = 'Save changes', loading = false }: Submit
     <button
       type="submit"
       disabled={loading}
-      className={`inline-flex items-center cursor-pointer justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white ${
-        loading ? 'bg-orange-400 cursor-not-allowed' : 'bg-orange-600 hover:bg-orange-700'
+      className={`w-full inline-flex items-center cursor-pointer justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-bold rounded-md text-white ${
+        loading ? 'bg-orange-400 cursor-not-allowed' : 'bg-orange-400 hover:bg-orange-600'
       }`}
     >
       {loading ? (

@@ -8,18 +8,23 @@ export async function getCategories(limit?: number, offset?: number, search?: st
     return response.data;
 }
 
+export async function listCategories() {
+    const response = await axios.get(`${API_URL}/category-list`);
+    return response.data;
+}
+
 export async function updateCategoryStatus(categoryId: number, status: string) {
     const response = await axios.patch(`${API_URL}/category/${categoryId}/status/${status}`);
     return response.data;
 }
 
 export async function deleteCategory(categoryId: number) {
-    const response = await axios.delete(`${API_URL}/category/${categoryId}`);
+    const response = await axios.delete(`${API_URL}/category/${categoryId}/delete`);
     return response.data;
 }
 
 export async function addCategory(formData: FormData) {
-    const response = await axios.post(`${API_URL}/category`, formData, {
+    const response = await axios.post(`${API_URL}/category/create`, formData, {
         headers: {
             "Content-Type": "multipart/form-data",
             Accept: "application/json",
