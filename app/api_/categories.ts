@@ -44,9 +44,33 @@ export async function updateCategory(categoryId: number, formData: FormData) {
 }
 
 
+
 export async function listBanners(limit?: number, offset?: number) {
-    const response = await axios.get(`${API_URL}/categories/banners`, {
+    const response = await axios.get(`${API_URL}/banners`, {
         params: { limit, offset },
     });
+    return response.data;
+}
+
+export async function addBanner(formData: FormData) {
+    const response = await axios.post(`${API_URL}/banners/create`, formData, {
+        headers: {
+            Accept: "application/json",
+        },
+    });
+    return response.data;
+}
+
+export async function updateBanner(bannerId: number, formData: FormData) {
+    const response = await axios.put(`${API_URL}/banners/${bannerId}/update`, formData, {
+        headers: {
+            Accept: "application/json",
+        },
+    });
+    return response.data;
+}
+
+export async function deleteBanner(bannerId: number) {
+    const response = await axios.delete(`${API_URL}/banners/${bannerId}/delete`);
     return response.data;
 }

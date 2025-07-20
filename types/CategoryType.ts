@@ -45,3 +45,13 @@ export interface FlattenedSubCategory {
   parent_name: string;
   parent_slug: string;
 }
+
+
+export interface BannerType {
+  id: number;
+  type: string;
+  banner_public_id: string;
+  banner: string;
+  created_at: string;
+  updated_at: string; 
+}
