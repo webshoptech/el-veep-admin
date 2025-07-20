@@ -10,19 +10,20 @@ import { CategoryType, FlattenedSubCategory } from '@/types/CategoryType';
 
 
 export default function SubCategoryForm({ onClose, category }: { onClose: () => void, category?: FlattenedSubCategory }) {
-  const [name, setName] = useState(category?.name ?? '');
-  const [selectedParent, setSelectedParent] = useState<{ label: string, value: string } | null>(
-    category?.parent_id
-      ? { label: category.parent_name ?? '', value: String(category.parent_id) }
-      : null
-  );
-    const { categories, setCategories: saveToStore } = useCategoryStore();  
-    const [localCategories, setLocalCategories] = useState<CategoryType[]>([]);  
+    const [name, setName] = useState(category?.name ?? '');
+    const [selectedParent, setSelectedParent] = useState<{ label: string, value: string } | null>(
+        category?.parent_id
+            ? { label: category.parent_name ?? '', value: String(category.parent_id) }
+            : null
+    );
+    const { categories, setCategories: saveToStore } = useCategoryStore();
+    const [localCategories, setLocalCategories] = useState<CategoryType[]>([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await getCategories(100); 
+                const response = await getCategories(100);
                 saveToStore(response.data);
                 setLocalCategories(response.data);
             } catch (error) {
@@ -47,6 +48,7 @@ export default function SubCategoryForm({ onClose, category }: { onClose: () => 
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
 
         const formData = new FormData();
         formData.append('name', name);
@@ -91,7 +93,7 @@ export default function SubCategoryForm({ onClose, category }: { onClose: () => 
                     className="w-full"
                 />
             </div>
-            <SubmitButton />
+            <SubmitButton loading={loading} label="Save changes" />
         </form>
     );
 }

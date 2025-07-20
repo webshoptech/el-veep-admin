@@ -41,6 +41,7 @@ export default function CategoryForm({ onClose, category }: Props) {
         { label: 'Product', value: 'products' },
         { label: 'Service', value: 'services' },
     ];
+    const [loading, setLoading] = useState(false);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -52,6 +53,7 @@ export default function CategoryForm({ onClose, category }: Props) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
 
         const formData = new FormData();
         formData.append('name', name);
@@ -162,7 +164,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                     />
                 </label>
             </div>
-            <SubmitButton />
+            <SubmitButton loading={loading} label="Save changes" />
         </form>
     );
 }

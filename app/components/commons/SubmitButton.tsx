@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactLoading from 'react-loading';
+import { ClipLoader } from 'react-spinners'; 
 
 type SubmitButtonProps = {
   label?: string;
@@ -11,13 +11,13 @@ export function SubmitButton({ label = 'Save changes', loading = false }: Submit
     <button
       type="submit"
       disabled={loading}
-      className={`w-full inline-flex items-center cursor-pointer justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-bold rounded-md text-white ${
+      className={`w-full inline-flex items-center justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-bold rounded-md text-white ${
         loading ? 'bg-orange-400 cursor-not-allowed' : 'bg-orange-400 hover:bg-orange-600'
       }`}
     >
       {loading ? (
         <>
-          <ReactLoading type="spin" color="#fff" height={16} width={16} className="mr-2" />
+          <ClipLoader size={16} color="#fff" className="mr-2" />
           Processing...
         </>
       ) : (
