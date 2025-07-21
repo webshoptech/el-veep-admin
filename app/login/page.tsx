@@ -36,10 +36,15 @@ export default function LoginScreen() {
   };
 
   return (
-    <div className="flex h-screen">
-      <div className="w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/login.png')" }}></div>
+    <div className="flex flex-col md:flex-row h-screen">
+      {/* Image */}
+      <div
+        className="h-40 md:h-full md:w-1/2 bg-cover bg-center"
+        style={{ backgroundImage: "url('/login.png')" }}
+      ></div>
 
-      <div className="w-1/2 flex flex-col justify-center items-center px-8">
+      {/* Form */}
+      <div className="flex-1 flex flex-col justify-center items-center px-6 py-8">
         <Image width={200} height={200} src="/logo.png" alt="Logo" className="mb-10" />
 
         <h1 className="text-2xl font-bold mb-6">Administration</h1>
