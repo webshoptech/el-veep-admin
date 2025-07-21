@@ -61,3 +61,27 @@ export interface ShopAnalyticsType {
     status: string;
     data: ShopAnalyticsItem[];
 }
+
+
+export interface ShopPerformanceItem {
+  id: number;
+  name: string;
+  slug: string;
+  type: string;
+  logo: string | null;
+  vendor_name: string;
+  total_sales_count: number;
+  total_sales_amount: number;
+  total_orders: number;
+  sales_percentage: number;
+}
+
+export interface ShopPerformanceType {
+  status: "success" | "error";
+  total: number;
+  limit: number;
+  offset: number;
+  data: ShopPerformanceItem[];
+  message?: string;
+}
+
