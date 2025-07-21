@@ -12,6 +12,8 @@ import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { debounce } from 'lodash';
 import SelectDropdown from '../components/commons/Fields/SelectDropdown';
+import { MetricCard } from './components/MetricCard';
+import AnalysisAreaChart from './components/AnalysisAreaChart';
 
 const typeOptions = [
     { label: "All Types", value: "" },
@@ -201,9 +203,11 @@ export default function Shops() {
                     />
                 </div>
             </div>
-
             
-
+            <MetricCard />
+            
+            <AnalysisAreaChart />
+            
             <TanStackTable
                 data={data}
                 columns={columns}

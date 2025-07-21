@@ -7,7 +7,8 @@ import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { mostSellingProductGraph } from "@/app/api_/products";
+import { shopAnalytics } from "@/app/api_/shop";
+import { ShopAnalyticsItem } from "@/types/ShopType";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -28,12 +29,12 @@ const AreaChart = () => {
     const fetchChartData = useCallback(async (selectedPeriod: string) => {
         setLoading(true);
         try {
-            const response = await mostSellingProductGraph(selectedPeriod);
+            const response = await shopAnalytics({ selectedPeriod });
             const raw = response?.data ?? [];
 
             if (response?.status === "success" && Array.isArray(raw) && raw.length > 0) {
-                const categories = raw.map((item: { day: string }) => formatDate(new Date(item.day)));
-                const series = raw.map((item: { total: string }) => parseFloat(item.total));
+                const categories = raw.map((item: ShopAnalyticsItem) => formatDate(new Date(item.day)));
+                const series = raw.map((item: ShopAnalyticsItem) => item.total);
                 setChartData({ categories, series });
                 setHasData(true);
             } else {
@@ -41,12 +42,13 @@ const AreaChart = () => {
                 setHasData(false);
             }
         } catch (error) {
-            console.error("Failed to fetch sales graph data:", error);
+            console.error("Failed to fetch shop analytics:", error);
             setHasData(false);
         } finally {
             setLoading(false);
         }
     }, []);
+
 
     useEffect(() => {
         fetchChartData(selected.value);
@@ -104,7 +106,7 @@ const AreaChart = () => {
                 colors: ["#F97316"],
 
             },
-            series: [{ name: "Items sold", data: chartData.series }],
+            series: [{ name: "Shop registered", data: chartData.series }],
             xaxis: {
                 categories: chartData.categories,
                 labels: {
@@ -138,7 +140,7 @@ const AreaChart = () => {
     return (
         <div className="p-6 card text-gray-950">
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-medium">Most selling items</h2>
+                <h2 className="text-lg font-medium">Shop Graph</h2>
                 <SelectDropdown options={monthOptions} value={selected} onChange={setSelected} />
             </div>
 

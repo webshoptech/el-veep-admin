@@ -38,3 +38,26 @@ export interface ShopType {
     offset: number;
     data: Shop[];
 }
+
+export interface ShopMetrics {
+    message: string;
+    status: string;
+    data: {
+        total_shops: number;
+        active_shops: number;
+        inactive_shops: number;
+        total_products: number;
+        total_services: number;
+    };
+}
+
+export interface ShopAnalyticsItem {
+    day: string;
+    total: number;
+}
+
+export interface ShopAnalyticsType {
+    message: string;
+    status: string;
+    data: ShopAnalyticsItem[];
+}
