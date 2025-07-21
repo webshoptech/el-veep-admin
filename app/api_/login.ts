@@ -1,8 +1,7 @@
-import axios from "axios";
-import { API_URL } from "../setting";
+import axios from "@/app/lib/axios"; 
 
 export async function login(formData: FormData) {
-  const response = await axios.post(`${API_URL}/login`, formData, {
+  const response = await axios.post("/login", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
       Accept: "application/json",
@@ -15,7 +14,7 @@ export async function login(formData: FormData) {
 export async function changePassword(formData: FormData) {
   const token = localStorage.getItem("token");
 
-  const response = await axios.post(`${API_URL}/change-password`, formData, {
+  const response = await axios.post("/change-password", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
       Accept: "application/json",

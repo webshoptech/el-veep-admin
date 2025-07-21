@@ -1,5 +1,4 @@
-import axios from "../lib/axios";
-import { API_URL } from "../setting";
+import axios from "../lib/axios"; // This is already configured
 
 export async function getRecentProducts(
     limit: number,
@@ -8,11 +7,11 @@ export async function getRecentProducts(
     type?: string,
     status?: string
 ) {
-    const response = await axios.get(`${API_URL}/products`, {
+    const response = await axios.get("/products", {
         params: {
             limit,
             offset,
-            ...(search ? { search } : {}),  
+            ...(search ? { search } : {}),
             ...(type ? { type } : {}),
             ...(status ? { status } : {}),
         },
@@ -22,23 +21,26 @@ export async function getRecentProducts(
 
 export async function productGraph(selectedPeriod?: string, type?: string, status?: string) {
     const response = await axios.get(
-        `${API_URL}/product-graph?start_date=${selectedPeriod}&type=${type}&status=${status}`
+        `/product-graph?start_date=${selectedPeriod}&type=${type}&status=${status}`
     );
     return response.data;
 }
+
 export async function mostSellingProducts(limit?: number, offset?: number) {
     const response = await axios.get(
-        `${API_URL}/most-selling-products?limit=${limit}&offset=${offset}`
+        `/most-selling-products?limit=${limit}&offset=${offset}`
     );
     return response.data;
 }
+
 export async function mostSellingProductGraph(selectedPeriod?: string) {
     const response = await axios.get(
-        `${API_URL}/most-selling-products-graph?start_date=${selectedPeriod}`
+        `/most-selling-products-graph?start_date=${selectedPeriod}`
     );
     return response.data;
 }
- export async function updateItemStatus(productId: number, status: string) {
-  const response = await axios.patch(`${API_URL}/product/${productId}/status/${status}`);
-  return response.data;
+
+export async function updateItemStatus(productId: number, status: string) {
+    const response = await axios.patch(`/product/${productId}/status/${status}`);
+    return response.data;
 }

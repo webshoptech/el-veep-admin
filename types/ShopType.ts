@@ -25,6 +25,7 @@ export interface Shop {
     city?: CityType;
     category?: CategoryType;
     vendor?: User;
+    products_count: number;
     created_at: string;
     updated_at: string;
 }

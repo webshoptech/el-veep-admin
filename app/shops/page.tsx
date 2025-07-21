@@ -88,8 +88,8 @@ export default function Shops() {
                             )}
                             <div className="flex flex-col">
                                 <span className="text-gray-900 font-medium leading-tight">{name}</span>
-                                <span className="text-xs text-gray-500">
-                                    {type} | {category?.name}
+                                <span className="text-xs text-gray-500 capitalize">
+                                    {category?.name} | <b>{row.original.products_count}</b> {type}
                                 </span>
                             </div>
                         </div>
@@ -201,6 +201,8 @@ export default function Shops() {
                     />
                 </div>
             </div>
+
+            
 
             <TanStackTable
                 data={data}

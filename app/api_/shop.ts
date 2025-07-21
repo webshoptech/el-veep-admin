@@ -12,3 +12,8 @@ export async function getShops(params: {
   });
   return response.data;
 }
+
+export async function shopMetrics(month: string) {
+  const response = await axios.get(`/shop-metrics?start_date=${month}`);
+  return response.data;
+}

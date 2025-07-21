@@ -1,14 +1,13 @@
-import axios from "axios";
-import { API_URL } from "@/app/setting";
+import axios from "@/app/lib/axios";
 import { UserAdminType } from "@/types/UserType";
 
 export async function loginAdmin(email: string, password: string) {
   const { data } = await axios.post<UserAdminType>(
-    `${API_URL}/login`,
-    `grant_type=password&username=${encodeURI(email)}&password=${password}`,
+    "/login",
+    `grant_type=password&username=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
     {
       headers: {
-        accept: "application/json",
+        Accept: "application/json",
         "Content-Type": "application/x-www-form-urlencoded",
       },
     }
