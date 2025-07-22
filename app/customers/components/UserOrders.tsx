@@ -120,7 +120,6 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                 return <StatusBadge status={value} />;
             },
         },
-
         {
             header: "Payment Status",
             accessorKey: "order.payment_status",

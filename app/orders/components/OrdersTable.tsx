@@ -9,6 +9,7 @@ import { debounce } from "lodash";
 import { OrderResponse } from "@/types/OrderType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { getRecentOrders } from "@/app/api_/orders";
+import StatusBadge from "@/utils/StatusBadge";
 
 interface OrderTableProps {
     limit: number;
@@ -78,16 +79,18 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
             {
                 header: "Shipping",
                 accessorKey: "shipping_status",
-                cell: ({ getValue }) => (
-                    <span className="capitalize">{getValue() as string}</span>
-                ),
+                cell: ({ getValue }) => {
+                    const value = String(getValue() ?? "N/A");
+                    return <StatusBadge status={value} />;
+                },
             },
             {
                 header: "Payment",
                 accessorKey: "payment_status",
-                cell: ({ getValue }) => (
-                    <span className="capitalize">{getValue() as string}</span>
-                ),
+                cell: ({ getValue }) => {
+                    const value = String(getValue() ?? "N/A");
+                    return <StatusBadge status={value} type={"payment"} />;
+                },
             },
             {
                 header: "Action",
