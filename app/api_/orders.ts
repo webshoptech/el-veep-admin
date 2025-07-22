@@ -4,10 +4,11 @@ import { OrderGraphPoint, OrderResponse, OrderStatsType } from "@/types/OrderTyp
 export async function getRecentOrders(
     limit: number,
     offset: number,
-    search: string
+    search: string,
+    status?: string
 ) {
     const response = await axios.get("/orders", {
-        params: { limit, offset, search },
+        params: { limit, offset, search, status },
     });
     return response.data;
 }

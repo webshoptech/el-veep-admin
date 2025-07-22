@@ -98,8 +98,11 @@ export const NAVIGATION = [
         icon: CreditCardIcon,
         children: [
             { name: "All Orders", href: "/orders" },
-            { name: "Returns & Refunds", href: "/orders/returns" },
-            { name: "Disputes", href: "/orders/disputes" },
+            { name: "Processing orders", href: "/orders/processing" },
+            { name: "Ongoing orders", href: "/orders/ongoing" },
+            { name: "Delivered orders", href: "/orders/delivered" },
+            { name: "Cancelled orders", href: "/orders/cancelled" },
+            { name: "Returns & Refunds orders", href: "/orders/returned" },
         ],
     },
     {

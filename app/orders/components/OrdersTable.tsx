@@ -13,9 +13,10 @@ import StatusBadge from "@/utils/StatusBadge";
 
 interface OrderTableProps {
     limit: number;
+    status?: string;
 }
 
-const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
+const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
     const [orders, setOrders] = useState<OrderResponse[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -129,7 +130,8 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
             const response = await getRecentOrders(
                 pagination.pageSize,
                 offset,
-                search
+                search,
+                status
             );
             setOrders(response.orders);
             setTotalOrders(response.total || 0);
@@ -139,7 +141,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
         } finally {
             setLoading(false);
         }
-    }, [pagination.pageSize]);
+    }, [pagination.pageSize, status]);
 
     const debouncedFetchOrders = useMemo(
         () =>
@@ -163,7 +165,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit }) => {
 
     return (
         <div>
-            <p className="text-lg font-bold text-gray-900">Recent orders</p>
+            {/* <p className="text-lg font-bold text-gray-900">Recent orders</p> */}
             <div className="mb-4">
                 <input
                     type="text"
