@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CubeIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/solid";
 import { ColumnDef } from "@tanstack/react-table";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { EyeIcon } from "@heroicons/react/24/outline";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { mostSellingShops } from "@/app/api_/shop";
 import { ShopPerformanceItem, ShopPerformanceType } from "@/types/ShopType";
@@ -117,15 +117,17 @@ export default function ShopPerformance() {
                 ),
             },
             {
-                header: "Action",
-                accessorKey: "slug",
+                header: 'Action',
+                accessorKey: 'id',
                 cell: ({ row }) => (
                     <Link
                         href={`/shops/${row.original.slug}`}
-                        className="bg-blue-500 text-white p-1.5 rounded hover:bg-blue-600 flex items-center gap-1"
+                        target="_blank"
+                        className="inline-flex items-center gap-1 text-sm px-3 py-1.5 border border-blue-500 text-blue-600 rounded hover:bg-blue-50 transition"
                     >
-                        <EyeIcon className="w-4 h-4" />
                         View
+                        {/* lead to frontend web app */}
+                        <ArrowTopRightOnSquareIcon className="w-4 h-4" />
                     </Link>
                 ),
             },

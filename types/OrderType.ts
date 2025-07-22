@@ -106,3 +106,14 @@ export type Shop = {
     created_at: string;
     updated_at: string;
 };
+export type OrderGraphPoint = {
+  day: string;  
+  total: number; 
+};
+
+export type OrderStatsType = {
+  total_processing: number;
+  total_ongoing: number;
+  total_completed: number;
+  total_cancelled: number;
+};

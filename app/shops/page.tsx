@@ -146,6 +146,7 @@ export default function Shops() {
                         className="inline-flex items-center gap-1 text-sm px-3 py-1.5 border border-blue-500 text-blue-600 rounded hover:bg-blue-50 transition"
                     >
                         View
+                        {/* lead to frontend web app */}
                         <ArrowTopRightOnSquareIcon className="w-4 h-4" />
                     </Link>
                 ),
