@@ -1,3 +1,5 @@
+import { User } from "./UserType";
+
 export interface FinanceOverviewType {
     status: "success";
     data: {
@@ -24,4 +26,34 @@ export interface FinanceGraph {
         day: string;
         total: number;
     };
+}
+
+export interface SettlementAccount {
+    id: number;
+    user_id: number;
+    name: string;
+    code: string;
+    institution_number: string;
+    transit_number: string;
+    account_number: string;
+    account_name: string;
+}
+export interface PayoutItem {
+    id: number;
+    vendor_id: number;
+    settlement_account_id: number;
+    amount: string;
+    status: string;
+    created_at: string;
+    updated_at: string;
+    vendor: User;
+    settlement_account: SettlementAccount;
+}
+
+export interface PayoutRequest {
+    status: "success";
+    data: PayoutItem[];
+    total: number;
+    offset: number;
+    limit: number;
 }

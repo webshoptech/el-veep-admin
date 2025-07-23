@@ -114,6 +114,7 @@ export const NAVIGATION = [
             { name: "Payout Requests", href: "/finance/payouts" }, 
             { name: "Transactions", href: "/finance/transactions" },
             { name: "Payout Commission", href: "/finance/commission" }, 
+            { name: "Settlment Accounts", href: "/finance/settlement-accounts" }, 
         ],
     },
     {   
