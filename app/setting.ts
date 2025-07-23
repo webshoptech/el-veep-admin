@@ -110,13 +110,13 @@ export const NAVIGATION = [
         href: "/finance",
         icon: CurrencyDollarIcon,
         children: [
-            { name: "Revenue Overview", href: "/finance/overview" },
-            { name: "Vendor Commissions", href: "/finance/commissions" },
-            { name: "Taxes & Fees", href: "/finance/taxes" },
-            { name: "Payout Schedule", href: "/finance/payouts" },
+            { name: "Revenue Overview", href: "/finance" },
+            { name: "Payout Requests", href: "/finance/payouts" }, 
+            { name: "Transactions", href: "/finance/transactions" },
+            { name: "Payout Commission", href: "/finance/commission" }, 
         ],
     },
-    {
+    {   
         name: "Reports & Analytics",
         href: "/reports",
         icon: ChartBarIcon,
