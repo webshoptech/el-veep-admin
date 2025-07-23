@@ -106,10 +106,7 @@ export default function OrderDetail() {
     const [loading, setLoading] = useState(true);
     const [stats, setStats] = useState<OrderResponse["data"]["stats"] | null>(null);
 
-    const [updating, setUpdating] = useState(false);
-    // const [selectedStatus, setSelectedStatus] = useState(() =>
-    //     statusOptions.find((opt) => opt.value === order?.order?.shipping_status) || statusOptions[0]
-    // );
+    const [updating, setUpdating] = useState(false); 
     const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]);
 
     useEffect(() => {

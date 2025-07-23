@@ -64,7 +64,7 @@ const PrintableOrderTable = ({
                                 <div>
                                     <p className="font-medium text-gray-800">{product.title}</p>
                                     <div
-                                        className="text-xs text-gray-500 mt-1 line-clamp-2"
+                                        className="text-xs text-gray-500 mt-1 truncate"
                                         dangerouslySetInnerHTML={{
                                             __html: product.description,
                                         }}
