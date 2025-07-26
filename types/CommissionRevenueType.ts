@@ -18,3 +18,4 @@ export interface CommissionRevenueItem {
     created_at: string;
     transaction: Transaction;
 }
+

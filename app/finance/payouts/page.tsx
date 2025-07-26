@@ -17,7 +17,7 @@ export default function PayoutRequests() {
     const [payouts, setPayouts] = useState<PayoutItem[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
     const [totalRows, setTotalRows] = useState(0);
     const [search, setSearch] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);

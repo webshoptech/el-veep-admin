@@ -5,6 +5,7 @@ import {
     FinanceOverviewType,
     PayoutRequest,
 } from "@/types/FinanceType";
+import { SettlementAccountType } from "@/types/SettlementAccountType";
 
 export async function getFinanceOverview(params: {
     start_date?: string;
@@ -56,6 +57,23 @@ export async function getCommissionRevenues(
             params: {
                 limit,
                 offset,
+            },
+        }
+    );
+    return response.data;
+}
+export async function getSettlementAccounts(
+    limit: number,
+    offset: number,
+    search?: string
+): Promise<SettlementAccountType> {
+    const response = await axios.get<SettlementAccountType>(
+        "/settlement-accounts",
+        {
+            params: {
+                limit,
+                offset,
+                ...(search ? { search } : {}),
             },
         }
     );

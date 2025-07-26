@@ -18,7 +18,7 @@ export default function ShopPerformance() {
     const [loading, setLoading] = useState<boolean>(false);
     const [pagination, setPagination] = useState({
         pageIndex: 0,
-        pageSize: 10,
+        pageSize: 20,
     });
 
     useEffect(() => {

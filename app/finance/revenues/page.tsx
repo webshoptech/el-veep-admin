@@ -15,10 +15,9 @@ import { CurrencyDollarIcon } from '@heroicons/react/20/solid';
 export default function Revenues() {
     const [revenues, setRevenues] = useState<CommissionRevenueItem[]>([]);
     const [totalRevenue, setTotalRevenue] = useState<number>(0);
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
     const [totalRows, setTotalRows] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedRevenue, setselectedRevenue] = useState<CommissionRevenueItem | null>(null);

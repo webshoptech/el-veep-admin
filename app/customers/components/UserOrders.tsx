@@ -23,7 +23,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
     const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState<string>("");
     const [searchInput, setSearchInput] = useState("");
-    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10, });
+    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20, });
     const [totalOrders, setTotalOrders] = useState(0);
 
     const router = useRouter();

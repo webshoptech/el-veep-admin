@@ -29,7 +29,7 @@ export default function Shops() {
     const [search, setSearch] = useState('');
     const [pagination, setPagination] = useState({
         pageIndex: 0,
-        pageSize: 10,
+        pageSize: 20,
     });
 
     const [selectedType, setSelectedType] = useState(typeOptions[0]);
