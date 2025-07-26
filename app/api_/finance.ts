@@ -1,4 +1,5 @@
 import axios from "@/app/lib/axios";
+import { CommissionRevenuesType } from "@/types/CommissionRevenueType";
 import {
     FinanceGraph,
     FinanceOverviewType,
@@ -41,6 +42,22 @@ export async function getPayoutRequests(
 }
 
 export async function updatePayoutStatus(id: number, status: string) {
-  const response = await axios.put(`/withdrawal/${id}/${status}`);
-  return response.data;
+    const response = await axios.put(`/withdrawal/${id}/${status}`);
+    return response.data;
+}
+
+export async function getCommissionRevenues(
+    limit: number,
+    offset: number
+): Promise<CommissionRevenuesType> {
+    const response = await axios.get<CommissionRevenuesType>(
+        "/commission/revenues",
+        {
+            params: {
+                limit,
+                offset,
+            },
+        }
+    );
+    return response.data;
 }

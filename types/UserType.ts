@@ -5,8 +5,9 @@ export interface User  {
     id: number;
     name: string;
     last_name: string;
-    phone: string;
+    statephone: string;
     email: string;
+    phone: string;
     email_verified_at: string | null;
     phone_verified_at: string | null;
     role: string;
