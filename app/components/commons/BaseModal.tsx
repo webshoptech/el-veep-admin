@@ -16,7 +16,7 @@ export default function BaseModal({
   onClose,
   title,
   children,
-  maxWidth = 'max-w-md',
+  maxWidth = 'max-w-xl',
 }: BaseModalProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>

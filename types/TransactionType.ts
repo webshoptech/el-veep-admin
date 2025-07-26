@@ -37,6 +37,7 @@ export interface Transaction {
     created_at: string;
     updated_at: string;
     settlement_account: SettlementAccount;
+    customer: User;
 }
 
 export interface TransactionData {
@@ -48,4 +49,11 @@ export interface TransactionData {
     created_at: string;
     updated_at: string;
     vendor: User;
+    customer: User;
+    total: number;
+    shipping_fee: string;
+    shipping_method: string;
+    shipping_status: string;
+    payment_status: string;
+    payment_date: string;
 }
