@@ -10,6 +10,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Skeleton from 'react-loading-skeleton';
 import ViewRevenuesModal from '../components/ViewRevenuesModal';
+import { CurrencyDollarIcon } from '@heroicons/react/20/solid';
 
 export default function Revenues() {
     const [revenues, setRevenues] = useState<CommissionRevenueItem[]>([]);
@@ -105,10 +106,10 @@ export default function Revenues() {
             <div className="grid sm:grid-cols-1 gap-4 mb-6">
                 <MetricCard
                     title="Total Revenue"
-                    icon={<EyeIcon className="w-6 h-6" />}
+                    icon={<CurrencyDollarIcon className="w-6 h-6" />}
                     value={formatAmount(totalRevenue)}
                     loading={loading}
-                    color="blue"
+                    color="green"
                 />
 
             </div>
