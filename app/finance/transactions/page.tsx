@@ -2,15 +2,17 @@
 
 import { getTransactions } from "@/app/api_/transactions";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { Transaction, TransactionResponse } from "@/types/TransactionType";
+import { Summary, Transaction, TransactionResponse } from "@/types/TransactionType";
 import { formatAmount } from "@/utils/formatCurrency";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import StatusBadge from "@/utils/StatusBadge";
-import { EyeIcon } from "@heroicons/react/24/outline";
+import { BanknotesIcon, EyeIcon } from "@heroicons/react/24/outline";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ViewTransactionModal from "../components/ViewTransactionModal";
+import Skeleton from "react-loading-skeleton";
+import { MetricCardProps } from "@/types/FinanceType";
 
 export default function Transactions() {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -21,7 +23,7 @@ export default function Transactions() {
     const [search, setSearch] = useState('');
     const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [summary, setSummary] = useState<Summary>();
     const fetchTransactions = useCallback(async (pageIndex: number, searchTerm: string) => {
         setLoading(true);
         setError(null);
@@ -33,6 +35,7 @@ export default function Transactions() {
             });
 
             setTransactions(response.data);
+            setSummary(response.summary);
             setTotalRows(Number(response.total));
         } catch {
             setError('Failed to fetch transactions');
@@ -123,6 +126,88 @@ export default function Transactions() {
                 </div>
             </div>
 
+            {/* Status Summary Cards */}
+            <h1 className="text-xl font-bold text-gray-600 mb-2">Status</h1>
+
+            <div className="grid sm:grid-cols-4 gap-4 mb-6">
+                <MetricCard
+                    title="Total Pending"
+                    icon={<EyeIcon className="w-6 h-6" />}
+                    value={summary?.status.pending}
+                    loading={loading}
+                    color="blue"
+                />
+                <MetricCard
+                    title="Total Cancelled"
+                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    value={summary?.status.cancelled}
+                    loading={loading}
+                    color="amber"
+                />
+                <MetricCard
+                    title="Total Completed"
+                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    value={summary?.status.completed}
+                    loading={loading}
+                    color="green"
+                />
+                <MetricCard
+                    title="Total Refunded"
+                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    value={summary?.status.refunded}
+                    loading={loading}
+                    color="purple"
+                />
+                <MetricCard
+                    title="Total Failed"
+                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    value={summary?.status.failed}
+                    loading={loading}
+                    color="red"
+                />
+                <MetricCard
+                    title="Total Approved"
+                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    value={summary?.status.approved}
+                    loading={loading}
+                    color="emerald"
+                />
+                <MetricCard
+                    title="Total Declined"
+                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    value={summary?.status.declined}
+                    loading={loading}
+                    color="rose"
+                />
+            </div>
+            {/* Type Summary Cards */}
+            <h1 className="text-xl font-bold text-gray-600 mb-2">Type</h1>
+
+            <div className="grid sm:grid-cols-3 gap-4 mb-6">
+                <MetricCard
+                    title="Product Transactions"
+                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    value={summary?.type.product}
+                    loading={loading}
+                    color="blue"
+                />
+                <MetricCard
+                    title="Subscriptions"
+                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    value={summary?.type.subscription}
+                    loading={loading}
+                    color="violet"
+                />
+                <MetricCard
+                    title="Withdrawals"
+                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    value={summary?.type.withdrawal}
+                    loading={loading}
+                    color="orange"
+                />
+            </div>
+
+
             <TanStackTable
                 data={transactions}
                 columns={columns}
@@ -149,5 +234,24 @@ export default function Transactions() {
                 />
             )}
         </>
+    );
+}
+
+function MetricCard({ title, value, icon, loading, color }: MetricCardProps) {
+    const bg = `bg-${color}-100`;
+    const text = `text-${color}-600`;
+
+    return (
+        <div className="bg-white border border-gray-200 shadow-sm rounded-lg p-4 flex items-center gap-4">
+            <div className={`${bg} ${text} p-2 rounded-full`}>
+                {icon}
+            </div>
+            <div>
+                <p className="text-sm text-gray-500">{title}</p>
+                <p className="text-3xl font-bold text-gray-950">
+                    {loading ? <Skeleton width={80} height={28} /> : value ?? 0}
+                </p>
+            </div>
+        </div>
     );
 }

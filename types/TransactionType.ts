@@ -7,12 +7,16 @@ export interface TransactionResponse {
     total: number;
     limit: string;
     offset: number;
+    search: string;
+    summary: Summary;
+}
+
+export interface Summary {
     type: {
         product: number;
         subscription: number;
         withdrawal: number;
     };
-    search: string;
     status: {
         pending: number;
         cancelled: number;
