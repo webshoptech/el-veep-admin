@@ -53,7 +53,19 @@ export interface PayoutItem {
 export interface PayoutRequest {
     status: "success";
     data: PayoutItem[];
+    summary: {
+        total_payout: number;
+        pending_payout: string; 
+    }
     total: number;
     offset: number;
     limit: number;
+}
+
+export interface MetricCardProps {
+    title: string;
+    value: number | string | undefined;
+    icon: React.ReactNode;
+    loading: boolean;
+    color: string;
 }

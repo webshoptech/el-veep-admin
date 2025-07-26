@@ -39,3 +39,8 @@ export async function getPayoutRequests(
     });
     return response.data;
 }
+
+export async function updatePayoutStatus(id: number, status: string) {
+  const response = await axios.put(`/withdrawal/${id}/${status}`);
+  return response.data;
+}

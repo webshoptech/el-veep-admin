@@ -1,37 +1,36 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { PayoutItem } from '@/types/FinanceType';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
 import BaseModal from '@/app/components/commons/BaseModal';
 import { formatAmount } from '@/utils/formatCurrency';
+import toast from 'react-hot-toast';
+import { updatePayoutStatus } from '@/app/api_/finance';
 
 interface ViewPayoutModalProps {
     isOpen: boolean;
     onClose: () => void;
-    payoutId: number;
-    payouts: PayoutItem[];
+    payout: PayoutItem;
+    onStatusUpdated: () => void;
 }
 
 const options = [
+    { label: 'Pending', value: 'pending' },
     { label: 'Approve', value: 'approved' },
-    { label: 'Deny', value: 'denied' },
+    { label: 'Decline', value: 'declined' },
 ];
 
 export default function ViewPayoutModal({
     isOpen,
     onClose,
-    payoutId,
-    payouts,
+    payout,
+    onStatusUpdated,
 }: ViewPayoutModalProps) {
     const [decision, setDecision] = useState(options[0]);
 
-    const payout = useMemo(() => payouts.find((p) => p.id === payoutId), [payoutId, payouts]);
-
-    if (!payout) return null;
-
     const account = payout.settlement_account;
- 
+
     return (
         <BaseModal isOpen={isOpen} onClose={onClose} title="Vendor Settlement Info">
             <div className="bg-gradient-to-tr from-gray-700 to-gray-900 text-white rounded-xl p-5 space-y-2">
@@ -70,6 +69,31 @@ export default function ViewPayoutModal({
                     value={decision}
                     onChange={(val) => setDecision(val)}
                 />
+
+                <div className="flex justify-end">
+                    <button
+                        className="rounded-md bg-amber-600 hover:bg-amber-700 px-4 py-2 text-sm text-white"
+                        onClick={async () => {
+                            const status = decision.value;
+                            if (status === 'pending') {
+                                toast.error('Please select Approve or Decline');
+                                return;
+                            }
+
+                            try {
+                                await updatePayoutStatus(payout.id, status);
+                                toast.success(`Payout ${status}d successfully`);
+                                onClose();
+                                onStatusUpdated();
+                            } catch (err: unknown) {
+                                console.error(err);
+                                toast.error('Failed to update payout status');
+                            }
+                        }}
+                    >
+                        Submit
+                    </button>
+                </div>
             </div>
 
             <div className="mt-6 flex justify-end gap-3">
