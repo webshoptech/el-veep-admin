@@ -12,7 +12,7 @@ const monthOptions = MONTHS.map(month => ({
 }));
 
 export default function Finance() {
-    const [selectedMonth, setSelectedMonth] = useState(monthOptions[0]); // Default to January
+    const [selectedMonth, setSelectedMonth] = useState(monthOptions[0]);  
 
     return (
         <div className="space-y-6 text-gray-800">

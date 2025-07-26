@@ -24,7 +24,7 @@ export default function SelectDropdown({
     <Listbox value={value} onChange={onChange}>
       <div className="relative">
         <ListboxButton
-          className={`relative cursor-default rounded-xl border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 text-gray-700 text-sm ${className}`}
+          className={`relative cursor-default rounded-xl border border-gray-300 bg-white py-2.5 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 text-gray-700 text-sm ${className}`}
         >
           <span className="block truncate">{value.label}</span>
           <span className="pointer-events-none absolute inset-y-0 right-2 flex items-center pr-2">
@@ -38,7 +38,7 @@ export default function SelectDropdown({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <ListboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-xl bg-white border border-gray-200 py-1 text-sm shadow-lg focus:outline-none">
+          <ListboxOptions className="absolute z-10 mt-1 max-h-70 w-full overflow-auto rounded-xl bg-white border border-gray-200 py-1 text-sm shadow-lg focus:outline-none">
             {options.map((option) => (
               <ListboxOption
                 key={option.value}

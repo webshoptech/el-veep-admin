@@ -6,7 +6,7 @@ import { Summary, Transaction, TransactionResponse } from "@/types/TransactionTy
 import { formatAmount } from "@/utils/formatCurrency";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import StatusBadge from "@/utils/StatusBadge";
-import { BanknotesIcon, EyeIcon } from "@heroicons/react/24/outline";
+import { ArrowPathIcon, CheckCircleIcon, CurrencyDollarIcon, ExclamationTriangleIcon, EyeIcon, HandThumbDownIcon, PaperAirplaneIcon, ShieldCheckIcon, ShoppingBagIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -139,68 +139,69 @@ export default function Transactions() {
                 />
                 <MetricCard
                     title="Total Cancelled"
-                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    icon={<XCircleIcon className="w-6 h-6" />}
                     value={summary?.status.cancelled}
                     loading={loading}
                     color="amber"
                 />
                 <MetricCard
                     title="Total Completed"
-                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    icon={<CheckCircleIcon className="w-6 h-6" />}
                     value={summary?.status.completed}
                     loading={loading}
                     color="green"
                 />
                 <MetricCard
                     title="Total Refunded"
-                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    icon={<ArrowPathIcon className="w-6 h-6" />}
                     value={summary?.status.refunded}
                     loading={loading}
-                    color="purple"
+                    color="yellow"
                 />
                 <MetricCard
                     title="Total Failed"
-                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    icon={<ExclamationTriangleIcon className="w-6 h-6" />}
                     value={summary?.status.failed}
                     loading={loading}
                     color="red"
                 />
                 <MetricCard
                     title="Total Approved"
-                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    icon={<ShieldCheckIcon className="w-6 h-6" />}
                     value={summary?.status.approved}
                     loading={loading}
-                    color="emerald"
+                    color="green"
                 />
                 <MetricCard
                     title="Total Declined"
-                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    icon={<HandThumbDownIcon className="w-6 h-6" />}
                     value={summary?.status.declined}
                     loading={loading}
-                    color="rose"
+                    color="red"
                 />
             </div>
+
             {/* Type Summary Cards */}
             <h1 className="text-xl font-bold text-gray-600 mb-2">Type</h1>
 
             <div className="grid sm:grid-cols-3 gap-4 mb-6">
                 <MetricCard
                     title="Product Transactions"
-                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    icon={<ShoppingBagIcon className="w-6 h-6" />}
                     value={summary?.type.product}
                     loading={loading}
                     color="blue"
                 />
                 <MetricCard
                     title="Subscriptions"
-                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    icon={<CurrencyDollarIcon className="w-6 h-6" />}
                     value={summary?.type.subscription}
                     loading={loading}
-                    color="violet"
+                    color="gray"
                 />
                 <MetricCard
                     title="Withdrawals"
-                    icon={<BanknotesIcon className="w-6 h-6" />}
+                    icon={<PaperAirplaneIcon className="w-6 h-6" />}
                     value={summary?.type.withdrawal}
                     loading={loading}
                     color="orange"

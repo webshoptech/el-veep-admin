@@ -19,7 +19,7 @@ interface DrawerProps {
 export default function Drawer({
   isOpen,
   onClose,
-  title = 'Drawer',
+  title = 'Empty Drawer',
   children,
 }: DrawerProps) {
   return (
