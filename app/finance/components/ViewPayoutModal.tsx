@@ -82,7 +82,7 @@ export default function ViewPayoutModal({
 
                             try {
                                 await updatePayoutStatus(payout.id, status);
-                                toast.success(`Payout ${status}d successfully`);
+                                toast.success(`Payout ${status} successfully`);
                                 onClose();
                                 onStatusUpdated();
                             } catch (err: unknown) {
