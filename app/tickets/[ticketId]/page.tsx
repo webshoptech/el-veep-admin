@@ -9,12 +9,12 @@ import {
   ArrowUturnLeftIcon,
   PaperClipIcon,
 } from "@heroicons/react/24/outline";
-import { getTicketDetail, replyTicket } from "@/app/api";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import Image from "next/image";
 import GlobalSkeleton from "@/app/components/Skeletons/GlobalSkeleton";
 import TicketType from "@/types/TicketType";
 import MessageEntry from "@/types/MessageEntry";
+import { getTicketDetail, replyTicket } from "@/app/api_/tickets";
 
 export default function TicketDetailPage() {
   const params = useParams();

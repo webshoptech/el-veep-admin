@@ -46,34 +46,8 @@ export async function savePolicy(formData: FormData) {
     const response = await axios.post(`${API_URL}/policy`, formData);
     return response.data;
 }
+ 
 
-/**
- * Fetches tickets for a given type from the server.
- *
- * @param type - The type of tickets to fetch, e.g., "open", "close".
- * @returns A promise that resolves to an object containing the tickets data.
- *          If the type is not supported, resolves to an empty array.
- * @throws An error if the API call fails.
- */
-export async function getTickets(type: string) {
-    const response = await axios.get(`${API_URL}/tickets/${type}`);
-    return response.data;
-}
-
-export async function getTicketDetail(ticketId: string) {
-    const response = await axios.get(`${API_URL}/ticket/detail/${ticketId}`);
-    return response.data.data;
-}
-export async function replyTicket(formData: FormData) {
-    const response = await axios.post(`${API_URL}/ticket/reply`, formData, {
-        headers: {
-            "Content-Type": "multipart/form-data",
-            Accept: "application/json",
-        },
-    });
-
-    return response.data;
-}
 
 export async function getStats(period: string) {
     const response = await axios.get(`${API_URL}/stats?start_date=${period}`);

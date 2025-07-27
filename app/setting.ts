@@ -21,7 +21,6 @@ import {
     HomeIcon,
     ShoppingBagIcon,
     CreditCardIcon,
-    ChartBarIcon,
     Cog6ToothIcon,
     QuestionMarkCircleIcon,
     UserCircleIcon,
@@ -117,17 +116,7 @@ export const NAVIGATION = [
             { name: "Commission Rates", href: "/finance/commissions" }, 
             { name: "Settlment Accounts", href: "/finance/settlement-accounts" }, 
         ],
-    },
-    {   
-        name: "Reports & Analytics",
-        href: "/reports",
-        icon: ChartBarIcon,
-        children: [
-            { name: "Sales Reports", href: "/reports/sales" },
-            { name: "Vendor Reports", href: "/reports/vendors" },
-            { name: "Notifications", href: "/settings/notifications" },
-        ],
-    },
+    }, 
     {
         name: "Support Tickets",
         href: "/reports",

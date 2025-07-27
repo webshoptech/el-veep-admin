@@ -18,6 +18,6 @@ export function formatHumanReadableDate(dateString: string): string {
   return format(date, 'do, MMMM yyyy');  
 }
 
-export function formatDate(date: Date): string {
+export function formatDate(date: string | Date): string {
   return format(date, 'dd MMM');
 }
