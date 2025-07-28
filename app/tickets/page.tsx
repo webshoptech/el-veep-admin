@@ -165,7 +165,7 @@ export default function Tickets() {
                         })
                         .map((ticket) => (
                             <Link
-                                href={`/settings/tickets/${ticket.ticket_id}`}
+                                href={`/tickets/${ticket.ticket_id}`}
                                 key={ticket.id}
                                 className="flex items-center px-8 py-4 hover:bg-gray-100 border-b transition text-sm"
                             >
