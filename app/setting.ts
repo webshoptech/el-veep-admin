@@ -34,6 +34,7 @@ import {
     BuildingStorefrontIcon,
     Squares2X2Icon,
     CubeIcon,
+    AdjustmentsHorizontalIcon,
 } from "@heroicons/react/24/outline";
 
 export const NAVIGATION = [
@@ -128,7 +129,7 @@ export const NAVIGATION = [
             { name: "Tickets", href: "/tickets" },
             { name: "Notifications", href: "/notifications" },
         ],
-    }, 
+    },
 
     {
         name: "Security & Compliance",
@@ -141,19 +142,29 @@ export const NAVIGATION = [
 ];
 
 export const SettingsNavigation = [
-    { name: "Platform Settings", href: "/settings/app" },
+    {
+        name: "Platform Settings",
+        href: "/settings/app",
+        icon: AdjustmentsHorizontalIcon,
+    },
     {
         name: "Integrations",
         href: "/settings/integrations",
         icon: Cog6ToothIcon,
         children: [
             { name: "Clik2Pay Configuration", href: "/settings/clik2pay" },
-            { name: "EasyPost Configuration", href: "/settings/easypost" },
+            { name: "Shipping Configuration", href: "/settings/easypost" },
             { name: "SMS Configuration", href: "/settings/sms" },
             { name: "Email Configuration", href: "/settings/email" },
-            { name: "Payment methods", href: "/settings/payments" },
         ],
     },
+];
+export const PrivacyPages = [
+    { name: "Privacy Policy", type: "privacy" },
+    { name: "Terms and Conditions", type: "terms" },
+    { name: "Delivery Policy", type: "delivery" },
+    { name: "Refund Policy", type: "refund" },
+    { name: "Return Policy", type: "return" },
 ];
 
 export const receiverOptions = [

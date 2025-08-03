@@ -3,11 +3,11 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
-import { getSalesGraph } from "@/app/api";
 import AreaChartSkeleton from "../Skeletons/AreaChartSkeleton";
 import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
 import SelectDropdown from "./Fields/SelectDropdown";
+import { getSalesGraph } from "@/app/api_/orders";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 

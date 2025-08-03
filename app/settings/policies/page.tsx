@@ -3,22 +3,15 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { HomeIcon } from "@heroicons/react/20/solid";
+import { PrivacyPages } from "@/app/setting";
 
 const PolicyEditor = dynamic(
   () => import("@/app/settings/policies/components/PolicyEditor"),
   {
     ssr: false,
   }
-);
+); 
 
-// Define policies and types
-const pages = [
-  { name: "Privacy Policy", type: "privacy" },
-  { name: "Terms and Conditions", type: "terms" },
-  { name: "Delivery Policy", type: "delivery" },
-  { name: "Refund Policy", type: "refund" },
-  { name: "Return Policy", type: "return" },
-];
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState("privacy");
@@ -31,7 +24,7 @@ export default function SettingsPage() {
           <span className="text-hub-secondary-600 text-sm">Settings</span>
         </div>
         <div className="mt-4 flex space-x-4 border-b">
-          {pages.map((page) => (
+          {PrivacyPages.map((page) => (
             <button
               key={page.name}
               onClick={() => setActiveTab(page.type)}

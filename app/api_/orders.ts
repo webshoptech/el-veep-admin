@@ -37,3 +37,14 @@ export async function orderStats(): Promise<OrderStatsType> {
   return response.data;
 }
 
+export async function getSalesGraph(period: string) {
+    const response = await axios.get(
+        `/stats/graph?start_date=${period}`
+    );
+    return response;
+}
+
+export async function getStats(period: string) {
+    const response = await axios.get(`/stats?start_date=${period}`);
+    return response.data;
+}

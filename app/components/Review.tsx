@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Review from "@/types/ReviewType";
-import { getRecentReview } from "@/app/api";
 import { formatHumanReadableDate } from "../../utils/formatHumanReadableDate";
 import RecentReviewsSkeleton from "./Skeletons/RecentReviewsSkeleton";
+import { getRecentReview } from "../api_/products";
 
 function StarRating({ rating }: { rating: number }) {
   return (

@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { Editor as TinyMCEEditor } from "@tinymce/tinymce-react";
-import { getPolicy, savePolicy } from "@/app/api";
 import toast from "react-hot-toast";
+import { getPolicy, savePolicy } from "@/app/api_/settings";
 
 interface PolicyEditorProps {
   type: string;
@@ -32,6 +32,7 @@ export default function PolicyEditor({ type }: PolicyEditorProps) {
 
     try {
       await savePolicy(formData);
+      toast.success("Policy saved successfully!");
     } catch {
       toast.error("Something went wrong while saving settings!");
     }
@@ -57,7 +58,7 @@ export default function PolicyEditor({ type }: PolicyEditorProps) {
             onClick={handleSave}
             className="bg-orange-600 inline-flex items-center cursor-pointer justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:bg-orange-700"
           >
-            Save Policy
+            Save {type}
           </button>
         </div>
       </div>
