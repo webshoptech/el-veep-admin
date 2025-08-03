@@ -6,19 +6,12 @@ import Image from 'next/image';
 import { sendNotification } from '@/app/api_/notifications';
 import { SubmitButton } from '@/app/components/commons/SubmitButton';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
-import { typeOptions } from '../page';
 import { getRecentUsers } from '@/app/api_/users';
 import { User } from '@/types/UserType';
 import AsyncSelect from 'react-select/async';
 import { debounce } from 'lodash';
-
-export const receiverOptions = [
-    { label: "All notifications", value: "" },
-    { label: "All users", value: "all" },
-    { label: "All customers", value: "customer" },
-    { label: "All vendor", value: "vendor" },
-    { label: "Single user", value: "single" },
-];
+import { receiverOptions, typeOptions } from '@/app/setting';
+ 
 const userSearchCache = new Map<string, { timestamp: number; data: Option[] }>();
 const CACHE_EXPIRY = 1000 * 60 * 60; // 1 hour
 

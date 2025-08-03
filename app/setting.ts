@@ -127,7 +127,7 @@ export const NAVIGATION = [
         ],
     },
     {
-        name: "Platform Settings",
+        name: "App Settings",
         href: "/settings",
         icon: Cog6ToothIcon,
         children: [
@@ -144,10 +144,23 @@ export const NAVIGATION = [
         href: "/security",
         icon: QuestionMarkCircleIcon,
         children: [
-            { name: "Privacy & Compliance", href: "/security/policies" },
+            { name: "Privacy & Compliance", href: "/settings/policies" },
         ],
     },
 ];
+
+export const receiverOptions = [
+  { label: "All notifications", value: "" },
+  { label: "All users", value: "all" },
+  { label: "All customers", value: "customer" },
+  { label: "All vendor", value: "vendor" },
+];
+
+export const typeOptions = [
+  { label: "SMS", value: "sms" },
+  { label: "Email", value: "email" },
+];
+
 
 export const bottomNavigation = [
     {

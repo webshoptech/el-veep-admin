@@ -15,18 +15,9 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "../components/commons/Drawer";
 import NotificationForm from "./components/NotificationForm";
 import NotificationStats from "./components/NotificationStats";
+import { receiverOptions } from "../setting";
 
-export const receiverOptions = [
-    { label: "All notifications", value: "" },
-    { label: "All users", value: "all" },
-    { label: "All customers", value: "customer" },
-    { label: "All vendor", value: "vendor" },
-];
-
-export const typeOptions = [
-    { label: "SMS", value: "sms" },
-    { label: "Email", value: "email" },
-]
+ 
 
 export default function Notifications() {
     const [selectedReceiver, setselectedReceiver] = useState(receiverOptions[0]);
