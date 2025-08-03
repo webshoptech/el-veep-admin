@@ -13,7 +13,7 @@ export async function getNotifications(params: {
 }
 
 export async function sendNotification(formData: FormData) {
-  const response = await axios.post("/notifications", formData, {
+  const response = await axios.post("/notification/send", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
       Accept: "application/json",

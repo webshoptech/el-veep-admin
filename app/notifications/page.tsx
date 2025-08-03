@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import SelectDropdown from "../components/commons/Fields/SelectDropdown";
 import { getNotifications } from "../api_/notifications";
-import { NotificationType } from "@/types/NotificationsType";
+import { NotificationResponse, NotificationType } from "@/types/NotificationsType";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import { ColumnDef } from "@tanstack/react-table";
 import TanStackTable from "../components/commons/TanStackTable";
@@ -14,12 +14,20 @@ import Link from "next/link";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "../components/commons/Drawer";
 import NotificationForm from "./components/NotificationForm";
+import NotificationStats from "./components/NotificationStats";
 
-const receiverOptions = [
-    { label: "All", value: "all" },
-    { label: "Customer", value: "customer" },
-    { label: "Vendor", value: "vendor" },
+export const receiverOptions = [
+    { label: "All notifications", value: "" },
+    { label: "All users", value: "all" },
+    { label: "All customers", value: "customer" },
+    { label: "All vendor", value: "vendor" },
 ];
+
+export const typeOptions = [
+    { label: "SMS", value: "sms" },
+    { label: "Email", value: "email" },
+]
+
 export default function Notifications() {
     const [selectedReceiver, setselectedReceiver] = useState(receiverOptions[0]);
     const [notifications, setNotifications] = useState<NotificationType[]>([]);
@@ -29,6 +37,7 @@ export default function Notifications() {
     const [totalRows, setTotalRows] = useState(0);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
+    const [notificationStats, setNotificationStats] = useState<NotificationResponse['stats'] | null>(null);
 
     useEffect(() => {
         setLoading(true);
@@ -43,6 +52,8 @@ export default function Notifications() {
                 });
 
                 setNotifications(response.data);
+                setNotificationStats(response.stats);
+
                 setTotalRows(Number(response.total));
             } catch {
                 setError("Failed to fetch notifications");
@@ -60,7 +71,7 @@ export default function Notifications() {
             accessorFn: (row) => `${row.receiver}`,
             cell: ({ getValue }) => <span>{getValue() as string}</span>,
         },
-        
+
         {
             header: "Body",
             accessorKey: "body",
@@ -215,6 +226,10 @@ export default function Notifications() {
 
             </div>
 
+            {notificationStats && (
+                <NotificationStats stats={notificationStats} loading={loading} />
+            )}
+
             <TanStackTable
                 data={notifications}
                 columns={columns}
@@ -236,8 +251,6 @@ export default function Notifications() {
             >
                 <NotificationForm onClose={() => setDrawerOpen(false)} />
             </Drawer>
-
-
         </div>
     );
 }

@@ -1,8 +1,14 @@
 import axios from 'axios';
+import { setupCache } from 'axios-cache-interceptor';
 
-const axiosInstance = axios.create({
+const base = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://apiamh.crosshubdigital.com/api/v1/admin',
-  withCredentials: true, 
+  withCredentials: true,
+});
+
+const axiosInstance = setupCache(base, {
+  ttl: 1000 * 60 * 60,  
+  interpretHeader: false, 
 });
 
 axiosInstance.interceptors.request.use((config) => {

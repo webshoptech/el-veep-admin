@@ -14,4 +14,15 @@ export interface NotificationResponse {
     total: number;
     limit: number;
     offset: number;
+    stats: {
+        total: number;
+        email: number;
+        sms: number;
+        pending: number;
+        delivered: number;
+        failed: number;
+        vendor: number;
+        customer: number;
+        single: number;
+    };
 }

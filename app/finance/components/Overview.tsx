@@ -107,7 +107,7 @@ interface MetricCardProps {
   color: string;
 }
 
-function MetricCard({ title, value, icon, loading, color }: MetricCardProps) {
+export function MetricCard({ title, value, icon, loading, color }: MetricCardProps) {
   const bg = `bg-${color}-100`;
   const text = `text-${color}-600`;
 
