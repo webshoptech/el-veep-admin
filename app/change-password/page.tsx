@@ -45,7 +45,7 @@ export default function ChangePassword() {
       <div className="w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/login.png')" }}></div>
 
       <div className="w-1/2 flex flex-col justify-center items-center px-8">
-        <Image width={200} height={200} src="/logo.png" alt="Logo" className="mb-10" />
+        <Image width={200} height={200} src="/logo.svg" alt="Logo" className="mb-10" />
 
         <h1 className="text-2xl font-bold mb-6">Change Password</h1>
 

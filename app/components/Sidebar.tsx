@@ -114,7 +114,7 @@ const SidebarContent = ({
 }) => (
     <div className="flex grow flex-col overflow-y-auto pt-4">
         <div className="flex items-center justify-center mb-8">
-            <Image src="/logo.png" alt="African Market Hub" width={150} height={40} className="h-10 w-30" priority />
+            <Image src="/logo.svg" alt="African Market Hub" width={150} height={40} className="h-10 w-30" priority />
         </div>
         <nav className="flex flex-1 flex-col justify-between">
             <NavMenu />
@@ -140,7 +140,7 @@ function BottomMenu({
                 <div className="flex items-center gap-x-3">
                     <Image
                         className="size-10 rounded-full object-cover"
-                        src="https://catalyst-demo.tailwindui.com/users/erica.jpg"
+                        src="/icon.svg"
                         alt="Profile"
                         width={40}
                         height={40}

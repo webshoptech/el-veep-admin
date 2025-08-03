@@ -110,35 +110,26 @@ export const NAVIGATION = [
         icon: CurrencyDollarIcon,
         children: [
             { name: "Revenue Overview", href: "/finance" },
-            { name: "Payout Requests", href: "/finance/payouts" }, 
+            { name: "Payout Requests", href: "/finance/payouts" },
             { name: "Transactions", href: "/finance/transactions" },
-            { name: "Commission Revenues", href: "/finance/revenues" }, 
-            { name: "Commission Rates", href: "/finance/commissions" }, 
-            { name: "Settlment Accounts", href: "/finance/settlement-accounts" }, 
+            { name: "Commission Revenues", href: "/finance/revenues" },
+            { name: "Commission Rates", href: "/finance/commissions" },
+            {
+                name: "Settlment Accounts",
+                href: "/finance/settlement-accounts",
+            },
         ],
-    }, 
+    },
     {
         name: "Support Tickets",
-        href: "/reports",
+        href: "/tickets",
         icon: MegaphoneIcon,
         children: [
             { name: "Tickets", href: "/tickets" },
             { name: "Notifications", href: "/notifications" },
         ],
-    },
-    {
-        name: "App Settings",
-        href: "/settings",
-        icon: Cog6ToothIcon,
-        children: [
-            { name: "General Settings", href: "/settings/general" },
-            { name: "Clik2Pay Configuration", href: "/settings/clik2pay" },
-            { name: "EasyPost Configuration", href: "/settings/easypost" },
-            { name: "SMS Configuration", href: "/settings/sms" },
-            { name: "Email Configuration", href: "/settings/email" },
-            { name: "Payment methods", href: "/settings/payments" },
-        ],
-    },
+    }, 
+
     {
         name: "Security & Compliance",
         href: "/security",
@@ -149,18 +140,33 @@ export const NAVIGATION = [
     },
 ];
 
+export const SettingsNavigation = [
+    { name: "Platform Settings", href: "/settings/app" },
+    {
+        name: "Integrations",
+        href: "/settings/integrations",
+        icon: Cog6ToothIcon,
+        children: [
+            { name: "Clik2Pay Configuration", href: "/settings/clik2pay" },
+            { name: "EasyPost Configuration", href: "/settings/easypost" },
+            { name: "SMS Configuration", href: "/settings/sms" },
+            { name: "Email Configuration", href: "/settings/email" },
+            { name: "Payment methods", href: "/settings/payments" },
+        ],
+    },
+];
+
 export const receiverOptions = [
-  { label: "All notifications", value: "" },
-  { label: "All users", value: "all" },
-  { label: "All customers", value: "customer" },
-  { label: "All vendor", value: "vendor" },
+    { label: "All notifications", value: "" },
+    { label: "All users", value: "all" },
+    { label: "All customers", value: "customer" },
+    { label: "All vendor", value: "vendor" },
 ];
 
 export const typeOptions = [
-  { label: "SMS", value: "sms" },
-  { label: "Email", value: "email" },
+    { label: "SMS", value: "sms" },
+    { label: "Email", value: "email" },
 ];
-
 
 export const bottomNavigation = [
     {

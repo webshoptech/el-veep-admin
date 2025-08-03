@@ -45,7 +45,7 @@ export default function LoginScreen() {
 
       {/* Form */}
       <div className="flex-1 flex flex-col justify-center items-center px-6 py-8">
-        <Image width={200} height={200} src="/logo.png" alt="Logo" className="mb-10" />
+        <Image width={200} height={200} src="/logo.svg" alt="Logo" className="mb-10" />
 
         <h1 className="text-2xl font-bold mb-6">Administration</h1>
 

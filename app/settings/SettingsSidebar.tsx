@@ -2,13 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SettingsNavigation } from "../setting";
 
-const navigation = [
-  { name: "App Settings", href: "/settings/app" },
-  { name: "User Management", href: "/settings/users" },
-  { name: "Billing", href: "/settings/billing" },
-  { name: "Integrations", href: "/settings/integrations" },
-];
+
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -20,7 +16,7 @@ export default function SettingsSidebar() {
   return (
     <aside className="py-6 lg:col-span-3">
       <nav className="space-y-1">
-        {navigation.map((item) => (
+        {SettingsNavigation.map((item) => (
           <Link
             key={item.name}
             href={item.href}
