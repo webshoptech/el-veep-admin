@@ -10,6 +10,10 @@ import TanStackTable from "../components/commons/TanStackTable";
 import { Dialog, DialogPanel, Popover, PopoverButton, PopoverPanel, Transition, TransitionChild } from "@headlessui/react";
 import { Fragment } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import Drawer from "../components/commons/Drawer";
+import NotificationForm from "./components/NotificationForm";
 
 const receiverOptions = [
     { label: "All", value: "all" },
@@ -24,6 +28,7 @@ export default function Notifications() {
     const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
     const [totalRows, setTotalRows] = useState(0);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const [isDrawerOpen, setDrawerOpen] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -55,6 +60,7 @@ export default function Notifications() {
             accessorFn: (row) => `${row.receiver}`,
             cell: ({ getValue }) => <span>{getValue() as string}</span>,
         },
+        
         {
             header: "Body",
             accessorKey: "body",
@@ -161,12 +167,22 @@ export default function Notifications() {
         {
             header: 'CTA',
             accessorKey: 'cta',
+            cell: ({ getValue }) => {
+                const url = getValue() as string;
+                return (
+                    <Link href={url} popoverTarget="_blank" className="text-hub-cinnabar-300 underline" target="_blank" rel="noopener noreferrer">
+                        {url}
+                    </Link>
+                );
+            },
         },
+
         {
-            header: 'Created At',
+            header: 'Sent',
             accessorKey: 'created_at',
             cell: ({ getValue }) => formatHumanReadableDate(getValue() as string),
         },
+
     ], [setPreviewImage, previewImage]);
 
     return (
@@ -179,13 +195,24 @@ export default function Notifications() {
                     <p className="text-sm text-gray-500">Manage your notification overview here.</p>
                 </div>
 
-                <div className="w-48">
-                    <SelectDropdown
-                        options={receiverOptions}
-                        value={selectedReceiver}
-                        onChange={setselectedReceiver}
-                    />
+                <div className="flex gap-3 items-center">
+                    <button
+                        onClick={() => setDrawerOpen(true)}
+                        className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600"
+                    >
+                        <PlusIcon className="w-4 h-4" />
+                        Send New Notification
+                    </button>
+
+                    <div className="w-48">
+                        <SelectDropdown
+                            options={receiverOptions}
+                            value={selectedReceiver}
+                            onChange={setselectedReceiver}
+                        />
+                    </div>
                 </div>
+
             </div>
 
             <TanStackTable
@@ -202,6 +229,14 @@ export default function Notifications() {
                     setPagination({ pageIndex: updated.pageIndex, pageSize: updated.pageSize })
                 }
             />
+            <Drawer
+                isOpen={isDrawerOpen}
+                onClose={() => setDrawerOpen(false)}
+                title="Send Notification"
+            >
+                <NotificationForm onClose={() => setDrawerOpen(false)} />
+            </Drawer>
+
 
         </div>
     );

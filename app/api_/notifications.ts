@@ -11,3 +11,18 @@ export async function getNotifications(params: {
   });
   return response.data;
 }
+
+export async function sendNotification(formData: FormData) {
+  const response = await axios.post("/notifications", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Accept: "application/json",
+    },
+  });
+
+  return response.data;
+}
+export async function deleteNotification(id: number) {
+  const response = await axios.delete(`/notifications/${id}`);
+  return response.data;
+}

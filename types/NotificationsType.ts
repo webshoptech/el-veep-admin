@@ -5,6 +5,7 @@ export interface NotificationType {
     image_public_id: string;
     cta: string;
     created_at: string;
+    delivery_status: string;
 }
 
 export interface NotificationResponse {
@@ -14,4 +15,3 @@ export interface NotificationResponse {
     limit: number;
     offset: number;
 }
-
