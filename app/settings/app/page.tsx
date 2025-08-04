@@ -116,7 +116,6 @@ const useAppSettingsForm = () => {
             };
             setValues(updatedSettings);
             setOriginalSettings(updatedSettings);
-
             toast.success("Settings saved successfully!");
         } catch (error: unknown) {
             const err = error as { response?: { data?: { error_detail?: string } } };

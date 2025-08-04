@@ -23,11 +23,7 @@ import {
     CreditCardIcon,
     Cog6ToothIcon,
     QuestionMarkCircleIcon,
-    UserCircleIcon,
-    WrenchIcon,
-    ShieldCheckIcon,
-    BriefcaseIcon,
-    BellAlertIcon,
+    UserCircleIcon, 
     ArrowRightStartOnRectangleIcon,
     CurrencyDollarIcon,
     MegaphoneIcon,
@@ -139,6 +135,14 @@ export const NAVIGATION = [
             { name: "Privacy & Compliance", href: "/settings/policies" },
         ],
     },
+    {
+        name: "Platform Settings",
+        href: "/settings/app",
+        icon: AdjustmentsHorizontalIcon,
+        children: [{ name: "Settings", href: "/settings/app" },
+            { name: "Invite team members", href: "/invite" }
+        ],
+    },
 ];
 
 export const SettingsNavigation = [
@@ -179,27 +183,7 @@ export const typeOptions = [
     { label: "Email", value: "email" },
 ];
 
-export const bottomNavigation = [
-    {
-        name: "App Settings",
-        href: "/settings/app",
-        icon: WrenchIcon,
-    },
-    {
-        name: "Policies Settings",
-        href: "/settings/policies",
-        icon: ShieldCheckIcon,
-    },
-    {
-        name: "Profile Settings",
-        href: "#",
-        icon: BriefcaseIcon,
-    },
-    {
-        name: "Tickets",
-        href: "/settings/tickets",
-        icon: BellAlertIcon,
-    },
+export const bottomNavigation = [ 
     {
         name: "Sign out",
         href: "#",
