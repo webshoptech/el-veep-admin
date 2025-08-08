@@ -73,7 +73,7 @@ export default function InviteForm({ onClose }: Props) {
         try {
             const response = await sendInvite(formData);
             console.log("Invite sent:", response);
-            toast.success(response);
+            toast.success(response.message);
             onClose();
         } catch (error) {
             console.error("Error sending invite:", error);
