@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import LayoutWrapper from './LayoutWrapper'; // your shell
+import LayoutWrapper from './LayoutWrapper'; 
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();
