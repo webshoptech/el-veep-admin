@@ -5,7 +5,14 @@ export async function listInvites() {
     return response.data;
 }
 
-export async function sendInvite(formData: FormData) {
-    const response = await axios.post("/invite/send", formData);
-    return response.data;
+export async function sendInvite(data: {
+  name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  role: string;
+  password: string;
+}) {
+  const response = await axios.post("/invite/send", data);
+  return response.data;
 }
