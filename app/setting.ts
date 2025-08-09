@@ -141,7 +141,7 @@ export const NAVIGATION = [
         icon: AdjustmentsHorizontalIcon,
         children: [
             { name: "Settings", href: "/settings/app" },
-            { name: "Invite team members", href: "/teams" },
+            { name: "Team members", href: "/teams" },
         ],
     },
 ];
