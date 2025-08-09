@@ -1,10 +1,13 @@
 export interface TeamResponse {
     data: Team[];
     total: number;
+    stats: Stats;
+}
+
+export interface Stats {
+    total: number;
     active: number;
     inactive: number;
-    offset: number;
-    limit: number;
 }
 
 export interface Team {

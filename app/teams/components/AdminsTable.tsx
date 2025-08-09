@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { deleteAdmin, listInvites } from "@/app/api_/team";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { Team } from "@/types/TeamType";
+import { Stats, Team } from "@/types/TeamType";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import StatusBadge from "@/utils/StatusBadge";
 import { TrashIcon } from "@heroicons/react/24/outline";
@@ -10,10 +10,16 @@ import { debounce } from "lodash";
 import toast from "react-hot-toast";
 import BaseModal from "@/app/components/commons/BaseModal";
 import { UserIcon, ShieldCheckIcon } from "@heroicons/react/24/outline"; // Staff / Admin icons
+import AdminSummary from "./AdminSummary";
 
 export default function AdminsTable() {
     const [admins, setAdmins] = useState<Team[]>([]);
     const [totalAdmins, setTotalAdmins] = useState(0);
+    const [stats, setStats] = useState<Stats>({
+        total: 0,
+        active: 0,
+        inactive: 0,
+    });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState("");
@@ -74,6 +80,7 @@ export default function AdminsTable() {
                 });
                 setAdmins(response.data);
                 setTotalAdmins(response.total);
+                setStats(response.stats);
             } catch (err) {
                 console.error(err);
                 setError("Failed to load admins");
@@ -113,16 +120,15 @@ export default function AdminsTable() {
     };
 
     return (
-        <div>
-            <div className="mb-4">
-                <input
-                    type="text"
-                    placeholder="Search by admin name or email..."
-                    value={search}
-                    onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
-                />
-            </div>
+        <div className="space-y-6">
+            <AdminSummary loading={loading} stats={stats} />
+            <input
+                type="text"
+                placeholder="Search by admin name or email..."
+                value={search}
+                onChange={handleSearchChange}
+                className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+            />
 
             <TanStackTable
                 data={admins}
@@ -171,6 +177,7 @@ export default function AdminsTable() {
                     </button>
                 </div>
             </BaseModal>
+            
         </div>
     );
 }
