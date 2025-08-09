@@ -23,7 +23,7 @@ import {
     CreditCardIcon,
     Cog6ToothIcon,
     QuestionMarkCircleIcon,
-    UserCircleIcon, 
+    UserCircleIcon,
     ArrowRightStartOnRectangleIcon,
     CurrencyDollarIcon,
     MegaphoneIcon,
@@ -139,8 +139,9 @@ export const NAVIGATION = [
         name: "Platform Settings",
         href: "/settings/app",
         icon: AdjustmentsHorizontalIcon,
-        children: [{ name: "Settings", href: "/settings/app" },
-            { name: "Invite team members", href: "/invite" }
+        children: [
+            { name: "Settings", href: "/settings/app" },
+            { name: "Invite team members", href: "/teams" },
         ],
     },
 ];
@@ -183,7 +184,7 @@ export const typeOptions = [
     { label: "Email", value: "email" },
 ];
 
-export const bottomNavigation = [ 
+export const bottomNavigation = [
     {
         name: "Sign out",
         href: "#",

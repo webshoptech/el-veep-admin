@@ -3,9 +3,11 @@ import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "../components/commons/Drawer";
 import InviteForm from "./components/InviteForm";
+import AdminsTable from "./components/AdminsTable";
 
 export default function InviteTeamMember() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
+
     return (
         <div className="space-y-6 text-gray-800">
             {/* Header Row */}
@@ -33,6 +35,8 @@ export default function InviteTeamMember() {
             >
                 <InviteForm onClose={() => setDrawerOpen(false)} />
             </Drawer>
+
+            <AdminsTable />
         </div>
     )
 }

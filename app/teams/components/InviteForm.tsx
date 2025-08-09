@@ -4,8 +4,9 @@ import { useState } from 'react';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
 import { SubmitButton } from '@/app/components/commons/SubmitButton';
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { sendInvite } from '@/app/api_/invite';
+import { sendInvite } from '@/app/api_/team';
 import toast from 'react-hot-toast';
+import { AxiosError } from 'axios';
 
 interface Props {
     onClose: () => void;
@@ -72,12 +73,18 @@ export default function InviteForm({ onClose }: Props) {
 
         try {
             const response = await sendInvite(formData);
-            console.log("Invite sent:", response);
             toast.success(response.message);
-            onClose();
-        } catch (error) {
-            console.error("Error sending invite:", error);
-            toast.error("Error sending invite");
+            window.location.reload();
+        } catch (err) {
+            const error = err as AxiosError<{ errors?: Record<string, string[]>; message?: string }>;
+            if (error.response?.data?.errors) {
+                const messages = Object.values(error.response.data.errors).flat();
+                messages.forEach((msg) => toast.error(msg));
+            } else if (error.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Something went wrong. Please try again.");
+            }
         } finally {
             setLoading(false);
         }
