@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import StatusBadge from "@/utils/StatusBadge";
+import { formatAmount } from "@/utils/formatCurrency";
 
 interface Props {
     product: {
@@ -61,23 +62,21 @@ const PrintableOrderTable = ({
                                     alt={product.title}
                                     className="rounded-md border object-cover w-12 h-12"
                                 />
-                                <div>
-                                    <p className="font-medium text-gray-800">{product.title}</p>
-                                    <div
-                                        className="text-xs text-gray-500 mt-1 truncate"
-                                        dangerouslySetInnerHTML={{
-                                            __html: product.description,
-                                        }}
-                                    />
-                                </div>
+                                <p
+                                    className="truncate text-sm text-gray-600 font-medium min-w-0"
+                                    title="{product.title}"
+                                >
+                                    {product.title}
+                                </p>
                             </td>
+
                             <td className="py-3 px-4 align-top">{quantity}</td>
                             <td className="py-3 px-4 align-top">{shop?.name || "N/A"}</td>
                             <td className="py-3 px-4 align-top font-medium">
-                                {parseFloat(String(price)).toFixed(2)} CAD
+                                {formatAmount(price)}
                             </td>
                             <td className="py-3 px-4 align-top font-semibold">
-                                {productSubtotal.toFixed(2)} CAD
+                                {formatAmount(productSubtotal)}
                             </td>
                             <td className="py-3 px-4 align-top">
                                 <StatusBadge status={orderMeta.shipping_status} type="shipping" />
@@ -92,20 +91,20 @@ const PrintableOrderTable = ({
                 <div className="flex justify-between">
                     <span>Subtotal</span>
                     <span className="font-medium">
-                        {productSubtotal.toFixed(2)} CAD
+                        {formatAmount(productSubtotal)}
                     </span>
                 </div>
                 <div className="flex justify-between">
                     <span>Shipping</span>
                     <span className="font-medium">
-                        {shippingFee.toFixed(2)} CAD
+                        {formatAmount(shippingFee)}
                     </span>
                 </div>
 
                 <div className="border-t border-gray-100 pt-3 mt-3 flex justify-between text-base font-semibold">
                     <span>Grand Total</span>
                     <span>
-                        {grandTotal.toFixed(2)} CAD
+                        {formatAmount(grandTotal)}
                     </span>
                 </div>
             </div>

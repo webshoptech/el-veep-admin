@@ -76,7 +76,7 @@ export default function Analytics() {
                 accessorKey: "total_sales_amount",
                 cell: ({ row }) => (
                     <span className="text-gray-900">
-                        ₦{parseFloat(row.original.total_sales_amount).toLocaleString()}
+                        {parseFloat(row.original.total_sales_amount).toLocaleString()}
                     </span>
                 ),
             },

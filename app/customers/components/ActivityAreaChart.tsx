@@ -25,8 +25,7 @@ const AreaChart = ({ type }: AreaChartProps) => {
     const [hasData, setHasData] = useState<boolean>(false);
 
     const monthOptions = MONTHS.map((m) => ({ label: m, value: m }));
-    const [selected, setSelected] = useState<{ label: string; value: string }>(
-        monthOptions.find((m) => m.value === new Date().toLocaleString("default", { month: "long" })) || monthOptions[0]
+    const [selected, setSelected] = useState<{ label: string; value: string }>(monthOptions[0]
     );
 
     const fetchChartData = useCallback(async (selectedPeriod: string) => {

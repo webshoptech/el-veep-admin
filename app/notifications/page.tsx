@@ -24,7 +24,7 @@ export default function Notifications() {
     const [notifications, setNotifications] = useState<NotificationType[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
+    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
     const [totalRows, setTotalRows] = useState(0);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
     const [isDrawerOpen, setDrawerOpen] = useState(false);

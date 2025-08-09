@@ -24,6 +24,12 @@ export async function changeOrderStatus(orderId: number, status: string) {
     });
     return response.data;
 }
+export async function changeOrderPaymentStatus(orderId: number, status: string) {
+    const response = await axios.put(`/orders/${orderId}/payment-status`, {
+        payment_status: status,
+    });
+    return response.data;
+}
 
 export async function getOrderGraph(start_date?: string): Promise<OrderGraphPoint[]> {
   const response = await axios.get<OrderGraphPoint[]>(`/orders/graph`, {

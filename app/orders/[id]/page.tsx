@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { changeOrderStatus, getOrderDetail } from "@/app/api_/orders";
+import { changeOrderPaymentStatus, changeOrderStatus, getOrderDetail } from "@/app/api_/orders";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import { OrderItem, OrderResponse } from "@/types/OrderType";
-import { ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { User } from "@/types/UserType";
 import dayjs from "dayjs";
 import Address from "@/types/AddressType";
@@ -21,6 +20,13 @@ const statusOptions = [
     { label: "Returned", value: "returned" },
     { label: "Delivered", value: "delivered" },
     { label: "Cancelled", value: "cancelled" },
+];
+
+const paymentStatusOptions = [
+    { label: "Pending", value: "pending" },
+    { label: "Cancel", value: "cancelled" },
+    { label: "Completed", value: "completed" },
+    { label: "Refund", value: "refunded" },
 ];
 
 function CustomerSummary({ customer, address, stats }: { customer: User; address: Address; stats?: OrderResponse["data"]["stats"] }) {
@@ -106,8 +112,9 @@ export default function OrderDetail() {
     const [loading, setLoading] = useState(true);
     const [stats, setStats] = useState<OrderResponse["data"]["stats"] | null>(null);
 
-    const [updating, setUpdating] = useState(false); 
+    const [updating, setUpdating] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]);
+    const [selectedPaymentStatus, setSelectedPaymentStatus] = useState(statusOptions[0]);
 
     useEffect(() => {
         const fetchOrder = async () => {
@@ -158,12 +165,43 @@ export default function OrderDetail() {
                         }
                         : prev
                 );
-                toast.success("Status updated successfully");
+                toast.success("Shipping status updated successfully");
             } else {
                 console.error("Unexpected response:", response);
             }
         } catch (error) {
             console.error("Failed to update status", error);
+        } finally {
+            setUpdating(false);
+        }
+    };
+    const handlePaymentStatusChange = async (status: { label: string; value: string }) => {
+        if (!order) return;
+
+        setSelectedPaymentStatus(status);
+        setUpdating(true);
+
+        try {
+            const response = await changeOrderPaymentStatus(order?.order?.id, status.value);
+
+            if (response?.success || response?.status === "success") {
+                setOrder((prev) =>
+                    prev
+                        ? {
+                            ...prev,
+                            order: {
+                                ...prev.order,
+                                payment_status: status.value,
+                            },
+                        }
+                        : prev
+                );
+                toast.success("Payment status updated successfully");
+            } else {
+                console.error("Unexpected response:", response);
+            }
+        } catch (error) {
+            console.error("Failed to update payment status", error);
         } finally {
             setUpdating(false);
         }
@@ -182,16 +220,22 @@ export default function OrderDetail() {
                             Cancel Order
                         </button>
                     )}
-                    <button className="cursor-pointer bg-orange-400 text-white px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-1">
-                        <ArrowDownTrayIcon className="w-4 h-4" />
-                        Download
-                    </button>
 
-                    <div className="w-40">
+                    <div className="flex items-center gap-2">
+                        <p className="text-gray-500 text-sm">Shipping status</p>
                         <SelectDropdown
                             options={statusOptions}
                             value={selectedStatus}
                             onChange={handleStatusChange}
+                            disabled={updating}
+                        />
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <p className="text-gray-500 text-sm">Payment status</p>
+                        <SelectDropdown
+                            options={paymentStatusOptions}
+                            value={selectedPaymentStatus}
+                            onChange={handlePaymentStatusChange}
                             disabled={updating}
                         />
                     </div>

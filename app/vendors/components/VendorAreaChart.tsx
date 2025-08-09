@@ -21,19 +21,28 @@ const AreaChart = () => {
     const [hasData, setHasData] = useState<boolean>(false);
 
     const monthOptions = MONTHS.map((m) => ({ label: m, value: m }));
-    const [selected, setSelected] = useState<{ label: string; value: string }>(
-        monthOptions.find((m) => m.value === new Date().toLocaleString("default", { month: "long" })) || monthOptions[0]
+    const [selected, setSelected] = useState<{ label: string; value: string }>(monthOptions[0]
     );
+
+    interface ChartItem {
+        day: string;
+        total: number;
+    }
+
+    interface GraphResponse {
+        status: string;
+        data: ChartItem[];
+    }
 
     const fetchChartData = useCallback(async (selectedPeriod: string) => {
         setLoading(true);
         try {
-            const response = await getUserGraph("vendor", selectedPeriod);
-            const raw = response?.data?.data ?? [];
+            const response: GraphResponse = await getUserGraph("vendor", selectedPeriod);
 
-            if (response?.data?.status === "success" && Array.isArray(raw) && raw.length > 0) {
-                const categories = raw.map((item: { day: string }) => formatDate(new Date(item.day)));
-                const series = raw.map((item: { total: string }) => parseFloat(item.total));
+            if (response?.status === "success" && Array.isArray(response.data) && response.data.length > 0) {
+                const categories = response.data.map((item) => formatDate(new Date(item.day)));
+                const series = response.data.map((item) => Number(item.total));
+
                 setChartData({ categories, series });
                 setHasData(true);
             } else {
@@ -47,6 +56,7 @@ const AreaChart = () => {
             setLoading(false);
         }
     }, []);
+
 
     useEffect(() => {
         fetchChartData(selected.value);
