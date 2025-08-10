@@ -76,8 +76,7 @@ export const NAVIGATION = [
         children: [
             { name: "All categories", href: "/categories" },
             { name: "Sub-categories", href: "/categories/sub" },
-            { name: "Category Banners", href: "/categories/banners" },
-            { name: "Category Analytics", href: "/categories/analytics" },
+             { name: "Category Analytics", href: "/categories/analytics" },
         ],
     },
     {
