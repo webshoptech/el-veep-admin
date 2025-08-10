@@ -31,6 +31,7 @@ import {
     Squares2X2Icon,
     CubeIcon,
     AdjustmentsHorizontalIcon,
+    FlagIcon,
 } from "@heroicons/react/24/outline";
 
 export const NAVIGATION = [
@@ -77,6 +78,15 @@ export const NAVIGATION = [
             { name: "Sub-categories", href: "/categories/sub" },
             { name: "Category Banners", href: "/categories/banners" },
             { name: "Category Analytics", href: "/categories/analytics" },
+        ],
+    },
+    {
+        name: "Banner Management",
+        href: "/categories",
+        icon: FlagIcon,
+        children: [ 
+            { name: "Banners", href: "/banners" },
+            { name: "Banner types", href: "/banners/types" },
         ],
     },
     {

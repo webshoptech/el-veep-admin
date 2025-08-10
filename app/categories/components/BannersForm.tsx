@@ -5,7 +5,7 @@ import Image from 'next/image';
 import toast from 'react-hot-toast';
 import { SubmitButton } from '@/app/components/commons/SubmitButton';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
-import { addBanner } from '@/app/api_/categories';
+import { addBanner, listBannerTypes } from '@/app/api_/banners';
 import { BannerType } from '@/types/CategoryType';
 
 export default function BannerForm({
@@ -62,10 +62,25 @@ export default function BannerForm({
         }
     };
 
-    const typeOptions = [
-        { label: 'Product', value: 'products' },
-        { label: 'Service', value: 'services' },
-    ];
+    const [typeOptions, setTypeOptions] = useState<{ label: string; value: string }[]>([]);
+
+    useEffect(() => {
+        async function fetchTypes() {
+            try {
+                const res = await listBannerTypes();
+                const formatted = res.data.map((type: { id: number; name: string }) => ({
+                    label: type.name,
+                    value: String(type.id),
+                }));
+                setTypeOptions(formatted);
+            } catch (error) {
+                console.error("Failed to fetch banner types", error);
+            }
+        }
+
+        fetchTypes();
+    }, []);
+
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">

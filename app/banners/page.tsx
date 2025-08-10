@@ -4,12 +4,11 @@ import { Fragment, useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import { BannerType } from "@/types/CategoryType";
-import { deleteBanner } from "@/app/api_/categories";
 import toast from "react-hot-toast";
 import { Transition, Dialog, TransitionChild, DialogPanel, DialogTitle } from "@headlessui/react";
-import BannersTable from "../components/BannersTable";
-import BannersForm from "../components/BannersForm";
- 
+import BannersForm from "../categories/components/BannersForm";
+import BannersTable from "../categories/components/BannersTable";
+import { deleteBanner } from "../api_/banners";
 
 export default function Banners() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);

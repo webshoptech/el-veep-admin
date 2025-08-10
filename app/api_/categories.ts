@@ -61,28 +61,7 @@ export async function listBanners(limit?: number, offset?: number) {
     return response.data;
 }
 
-export async function addBanner(formData: FormData) {
-    const response = await axios.post("/banners/create", formData, {
-        headers: {
-            Accept: "application/json",
-        },
-    });
-    return response.data;
-}
 
-export async function updateBanner(bannerId: number, formData: FormData) {
-    const response = await axios.put(`/banners/${bannerId}/update`, formData, {
-        headers: {
-            Accept: "application/json",
-        },
-    });
-    return response.data;
-}
-
-export async function deleteBanner(bannerId: number) {
-    const response = await axios.delete(`/banners/${bannerId}/delete`);
-    return response.data;
-}
 
 export async function categoryAnalytics(params: {
     limit: number;
