@@ -3,35 +3,39 @@
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
-import { ColorType } from "@/types/ColorType";
-import toast from "react-hot-toast"; 
+import toast from "react-hot-toast";
 import BaseModal from "@/app/components/commons/BaseModal";
-import ProductColorsTable from "../components/ProductColorsTable";
-import ProductColorsForm from "../components/ProductColorsForm";
-import { deleteColour } from "@/app/api_/colours";
+import { deleteSizes } from "@/app/api_/sizes";
+import ProductSizesTable from "../components/ProductSizesTable";
+import ProductSizeForm from "../components/ProductSizeForm";
+import { Sizes } from "@/types/SizeType";
 
-export default function ProductColors() {
+export default function ProductSizes() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingColor, setEditingColor] = useState<ColorType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [colorToDelete, setcolorToDelete] = useState<ColorType | null>(null);
+    const [sizeToDelete, setsizeToDelete] = useState<Sizes | null>(null);
+    const [loading, setLoading] = useState(false);
 
-    const confirmDelete = (color: ColorType) => {
-        setcolorToDelete(color);
+    const confirmDelete = (size: Sizes) => {
+        setsizeToDelete(size);
         setIsModalOpen(true);
     };
 
     const handleDelete = async () => {
-        if (!colorToDelete) return;
+        if (!sizeToDelete) return;
+        setLoading(true);
+
         try {
-            await deleteColour(colorToDelete.id);
-            toast.success("Color deleted successfully.");
+            await deleteSizes(sizeToDelete.id);
+            toast.success("Size deleted successfully.");
             setIsModalOpen(false);
-            setcolorToDelete(null);
+            setsizeToDelete(null);
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error("Failed to delete subcolor.");
+            toast.error("Failed to delete size.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -39,8 +43,8 @@ export default function ProductColors() {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Product Colors</h1>
-                    <p className="text-sm text-gray-600">Manage your product colors here.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">Product sizes</h1>
+                    <p className="text-sm text-gray-600">Manage your product sizes here.</p>
                 </div>
 
                 <div className="flex gap-3 items-center">
@@ -48,18 +52,17 @@ export default function ProductColors() {
 
                     <button
                         onClick={() => {
-                            setEditingColor(null);
                             setDrawerOpen(true);
                         }}
                         className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600"
                     >
                         <PlusIcon className="w-4 h-4" />
-                        Create Product Colors
+                        Create Product Size
                     </button>
                 </div>
             </div>
 
-            <ProductColorsTable
+            <ProductSizesTable
                 limit={10}
                 onDelete={confirmDelete}
             />
@@ -68,21 +71,18 @@ export default function ProductColors() {
                 isOpen={isDrawerOpen}
                 onClose={() => {
                     setDrawerOpen(false);
-                    setEditingColor(null);
                 }}
-                title={editingColor ? "Edit Color" : "Create Color"}
             >
-                <ProductColorsForm
+                <ProductSizeForm
                     onClose={() => {
                         setDrawerOpen(false);
-                        setEditingColor(null);
                     }}
                 />
             </Drawer>
 
             <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this color? This action cannot be undone.
+                    Are you sure you want to delete this size? This action cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button
@@ -95,7 +95,7 @@ export default function ProductColors() {
                         className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
                         onClick={handleDelete}
                     >
-                        Proceed
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
             </BaseModal>

@@ -3,3 +3,4 @@ export interface ColorType {
     name: string;
     hexcode: string;
 }
+
