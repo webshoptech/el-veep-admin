@@ -29,7 +29,7 @@ const NavMenu = () => {
                         <button
                             onClick={() => toggleSection(item.name)}
                             className={clsx(
-                                "w-full flex items-center justify-between px-3 py-2 rounded-md text-sm font-semibold",
+                                "w-full flex items-center justify-between px-3 py-2 rounded-md text-xs font-semibold",
                                 isActiveParent
                                     ? "text-orange-500"
                                     : "text-gray-700 hover:text-orange-500"

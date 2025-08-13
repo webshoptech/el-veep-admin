@@ -4,14 +4,14 @@ import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import { BannerType } from "@/types/CategoryType";
-import toast from "react-hot-toast";
-import BannerTypesTable from "../components/BannerTypesTable";
-import BannerTypesForm from "../components/BannerTypesForm";
+import toast from "react-hot-toast"; 
 import { deleteBannerType } from "@/app/api_/banners";
 import BaseModal from "@/app/components/commons/BaseModal";
+import ProductColorsTable from "../components/ProductColorsTable";
+import ProductColorsForm from "../components/ProductColorsForm";
 
 
-export default function BannerTypes() {
+export default function ProductColors() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState<BannerType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,8 +40,8 @@ export default function BannerTypes() {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Banner types</h1>
-                    <p className="text-sm text-gray-600">Manage your banner types here.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">Product Colorss</h1>
+                    <p className="text-sm text-gray-600">Manage your product colorss here.</p>
                 </div>
 
                 <div className="flex gap-3 items-center">
@@ -55,12 +55,12 @@ export default function BannerTypes() {
                         className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600"
                     >
                         <PlusIcon className="w-4 h-4" />
-                        Create Banner Type
+                        Create Product Colors
                     </button>
                 </div>
             </div>
 
-            <BannerTypesTable
+            <ProductColorsTable
                 limit={10}
                 onDelete={confirmDelete}
             />
@@ -73,18 +73,17 @@ export default function BannerTypes() {
                 }}
                 title={editingCategory ? "Edit Banner" : "Create Banner"}
             >
-                <BannerTypesForm
+                <ProductColorsForm
                     onClose={() => {
                         setDrawerOpen(false);
                         setEditingCategory(null);
                     }}
-                    category={editingCategory ?? undefined}
                 />
             </Drawer>
 
             <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this banner type? This action cannot be undone.
+                    Are you sure you want to delete this color? This action cannot be undone.
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button

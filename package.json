@@ -21,6 +21,7 @@
     "axios": "^1.8.4",
     "axios-cache-interceptor": "^1.8.0",
     "clsx": "^2.1.1",
+    "color-name-list": "^11.24.0",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "lexical": "^0.33.1",

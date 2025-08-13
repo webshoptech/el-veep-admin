@@ -80,6 +80,15 @@ export const NAVIGATION = [
         ],
     },
     {
+        name: "Variation Management",
+        href: "/variations",
+        icon: AdjustmentsHorizontalIcon,
+        children: [ 
+            { name: "Product colors", href: "/variations/colors" },
+            { name: "Product sizes", href: "/variations/sizes" },
+        ],
+    },
+    {
         name: "Banner Management",
         href: "/categories",
         icon: FlagIcon,
@@ -95,6 +104,15 @@ export const NAVIGATION = [
         children: [
             { name: "Shop List", href: "/shops" },
             { name: "Shop Performance", href: "/shops/performance" },
+        ],
+    },
+    {
+        name: "FAQs Management",
+        href: "/faqs",
+        icon: QuestionMarkCircleIcon,
+        children: [
+            { name: "FAQs", href: "/faqs" },
+            { name: "Tutorials", href: "/faqs/tutorials" },
         ],
     },
     {
@@ -139,7 +157,7 @@ export const NAVIGATION = [
     {
         name: "Security & Compliance",
         href: "/security",
-        icon: QuestionMarkCircleIcon,
+        icon: Cog6ToothIcon,
         children: [
             { name: "Privacy & Compliance", href: "/settings/policies" },
         ],

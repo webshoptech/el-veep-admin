@@ -84,7 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
             </Dialog>
 
             {/* Mobile toggle */}
-            <div className="sticky top-0 z-40 flex h-16 items-center px-4 sm:px-6 lg:px-8 lg:hidden">
+            <div className="sticky top-0 z-40 flex h-16 items-center px-2 sm:px-4 lg:px-6 lg:hidden">
                 <button
                     type="button"
                     onClick={() => setSidebarOpen(true)}
@@ -112,16 +112,26 @@ const SidebarContent = ({
     user: User | null;
     onLogout: () => void;
 }) => (
-    <div className="flex grow flex-col overflow-y-auto pt-4">
-        <div className="flex items-center justify-center mb-8">
-            <Image src="/logo.svg" alt="African Market Hub" width={150} height={40} className="h-10 w-30" priority />
-        </div>
-        <nav className="flex flex-1 flex-col justify-between">
-            <NavMenu />
-            <BottomMenu collapsed={collapsed} user={user} onLogout={onLogout} />
+   <div
+  className="flex grow flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-gray-50 hover:scrollbar-thumb-gray-100 scrollbar-track-transparent pt-2"
+  style={{ height: 'calc(100vh - 60px)' }} 
+>
+  <div className="flex items-center justify-center mb-2">
+    <Image
+      src="/logo.svg"
+      alt="African Market Hub"
+      width={150}
+      height={40}
+      className="h-10 w-30"
+      priority
+    />
+  </div>
+  <nav className="flex flex-1 flex-col justify-between">
+    <NavMenu />
+    <BottomMenu collapsed={collapsed} user={user} onLogout={onLogout} />
+  </nav>
+</div>
 
-        </nav>
-    </div>
 );
 
 function BottomMenu({
