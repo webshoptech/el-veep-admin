@@ -12,7 +12,6 @@ export default function ProductColorsForm({ onClose }: { onClose: () => void }) 
     const [hexcode, setHexcode] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // Whenever name changes, try to find matching hex
     useEffect(() => {
         if (name.trim()) {
             const match = colornames.find(
@@ -40,7 +39,7 @@ export default function ProductColorsForm({ onClose }: { onClose: () => void }) 
             window.location.reload();
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
-                toast.error(error.response?.data?.message || 'Failed to add color');
+                toast.error(error.response?.data?.name || 'Failed to add color');
             } else {
                 toast.error('An unexpected error occurred');
             }

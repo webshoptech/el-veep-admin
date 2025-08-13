@@ -3,36 +3,35 @@
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
-import { BannerType } from "@/types/CategoryType";
+import { ColorType } from "@/types/ColorType";
 import toast from "react-hot-toast"; 
-import { deleteBannerType } from "@/app/api_/banners";
 import BaseModal from "@/app/components/commons/BaseModal";
 import ProductColorsTable from "../components/ProductColorsTable";
 import ProductColorsForm from "../components/ProductColorsForm";
-
+import { deleteColour } from "@/app/api_/colours";
 
 export default function ProductColors() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingCategory, setEditingCategory] = useState<BannerType | null>(null);
+    const [editingColor, setEditingColor] = useState<ColorType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [typeToDelete, settypeToDelete] = useState<BannerType | null>(null);
+    const [colorToDelete, setcolorToDelete] = useState<ColorType | null>(null);
 
-    const confirmDelete = (category: BannerType) => {
-        settypeToDelete(category);
+    const confirmDelete = (color: ColorType) => {
+        setcolorToDelete(color);
         setIsModalOpen(true);
     };
 
     const handleDelete = async () => {
-        if (!typeToDelete) return;
+        if (!colorToDelete) return;
         try {
-            await deleteBannerType(typeToDelete.id);
-            toast.success("Banner deleted successfully.");
+            await deleteColour(colorToDelete.id);
+            toast.success("Color deleted successfully.");
             setIsModalOpen(false);
-            settypeToDelete(null);
+            setcolorToDelete(null);
             window.location.reload();
         } catch (error) {
             console.error(error);
-            toast.error("Failed to delete subcategory.");
+            toast.error("Failed to delete subcolor.");
         }
     };
 
@@ -40,7 +39,7 @@ export default function ProductColors() {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Product Colorss</h1>
+                    <h1 className="text-2xl font-bold text-gray-800">Product Colors</h1>
                     <p className="text-sm text-gray-600">Manage your product colorss here.</p>
                 </div>
 
@@ -49,7 +48,7 @@ export default function ProductColors() {
 
                     <button
                         onClick={() => {
-                            setEditingCategory(null);
+                            setEditingColor(null);
                             setDrawerOpen(true);
                         }}
                         className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600"
@@ -69,14 +68,14 @@ export default function ProductColors() {
                 isOpen={isDrawerOpen}
                 onClose={() => {
                     setDrawerOpen(false);
-                    setEditingCategory(null);
+                    setEditingColor(null);
                 }}
-                title={editingCategory ? "Edit Banner" : "Create Banner"}
+                title={editingColor ? "Edit Banner" : "Create Banner"}
             >
                 <ProductColorsForm
                     onClose={() => {
                         setDrawerOpen(false);
-                        setEditingCategory(null);
+                        setEditingColor(null);
                     }}
                 />
             </Drawer>

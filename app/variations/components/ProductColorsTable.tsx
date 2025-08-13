@@ -3,17 +3,17 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { BannerType } from "@/types/CategoryType";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { listColours } from "@/app/api_/colours";
+import { ColorType } from "@/types/ColorType";
 
-type BannerProps = {
+type ColorProps = {
     limit: number;
-    onDelete: (category: BannerType) => void;
+    onDelete: (color: ColorType) => void;
 };
 
-const ProductColorsTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
-    const [colors, setColors] = useState<BannerType[]>([]);
+const ProductColorsTable: React.FC<ColorProps> = ({ limit, onDelete }) => {
+    const [colors, setColors] = useState<ColorType[]>([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -22,7 +22,7 @@ const ProductColorsTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
         pageSize: limit,
     });
 
-    const columns: ColumnDef<BannerType>[] = useMemo(
+    const columns: ColumnDef<ColorType>[] = useMemo(
         () => [
             {
                 header: "Color name",
