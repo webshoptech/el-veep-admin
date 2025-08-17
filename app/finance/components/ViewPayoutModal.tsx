@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { PayoutItem } from '@/types/FinanceType';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
-import BaseModal from '@/app/components/commons/BaseModal';
+import ConfirmationModal from '@/app/components/commons/ConfirmationModal';
 import { formatAmount } from '@/utils/formatCurrency';
 import toast from 'react-hot-toast';
 import { updatePayoutStatus } from '@/app/api_/finance';
@@ -32,7 +32,7 @@ export default function ViewPayoutModal({
     const account = payout.settlement_account;
 
     return (
-        <BaseModal isOpen={isOpen} onClose={onClose} title="Vendor Settlement Info">
+        <ConfirmationModal isOpen={isOpen} onClose={onClose} title="Vendor Settlement Info">
             <div className="bg-gradient-to-tr from-gray-700 to-gray-900 text-white rounded-xl p-5 space-y-2">
                 <div className="flex justify-between text-sm">
                     <span>Account Name</span>
@@ -104,6 +104,6 @@ export default function ViewPayoutModal({
                     Close
                 </button>
             </div>
-        </BaseModal>
+        </ConfirmationModal>
     );
 }

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import toast from "react-hot-toast";
-import BaseModal from "@/app/components/commons/BaseModal";
+import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 import { deleteSizes } from "@/app/api_/sizes";
 import ProductSizesTable from "../components/ProductSizesTable";
 import ProductSizeForm from "../components/ProductSizeForm";
@@ -80,7 +80,7 @@ export default function ProductSizes() {
                 />
             </Drawer>
 
-            <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
+            <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
                 <p className="mt-2 text-sm text-gray-500">
                     Are you sure you want to delete this size? This action cannot be undone.
                 </p>
@@ -98,7 +98,7 @@ export default function ProductSizes() {
                         {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
-            </BaseModal>
+            </ConfirmationModal>
         </div>
     );
 }

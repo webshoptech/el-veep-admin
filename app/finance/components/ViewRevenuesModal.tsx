@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { CommissionRevenueItem } from '@/types/CommissionRevenueType';
-import BaseModal from '@/app/components/commons/BaseModal';
+import ConfirmationModal from '@/app/components/commons/ConfirmationModal';
 import { formatAmount } from '@/utils/formatCurrency';
 import { formatHumanReadableDate } from '@/utils/formatHumanReadableDate';
 import Image from 'next/image';
@@ -28,7 +28,7 @@ export default function ViewRevenuesModal({
         : transaction.customer;
 
     return (
-        <BaseModal isOpen={isOpen} onClose={onClose} title="Commission Revenue Details">
+        <ConfirmationModal isOpen={isOpen} onClose={onClose} title="Commission Revenue Details">
             <div className="space-y-6">
 
                 {/* Summary */}
@@ -153,6 +153,6 @@ export default function ViewRevenuesModal({
                     </button>
                 </div>
             </div>
-        </BaseModal>
+        </ConfirmationModal>
     );
 }

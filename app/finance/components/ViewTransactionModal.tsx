@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Transaction } from '@/types/TransactionType';
-import BaseModal from '@/app/components/commons/BaseModal';
+import ConfirmationModal from '@/app/components/commons/ConfirmationModal';
 import { formatAmount } from '@/utils/formatCurrency';
 import { formatHumanReadableDate } from '@/utils/formatHumanReadableDate';
 
@@ -27,7 +27,7 @@ export default function ViewTransactionModal({
     : customer;
 
   return (
-    <BaseModal isOpen={isOpen} onClose={onClose} title="Transaction Details">
+    <ConfirmationModal isOpen={isOpen} onClose={onClose} title="Transaction Details">
       <div className="space-y-6">
 
         {/* Header Section */}
@@ -139,6 +139,6 @@ export default function ViewTransactionModal({
           </button>
         </div>
       </div>
-    </BaseModal>
+    </ConfirmationModal>
   );
 }

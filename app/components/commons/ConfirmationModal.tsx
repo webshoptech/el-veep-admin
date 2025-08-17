@@ -3,7 +3,7 @@
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import React, { Fragment, ReactNode } from 'react';
 
-interface BaseModalProps {
+interface ConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
@@ -11,13 +11,13 @@ interface BaseModalProps {
   maxWidth?: string;
 }
 
-export default function BaseModal({
+export default function ConfirmationModal({
   isOpen,
   onClose,
   title,
   children,
   maxWidth = 'max-w-xl',
-}: BaseModalProps) {
+}: ConfirmationModalProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>

@@ -9,7 +9,7 @@ import Drawer from '@/app/components/commons/Drawer';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 import CommissionForm from '../components/CommissionForm';
-import BaseModal from '@/app/components/commons/BaseModal';
+import ConfirmationModal from '@/app/components/commons/ConfirmationModal';
 
 export default function Commission() {
     const [commissions, setCommissions] = useState<CommissionFormType[]>([]);
@@ -150,7 +150,7 @@ export default function Commission() {
 
             />
 
-            <BaseModal
+            <ConfirmationModal
                 isOpen={confirmDeleteId !== null}
                 onClose={() => setConfirmDeleteId(null)}
                 title="Confirm Deletion"
@@ -178,7 +178,7 @@ export default function Commission() {
                         Delete
                     </button>
                 </div>
-            </BaseModal>
+            </ConfirmationModal>
         </div>
     );
 }

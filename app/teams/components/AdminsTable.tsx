@@ -8,7 +8,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import toast from "react-hot-toast";
-import BaseModal from "@/app/components/commons/BaseModal";
+import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 import { UserIcon, ShieldCheckIcon } from "@heroicons/react/24/outline"; // Staff / Admin icons
 import AdminSummary from "./AdminSummary";
 
@@ -148,7 +148,7 @@ export default function AdminsTable() {
                 }}
             />
 
-            <BaseModal
+            <ConfirmationModal
                 isOpen={confirmDeleteId !== null}
                 onClose={() => setConfirmDeleteId(null)}
                 title="Confirm Deletion"
@@ -176,7 +176,7 @@ export default function AdminsTable() {
                         Delete
                     </button>
                 </div>
-            </BaseModal>
+            </ConfirmationModal>
             
         </div>
     );

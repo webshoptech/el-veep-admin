@@ -13,10 +13,10 @@ export async function listFaqs(
 }
 
 export async function create(formData: FormData) {
-    const response = await axios.post(`/faqs/`, formData);
+    const response = await axios.post(`/faqs`, formData);
     return response.data;
 }
-export async function update(id: string, formData: FormData) {
+export async function updateFaq(id: string, formData: FormData) {
     const response = await axios.put(`/faqs/${id}`, formData, {
         headers: {
             "Content-Type": "multipart/form-data",

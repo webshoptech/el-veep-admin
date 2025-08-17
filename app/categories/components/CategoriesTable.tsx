@@ -14,10 +14,10 @@ import { deleteCategory, getCategories } from "@/app/api_/categories";
 import CategorySummary from "./CategorySummary";
 import { CategoryType } from "@/types/CategoryType";
 import { useCategoryStore } from "@/app/store/CategoryStore";
-import { Transition, Dialog, TransitionChild, DialogPanel, DialogTitle } from "@headlessui/react";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import CategoryForm from "./CategoryForm";
+import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 
 interface CategoryTableProps {
     limit: number;
@@ -87,7 +87,7 @@ function CategoryActionCell({
                     title="Update"
                     className="bg-yellow-500 text-white p-1.5 rounded-md hover:bg-yellow-600"
                     onClick={() => {
-                        onEdit(category); 
+                        onEdit(category);
                     }}
                 >
                     <PencilSquareIcon className="w-4 h-4" />
@@ -101,66 +101,26 @@ function CategoryActionCell({
                     <TrashIcon className="w-4 h-4" />
                 </button>
             </div>
-            <Transition appear show={isModalOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-50" onClose={() => setIsModalOpen(false)}>
-                    <TransitionChild
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
+
+            <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
+                <p className="mt-2 text-sm text-gray-500">
+                    Are you sure you want to delete this category? This action cannot be undone.
+                </p>
+                <div className="mt-4 flex justify-end gap-3">
+                    <button
+                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setIsModalOpen(false)}
                     >
-                        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
-                    </TransitionChild>
-
-                    <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4 text-center">
-                            <TransitionChild
-                                as={Fragment}
-                                enter="ease-out duration-300"
-                                enterFrom="opacity-0 scale-95"
-                                enterTo="opacity-100 scale-100"
-                                leave="ease-in duration-200"
-                                leaveFrom="opacity-100 scale-100"
-                                leaveTo="opacity-0 scale-95"
-                            >
-                                <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                    <DialogTitle
-                                        as="h3"
-                                        className="text-lg font-medium leading-6 text-gray-900"
-                                    >
-                                        Confirm Deletion
-                                    </DialogTitle>
-                                    <div className="mt-2">
-                                        <p className="text-sm text-gray-500">
-                                            Are you sure you want to delete this category? This action cannot be undone.
-                                        </p>
-                                    </div>
-
-                                    <div className="mt-4 flex justify-end gap-3">
-                                        <button
-                                            type="button"
-                                            className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
-                                            onClick={() => setIsModalOpen(false)}
-                                        >
-                                            Cancel
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="inline-flex justify-center rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
-                                            onClick={handleDelete}
-                                        >
-                                            Proceed
-                                        </button>
-                                    </div>
-                                </DialogPanel>
-                            </TransitionChild>
-                        </div>
-                    </div>
-                </Dialog>
-            </Transition>
+                        Cancel
+                    </button>
+                    <button
+                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                        onClick={handleDelete}
+                    >
+                        Proceed
+                    </button>
+                </div>
+            </ConfirmationModal> 
             <Drawer
                 isOpen={isDrawerOpen}
                 onClose={() => {

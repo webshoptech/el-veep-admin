@@ -19,7 +19,7 @@ import {
 } from "@/app/api_/tickets";
 import router from "next/router";
 import toast from "react-hot-toast";
-import BaseModal from "@/app/components/commons/BaseModal";
+import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import { updateTicketStatus } from "@/app/api_/tickets";
 
@@ -214,7 +214,7 @@ export default function TicketDetailPage() {
 
 
             {/* MODAL INSIDE COMPONENT */}
-            <BaseModal
+            <ConfirmationModal
                 isOpen={confirmDeleteId !== null}
                 onClose={() => setConfirmDeleteId(null)}
                 title="Confirm Deletion"
@@ -243,7 +243,7 @@ export default function TicketDetailPage() {
                         Delete
                     </button>
                 </div>
-            </BaseModal>
+            </ConfirmationModal>
         </div>
     );
 }

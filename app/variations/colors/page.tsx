@@ -5,7 +5,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import { ColorType } from "@/types/ColorType";
 import toast from "react-hot-toast"; 
-import BaseModal from "@/app/components/commons/BaseModal";
+import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 import ProductColorsTable from "../components/ProductColorsTable";
 import ProductColorsForm from "../components/ProductColorsForm";
 import { deleteColour } from "@/app/api_/colours";
@@ -80,7 +80,7 @@ export default function ProductColors() {
                 />
             </Drawer>
 
-            <BaseModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
+            <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
                 <p className="mt-2 text-sm text-gray-500">
                     Are you sure you want to delete this color? This action cannot be undone.
                 </p>
@@ -98,7 +98,7 @@ export default function ProductColors() {
                         Proceed
                     </button>
                 </div>
-            </BaseModal>
+            </ConfirmationModal>
         </div>
     );
 }
