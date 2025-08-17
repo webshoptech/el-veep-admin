@@ -87,7 +87,7 @@ function CategoryActionCell({
                     title="Update"
                     className="bg-yellow-500 text-white p-1.5 rounded-md hover:bg-yellow-600"
                     onClick={() => {
-                        onEdit(category); // Pass full category object here
+                        onEdit(category); 
                     }}
                 >
                     <PencilSquareIcon className="w-4 h-4" />
