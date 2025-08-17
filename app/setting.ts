@@ -112,7 +112,7 @@ export const NAVIGATION = [
         icon: QuestionMarkCircleIcon,
         children: [
             { name: "FAQs", href: "/faqs" },
-            { name: "Tutorials", href: "/faqs/tutorials" },
+            { name: "Tutorials", href: "/tutorials" },
         ],
     },
     {
