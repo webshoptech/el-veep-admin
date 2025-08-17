@@ -61,7 +61,6 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
 
     return (
         <>
-            {/* ✅ Mobile Sidebar */}
             <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
                 <DialogBackdrop className="fixed inset-0 bg-black/50 transition-opacity duration-300" />
                 <div className="fixed inset-0 flex">
@@ -94,7 +93,6 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
                 </button>
             </div>
 
-            {/* ✅ Desktop Sidebar */}
             <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col bg-white px-6 pb-4 border-r rounded-r-4xl border-orange-200">
                 <SidebarContent collapsed={collapsed} setCollapsed={setCollapsed} user={user} onLogout={handleLogout} />
             </div>
@@ -146,10 +144,10 @@ function BottomMenu({
 
     return (
         <Popover className="relative w-1/2">
-            <div className="fixed bottom-0 z-50 bg-hub-primary-400 text-white rounded-xl shadow-inner px-4 py-3 flex items-center justify-between mb-2">     {/* Profile */}
-                <div className="flex items-center gap-x-3">
+            <div className="fixed bottom-0 z-50 bg-hub-primary-400 text-white rounded-xl shadow-inner px-1.5 py-1.5 flex items-center justify-between">
+                <div className="flex items-center gap-x-1">
                     <Image
-                        className="size-10 rounded-full object-cover"
+                        className="size-5 rounded-full object-cover"
                         src="/icon.svg"
                         alt="Profile"
                         width={40}
@@ -167,19 +165,19 @@ function BottomMenu({
 
                 <PopoverButton className="text-white hover:text-white transition" aria-label="Toggle menu">
                     {({ open }) => (
-                        <ChevronUpIcon className={`h-5 w-5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+                        <ChevronUpIcon className={`h-4 w-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
                     )}
                 </PopoverButton>
             </div>
 
             {/* Menu Panel */}
-            <PopoverPanel className="fixed bottom-[60px] z-40 px-4">
-                <div className="rounded-t-xl bg-hub-primary-400 text-white shadow-lg ring-1 ring-white/10 p-3 space-y-1">
+            <PopoverPanel className="fixed bottom-[37px] z-40 px-5">
+                <div className="rounded-xl text-white p-3">
                     {bottomNavigation.map((item) => (
                         <button
                             key={item.name}
                             onClick={item.isLogout ? onLogout : undefined}
-                            className={`w-full text-left flex items-center cursor-pointer gap-x-3 rounded-md px-4 py-2 text-sm font-medium hover:bg-white/10 ${item.isLogout ? 'text-orange-500 font-bold bg-white border hover:bg-white hover:text-white' : ''
+                            className={`w-full text-left flex items-center cursor-pointer gap-x-3 rounded-md px-4 py-2 text-xs font-medium hover:bg-white/10 ${item.isLogout ? 'text-orange-500 font-bold bg-white border hover:bg-white hover:text-white' : ''
                                 } ${collapsed ? 'justify-center' : ''}`}
                         >
                             <item.icon

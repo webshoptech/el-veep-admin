@@ -29,7 +29,7 @@ const NavMenu = () => {
                         <button
                             onClick={() => toggleSection(item.name)}
                             className={clsx(
-                                "w-full flex items-center justify-between px-3 py-2 rounded-md text-xs font-semibold",
+                                "w-full flex items-center justify-between px-3 py-1.5 rounded-md text-xs font-semibold",
                                 isActiveParent
                                     ? "text-orange-500"
                                     : "text-gray-700 hover:text-orange-500"
@@ -56,7 +56,7 @@ const NavMenu = () => {
                                             <Link
                                                 href={subItem.href}
                                                 className={clsx(
-                                                    "block px-3 py-1.5 text-sm rounded-md",
+                                                    "block px-3 py-1.5 text-xs rounded-md",
                                                     isActiveSub
                                                         ? "bg-orange-50 text-orange-600"
                                                         : "text-gray-500 hover:text-orange-500 hover:bg-orange-50"
