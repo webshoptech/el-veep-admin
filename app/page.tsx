@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import AreaChart from "@/app/components/commons/AreaChart";
 import { RecentReviews } from "./components/Review";
 import { Greetings } from "@/utils/Greetings";
-import OrdersTable from "./orders/components/OrdersTable";
 import Overview from "./components/Overview"; 
 import SelectDropdown from "./components/commons/Fields/SelectDropdown";
+import RecentOrdersTable from "./orders/components/RecentOrdersTable";
 
 const periods = [
     { value: "all", label: "All" },
@@ -47,7 +47,7 @@ const Home: React.FC = () => {
                 </div>
             </div>
 
-            <OrdersTable limit={10} />
+            <RecentOrdersTable limit={10} />
         </div>
     );
 };

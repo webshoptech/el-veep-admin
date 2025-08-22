@@ -14,6 +14,7 @@ interface TanStackTableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
   loading?: boolean;
+  
   error?: string | null;
   itemsPerPage?: number;
   pagination?: {
