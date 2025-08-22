@@ -50,6 +50,19 @@ export const NAVIGATION = [
             { name: "Customer Activity", href: "/customers/activities" },
         ],
     },
+     {
+        name: "Order Management",
+        href: "/orders",
+        icon: CreditCardIcon,
+        children: [
+            { name: "All Orders", href: "/orders" },
+            { name: "Processing orders", href: "/orders/processing" },
+            { name: "Ongoing orders", href: "/orders/ongoing" },
+            { name: "Delivered orders", href: "/orders/delivered" },
+            { name: "Cancelled orders", href: "/orders/cancelled" },
+            { name: "Returns & Refunds orders", href: "/orders/returned" },
+        ],
+    },
     {
         name: "Vendor Management",
         href: "/vendors",
@@ -115,19 +128,7 @@ export const NAVIGATION = [
             { name: "Tutorials", href: "/tutorials" },
         ],
     },
-    {
-        name: "Order Management",
-        href: "/orders",
-        icon: CreditCardIcon,
-        children: [
-            { name: "All Orders", href: "/orders" },
-            { name: "Processing orders", href: "/orders/processing" },
-            { name: "Ongoing orders", href: "/orders/ongoing" },
-            { name: "Delivered orders", href: "/orders/delivered" },
-            { name: "Cancelled orders", href: "/orders/cancelled" },
-            { name: "Returns & Refunds orders", href: "/orders/returned" },
-        ],
-    },
+   
     {
         name: "Financial Management",
         href: "/finance",
