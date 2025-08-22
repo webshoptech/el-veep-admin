@@ -50,7 +50,7 @@ export const NAVIGATION = [
             { name: "Customer Activity", href: "/customers/activities" },
         ],
     },
-     {
+    {
         name: "Order Management",
         href: "/orders",
         icon: CreditCardIcon,
@@ -89,14 +89,14 @@ export const NAVIGATION = [
         children: [
             { name: "All categories", href: "/categories" },
             { name: "Sub-categories", href: "/categories/sub" },
-             { name: "Category Analytics", href: "/categories/analytics" },
+            { name: "Category Analytics", href: "/categories/analytics" },
         ],
     },
     {
         name: "Variation Management",
         href: "/variations",
         icon: AdjustmentsHorizontalIcon,
-        children: [ 
+        children: [
             { name: "Product colors", href: "/variations/colors" },
             { name: "Product sizes", href: "/variations/sizes" },
         ],
@@ -105,7 +105,7 @@ export const NAVIGATION = [
         name: "Banner Management",
         href: "/categories",
         icon: FlagIcon,
-        children: [ 
+        children: [
             { name: "Banners", href: "/banners" },
             { name: "Banner types", href: "/banners/types" },
         ],
@@ -128,7 +128,7 @@ export const NAVIGATION = [
             { name: "Tutorials", href: "/tutorials" },
         ],
     },
-   
+
     {
         name: "Financial Management",
         href: "/finance",
