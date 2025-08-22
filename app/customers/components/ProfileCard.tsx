@@ -5,9 +5,10 @@ import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import clsx from "clsx";
 import { UserDetailResponse } from "@/types/UserType";
-import { changeUserStatus } from "@/app/api_/users";
+import { changeUserStatus, deleteUser } from "@/app/api_/users";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
+import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 
 interface ProfileCardProps {
     user: UserDetailResponse | null;
@@ -17,6 +18,8 @@ interface ProfileCardProps {
 export default function ProfileCard({ user: initialUser, loading }: ProfileCardProps) {
     const [user, setUser] = useState<UserDetailResponse | null>(initialUser);
     const [updating, setUpdating] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [confirmText, setConfirmText] = useState("");
 
     useEffect(() => {
         setUser(initialUser);
@@ -75,7 +78,7 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                         </div>
                     )}
 
-                    <div className="flex-1">
+                    <div className="flex-1 mt-4">
                         <h3 className="text-xl font-bold text-gray-800">
                             {loading ? <Skeleton width={120} /> : `${user?.name} ${user?.last_name}`}
                         </h3>
@@ -152,17 +155,77 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
 
                     <div>
                         <p className="text-gray-400 font-semibold uppercase text-xs mb-1">User Status</p>
-                        <div className="w-40">
-                            {selectedStatus && (
-                                <SelectDropdown
-                                    options={statusOptions}
-                                    value={selectedStatus}
-                                    onChange={handleStatusChange}
-                                    disabled={updating}
+                        <div className="flex items-center gap-2">
+                            <div className="w-40">
+                                {selectedStatus && (
+                                    <SelectDropdown
+                                        options={statusOptions}
+                                        value={selectedStatus}
+                                        onChange={handleStatusChange}
+                                        disabled={updating}
+                                    />
+                                )}
+                            </div>
+
+                            {/* Delete Button */}
+                            <button
+                                onClick={() => setIsDeleteModalOpen(true)}
+                                className="px-3 py-1.5 bg-red-600 text-white rounded-md text-sm hover:bg-red-700 transition"
+                            >
+                                Delete
+                            </button>
+
+                            <ConfirmationModal
+                                isOpen={isDeleteModalOpen}
+                                onClose={() => {
+                                    setIsDeleteModalOpen(false);
+                                    setConfirmText("");
+                                }}
+                                title="Delete User"
+                            >
+                                <p className="text-sm text-gray-600">
+                                    To confirm, please type <span className="font-semibold text-red-600">DELETE</span> below.
+                                </p>
+
+                                <input
+                                    type="text"
+                                    value={confirmText}
+                                    onChange={(e) => setConfirmText(e.target.value)}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 mt-2"
                                 />
-                            )}
+
+                                <div className="mt-6 flex justify-end gap-3">
+                                    <button
+                                        onClick={() => setIsDeleteModalOpen(false)}
+                                        className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        disabled={confirmText !== "DELETE"}
+                                        onClick={async () => {
+                                            try {
+                                                await deleteUser(user?.id?.toString() ?? "");
+                                                toast.success("User deleted successfully");
+                                                setIsDeleteModalOpen(false);
+                                                window.location.href = "/users";
+                                            } catch (error) {
+                                                console.error("Failed to delete user", error);
+                                                toast.error("Failed to delete user");
+                                            }
+                                        }}
+                                        className={`px-4 py-2 rounded-md text-white transition ${confirmText === "DELETE"
+                                            ? "bg-red-600 hover:bg-red-700"
+                                            : "bg-red-300 cursor-not-allowed"
+                                            }`}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </ConfirmationModal>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
