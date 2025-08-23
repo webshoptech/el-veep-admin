@@ -4,12 +4,37 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAVIGATION } from "@/app/setting";
 import clsx from "clsx";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { User } from "@/types/UserType";
 
-const NavMenu = () => {
+const NavMenu = ({ user }: { user: User | null }) => {
     const pathname = usePathname();
     const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+
+    const filteredNavigation = useMemo(() => {
+        if (!user) return [];
+
+        if (user.role === "staff") {
+            // Only allow these sections for staff
+            const allowed = [
+                "Customer Management",
+                "Items Management",
+                "Vendor Management",
+                "Support Tickets",
+                "Reviews Management",
+                "Category Management",
+                "Variation Management",
+                "Banner Management",
+                "Shop Management",
+                "FAQs Management"
+            ];
+            return NAVIGATION.filter((nav) => allowed.includes(nav.name));
+        }
+
+        // otherwise return full menu
+        return NAVIGATION;
+    }, [user]);
 
     const toggleSection = (name: string) => {
         setOpenSections((prev) => ({
@@ -20,7 +45,7 @@ const NavMenu = () => {
 
     return (
         <ul className="space-y-2">
-            {NAVIGATION.map((item) => {
+            {filteredNavigation.map((item) => {
                 const isActiveParent = pathname.startsWith(item.href);
                 const isOpen = openSections[item.name] || isActiveParent;
 
