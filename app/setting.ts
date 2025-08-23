@@ -64,6 +64,15 @@ export const NAVIGATION = [
         ],
     },
     {
+        name: "Reviews Management",
+        href: "/orders",
+        icon: CreditCardIcon,
+        children: [
+            { name: "All Reviews", href: "/reviews" },
+            { name: "Un-Reviews orders", href: "/reviews/un-reviews" },
+        ],
+    },
+    {
         name: "Vendor Management",
         href: "/vendors",
         icon: ShoppingBagIcon,
@@ -172,26 +181,8 @@ export const NAVIGATION = [
             { name: "Team members", href: "/teams" },
         ],
     },
-];
+]; 
 
-export const SettingsNavigation = [
-    {
-        name: "Platform Settings",
-        href: "/settings/app",
-        icon: AdjustmentsHorizontalIcon,
-    },
-    {
-        name: "Integrations",
-        href: "/settings/integrations",
-        icon: Cog6ToothIcon,
-        children: [
-            { name: "Clik2Pay Configuration", href: "/settings/clik2pay" },
-            { name: "Shipping Configuration", href: "/settings/easypost" },
-            { name: "SMS Configuration", href: "/settings/sms" },
-            { name: "Email Configuration", href: "/settings/email" },
-        ],
-    },
-];
 export const PrivacyPages = [
     { name: "Privacy Policy", type: "privacy" },
     { name: "Terms and Conditions", type: "terms" },

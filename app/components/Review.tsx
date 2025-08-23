@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Review from "@/types/ReviewType";
+import ReviewType from "@/types/ReviewType";
 import { formatHumanReadableDate } from "../../utils/formatHumanReadableDate";
 import RecentReviewsSkeleton from "./Skeletons/RecentReviewsSkeleton";
-import { getRecentReview } from "../api_/products";
+import { listReviews } from "../api_/reviews";
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -26,7 +26,7 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-function ReviewCard({ review }: { review: Review }) {
+function ReviewCard({ review }: { review: ReviewType }) {
   return (
     <div className="flex items-start space-x-4 py-4">
       <Image
@@ -58,14 +58,14 @@ function ReviewCard({ review }: { review: Review }) {
 }
 
 export function RecentReviews() {
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState<ReviewType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchReviews() {
       try {
-        const response = await getRecentReview();
+        const response = await listReviews(3, 0);
         if (response?.status === "success" && Array.isArray(response.data)) {
           setReviews(response.data);
         } else {

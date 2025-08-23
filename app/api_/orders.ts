@@ -54,3 +54,4 @@ export async function getStats(period: string) {
     const response = await axios.get(`/stats?start_date=${period}`);
     return response.data;
 }
+

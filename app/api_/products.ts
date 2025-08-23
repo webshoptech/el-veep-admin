@@ -45,7 +45,3 @@ export async function updateItemStatus(productId: number, status: string) {
     return response.data;
 }
 
-export async function getRecentReview() {
-    const response = await axios.get(`/review`);
-    return response.data;
-}

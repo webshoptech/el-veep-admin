@@ -16,7 +16,7 @@ interface RecentOrdersTableProps {
     status?: string;
 }
 
-const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit, status }) => {
+const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
     const [orders, setOrders] = useState<OrderResponse[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -126,7 +126,7 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit, status }) 
         } finally {
             setLoading(false);
         }
-    }, [limit, status]);
+    }, [limit]);
 
     useEffect(() => {
         fetchOrders();

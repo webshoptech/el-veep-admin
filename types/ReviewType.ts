@@ -1,4 +1,6 @@
-export default interface Review {
+import { Product } from "./ProductType";
+
+export default interface ReviewType {
   id: number;
   product_id: number;
   user_id: number;
@@ -27,4 +29,11 @@ export default interface Review {
     deleted_at: string | null;
     updated_at: string;
   };
+  product: Product;
 }
+
+export interface ReviewMetricType {
+    rating: number;
+    count: number;
+}
+ 

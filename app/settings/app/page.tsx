@@ -27,7 +27,6 @@ const initialData: AppSettingsData = {
 };
 
 const useAppSettingsForm = () => {
-    const [originalSettings, setOriginalSettings] = useState<AppSettingsData>(initialData);
     const [values, setValues] = useState<AppSettingsData>(initialData);
     const [isLoading, setIsLoading] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,7 +46,6 @@ const useAppSettingsForm = () => {
                         support_phone: data.support_phone || "",
                     };
                     setValues(settings);
-                    setOriginalSettings(settings)
                 }
             } catch (error) {
                 console.error("Failed to fetch settings", error);
@@ -79,18 +77,13 @@ const useAppSettingsForm = () => {
         }
     }, []);
 
-    const handleReset = useCallback(() => {
-        setValues(originalSettings);
-    }, [originalSettings]);
-
-    // Handle the form submission
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
 
         const payload = new FormData();
         Object.entries(values).forEach(([key, value]) => {
-            if (key === 'app_logo') {
+            if (key === "app_logo") {
                 if (value instanceof File) {
                     payload.append(key, value);
                 }
@@ -100,27 +93,29 @@ const useAppSettingsForm = () => {
         });
 
         try {
-            const data = await saveAppSettings(payload);
-            if (data?.error_detail) {
-                toast.error(data.error_detail);
+            const response = await saveAppSettings(payload);
+            if (response?.error_detail) {
+                toast.error(response.error_detail);
                 return;
             }
 
-            // Re-sync the state with the response from the server
+            const updated = response.data || {};
             const updatedSettings = {
-                app_name: data.app_name || "",
-                app_logo: data.app_logo || null,
-                app_description: data.app_description || "",
-                support_email: data.support_email || "",
-                support_phone: data.support_phone || "",
+                app_name: updated.app_name || "",
+                app_logo: updated.app_logo || null,
+                app_description: updated.app_description || "",
+                support_email: updated.support_email || "",
+                support_phone: updated.support_phone || "",
             };
+
             setValues(updatedSettings);
-            setOriginalSettings(updatedSettings);
-            toast.success("Settings saved successfully!");
+            toast.success(response.message || "Settings saved successfully!");
         } catch (error: unknown) {
             const err = error as { response?: { data?: { error_detail?: string } } };
             console.error("Submission error:", err);
-            toast.error(err?.response?.data?.error_detail || "Failed to save settings.");
+            toast.error(
+                err?.response?.data?.error_detail || "Failed to save settings."
+            );
         } finally {
             setIsSubmitting(false);
         }
@@ -134,9 +129,9 @@ const useAppSettingsForm = () => {
         handleChange,
         handleFileChange,
         handleSubmit,
-        handleReset,
     };
 };
+
 export default function AppSettings() {
     const {
         values,
@@ -146,13 +141,38 @@ export default function AppSettings() {
         handleChange,
         handleFileChange,
         handleSubmit,
-        handleReset,
     } = useAppSettingsForm();
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     if (isLoading) {
-        return <Skeleton count={5} />;
+        return (
+            <div className="bg-white shadow-md rounded-lg p-6 space-y-6">
+                <h1 className="text-2xl font-semibold mb-6">
+                    <Skeleton width={200} />
+                </h1>
+
+                {/* Logo Section */}
+                <div className="flex flex-col md:flex-row md:items-center md:space-x-6 mb-6">
+                    <Skeleton width={120} height={40} />
+                    <Skeleton width={100} height={36} />
+                </div>
+
+                {/* Inputs */}
+                <div className="space-y-6">
+                    <Skeleton height={40} />
+                    <Skeleton height={100} />
+                    <Skeleton height={40} />
+                    <Skeleton height={40} />
+                </div>
+
+                {/* Buttons */}
+                <div className="flex justify-end space-x-3 mt-8">
+                    <Skeleton width={80} height={36} />
+                    <Skeleton width={120} height={36} />
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -160,12 +180,12 @@ export default function AppSettings() {
             <h1 className="text-2xl text-black font-semibold mb-6">App Settings</h1>
 
             {/* Logo Section */}
-            <div className="flex flex-col md:flex-row md:items-center md:space-x-6 mb-6">
+            <div className="flex flex-col items-center justify-center mb-6">
                 {logoPreviewUrl && (
-                    <div className="mb-4 md:mb-0">
+                    <div className="mb-4">
                         <Image
                             width={120}
-                            height={40}
+                            height={120}
                             src={logoPreviewUrl}
                             alt="App logo preview"
                             priority
@@ -194,7 +214,7 @@ export default function AppSettings() {
                 </div>
             </div>
 
-            {/* Form Inputs */}
+
             <fieldset disabled={isSubmitting} className="space-y-6">
                 <Input
                     label="Brand name"
@@ -226,18 +246,10 @@ export default function AppSettings() {
                 />
             </fieldset>
 
-            {/* Actions */}
-            <div className="mt-8 border-t border-gray-200 pt-5 flex justify-end space-x-3">
-                <button
-                    type="button"
-                    onClick={handleReset}
-                    disabled={isSubmitting}
-                    className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:bg-gray-200"
-                >
-                    Reset
-                </button>
+            <div className="mt-8 flex justify-end space-x-3 w-full">
                 <SubmitButton label="Save changes" loading={isSubmitting} />
             </div>
+
         </form>
     );
 }
