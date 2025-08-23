@@ -41,8 +41,8 @@ export default function Banners() {
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Category Banners</h1>
-                    <p className="text-sm text-gray-600">Manage your category banners here.</p>
+                    <h1 className="text-2xl font-bold text-gray-800">App Banners</h1>
+                    <p className="text-sm text-gray-600">Manage your app banners here.</p>
                 </div>
 
                 <div className="flex gap-3 items-center">
