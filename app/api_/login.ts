@@ -24,3 +24,37 @@ export async function changePassword(formData: FormData) {
 
   return response.data;
 }
+
+
+export async function forgetPassword(formData: FormData) {
+  const response = await axios.post("/forget-password", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Accept: "application/json",
+    },
+  });
+
+  return response.data;
+}
+
+export async function confirmResetCode(formData: FormData) {
+  const response = await axios.post("/confirm-reset-code", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Accept: "application/json",
+    },
+  });
+
+  return response.data;
+}
+
+export async function resetPassword(formData: FormData) {
+  const response = await axios.post("/reset-password", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Accept: "application/json",
+    },
+  });
+
+  return response.data;
+}
