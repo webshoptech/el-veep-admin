@@ -32,7 +32,7 @@ export default function ConfirmResetCode() {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append("code", code);
+        formData.append("otp", code);
         formData.append("email", email);
 
         try {
@@ -40,7 +40,7 @@ export default function ConfirmResetCode() {
             const result = await confirmResetCode(formData);
 
             toast.success(result.message || "Code confirmed successfully.");
-            router.replace("/auth/forget-password");
+            router.replace("/auth/reset-password");
         } catch (err) {
             const error = err as { response?: { data?: ErrorResponse } };
             const errorDetail =
@@ -77,7 +77,8 @@ export default function ConfirmResetCode() {
                             Reset Code
                         </label>
                         <input
-                            type="text"
+                            type="tel"
+                            maxLength={6}
                             value={code}
                             onChange={(e) => setCode(e.target.value)}
                             placeholder="Enter the code from your email"
