@@ -87,7 +87,6 @@ export default function ResetPassword() {
                         />
                     </div>
 
-                    {/* New password */}
                     <div>
                         <label className="block text-sm font-medium mb-1">
                             New Password
