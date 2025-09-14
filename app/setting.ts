@@ -126,7 +126,7 @@ export const NAVIGATION = [
         children: [
             { name: "Shop List", href: "/shops" },
             { name: "Shop Performance", href: "/shops/performance" },
-        ],
+        ], 
     },
     {
         name: "FAQs Management",

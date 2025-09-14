@@ -8,7 +8,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
     return (
-        <div className="flex bg-white/95 h-screen overflow-auto">
+        <div className="flex bg-white/95 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-50 hover:scrollbar-thumb-gray-100 scrollbar-track-transparent">
             <Sidebar
                 sidebarOpen={sidebarOpen}
                 setSidebarOpen={setSidebarOpen}
