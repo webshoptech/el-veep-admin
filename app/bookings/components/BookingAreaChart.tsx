@@ -7,12 +7,12 @@ import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { getBookingGraph } from "@/app/api_/orders";
-import { OrderGraphPoint } from "@/types/OrderType";
+import { getBookingGraph } from "@/app/api_/bookings";
+import { GraphPoint } from "@/types/OrderType";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const AreaChart = () => {
+const BookingAreaChart = () => {
     const [chartData, setChartData] = useState<{ categories: string[]; series: number[] }>({
         categories: [],
         series: [],
@@ -31,8 +31,8 @@ const AreaChart = () => {
             const raw = await getBookingGraph(start_date);
 
             if (Array.isArray(raw) && raw.length > 0) {
-                const categories = raw.map((item: OrderGraphPoint) => formatDate(new Date(item.day)));
-                const series = raw.map((item: OrderGraphPoint) => item.total);
+                const categories = raw.map((item: GraphPoint) => formatDate(new Date(item.day)));
+                const series = raw.map((item: GraphPoint) => item.total);
                 setChartData({ categories, series });
                 setHasData(true);
             } else {
@@ -139,7 +139,7 @@ const AreaChart = () => {
     return (
         <div className="p-6 card text-gray-950">
             <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-medium">Order Graph</h2>
+                <h2 className="text-lg font-medium">Bookings Graph</h2>
                 <SelectDropdown options={monthOptions} value={selected} onChange={setSelected} />
             </div>
 
@@ -156,4 +156,4 @@ const AreaChart = () => {
     );
 };
 
-export default AreaChart;
+export default BookingAreaChart;

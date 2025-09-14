@@ -1,5 +1,5 @@
 import axios from "@/app/lib/axios";
-import { OrderGraphPoint, OrderResponse, OrderStatsType } from "@/types/OrderType";
+import { GraphPoint, OrderResponse, OrderStatsType } from "@/types/OrderType";
 
 export async function getRecentBookings(
     limit: number,
@@ -12,6 +12,7 @@ export async function getRecentBookings(
     });
     return response.data;
 }
+ 
 
 export async function getOrderDetail(orderId: string): Promise<OrderResponse> {
     const response = await axios.get<OrderResponse>(`/orders/${orderId}`);
@@ -31,14 +32,14 @@ export async function changeOrderPaymentStatus(orderId: number, status: string) 
     return response.data;
 }
 
-export async function getOrderGraph(start_date?: string): Promise<OrderGraphPoint[]> {
-  const response = await axios.get<OrderGraphPoint[]>(`/orders/graph`, {
+export async function getOrderGraph(start_date?: string): Promise<GraphPoint[]> {
+  const response = await axios.get<GraphPoint[]>(`/orders/graph`, {
     params: { start_date },
   });
   return response.data;
 }
-export async function getBookingGraph(start_date?: string): Promise<OrderGraphPoint[]> {
-  const response = await axios.get<OrderGraphPoint[]>(`/bookings/graph`, {
+export async function getBookingGraph(start_date?: string): Promise<GraphPoint[]> {
+  const response = await axios.get<GraphPoint[]>(`/bookings/graph`, {
     params: { start_date },
   });
   return response.data;

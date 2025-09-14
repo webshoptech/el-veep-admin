@@ -8,7 +8,7 @@ import { MONTHS } from "@/app/setting";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import { getOrderGraph } from "@/app/api_/orders";
-import { OrderGraphPoint } from "@/types/OrderType";
+import { GraphPoint } from "@/types/OrderType";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -31,8 +31,8 @@ const AreaChart = () => {
             const raw = await getOrderGraph(start_date);
 
             if (Array.isArray(raw) && raw.length > 0) {
-                const categories = raw.map((item: OrderGraphPoint) => formatDate(new Date(item.day)));
-                const series = raw.map((item: OrderGraphPoint) => item.total);
+                const categories = raw.map((item: GraphPoint) => formatDate(new Date(item.day)));
+                const series = raw.map((item: GraphPoint) => item.total);
                 setChartData({ categories, series });
                 setHasData(true);
             } else {

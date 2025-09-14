@@ -106,7 +106,7 @@ export type Shop = {
     created_at: string;
     updated_at: string;
 };
-export type OrderGraphPoint = {
+export type GraphPoint = {
   day: string;  
   total: number; 
 };
