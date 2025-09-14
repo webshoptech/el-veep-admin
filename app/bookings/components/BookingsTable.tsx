@@ -6,18 +6,18 @@ import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
-import { OrderResponse } from "@/types/OrderType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { getRecentOrders } from "@/app/api_/orders";
+import { getRecentBookings } from "@/app/api_/bookings";
 import StatusBadge from "@/utils/StatusBadge";
+import { BookingResponse } from "@/types/BookingType";
 
-interface OrderTableProps {
+interface BookingTableProps {
     limit: number;
     status?: string;
 }
 
-const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
-    const [orders, setOrders] = useState<OrderResponse[]>([]);
+const BookingTable: React.FC<BookingTableProps> = ({ limit, status }) => {
+    const [bookings, setBookings] = useState<BookingResponse[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState<string>("");
@@ -25,33 +25,46 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
         pageIndex: 0,
         pageSize: limit,
     });
-    const [totalOrders, setTotalOrders] = useState(0);
+    const [totalBookings, setTotalBookings] = useState(0);
 
-    const columns: ColumnDef<OrderResponse>[] = useMemo(
+    const columns: ColumnDef<BookingResponse>[] = useMemo(
         () => [
             {
                 header: "Customer",
-                accessorKey: "user",
+                accessorKey: "customer",
                 cell: ({ getValue }) => {
-                    const value = getValue() as { name: string; photo: string } | null;
+                    const value = getValue() as BookingResponse["customer"];
                     return (
                         <div className="flex items-center space-x-2">
-                            <Avatar src={value?.photo} alt={value?.name || "User"} />
+                            <Avatar src={value?.photo || ""} alt={value?.name || "Customer"} />
                             <span>{value?.name ?? "N/A"}</span>
                         </div>
                     );
                 },
             },
             {
-                header: "Item",
-                accessorKey: "product",
+                header: "Vendor",
+                accessorKey: "vendor",
                 cell: ({ getValue }) => {
-                    const value = getValue() as { title: string; image: string } | null;
+                    const value = getValue() as BookingResponse["vendor"];
+                    return (
+                        <div className="flex items-center space-x-2">
+                            <Avatar src={value?.photo || ""} alt={value?.name || "Vendor"} />
+                            <span>{value?.name ?? "N/A"}</span>
+                        </div>
+                    );
+                },
+            },
+            {
+                header: "Service",
+                accessorKey: "service",
+                cell: ({ getValue }) => {
+                    const value = getValue() as BookingResponse["service"];
                     return (
                         <div className="flex items-center space-x-2">
                             <Image
                                 src={value?.image || ""}
-                                alt={value?.title || "Product"}
+                                alt={value?.title || "Service"}
                                 width={40}
                                 height={40}
                                 className="w-10 h-10 object-cover rounded"
@@ -62,24 +75,19 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                 },
             },
             {
-                header: "Subtotal",
-                accessorKey: "subtotal",
+                header: "Total",
+                accessorKey: "total",
                 cell: ({ getValue }) => {
-                    const value = getValue() as string;
-                    const numericValue = parseFloat(value);
+                    const value = getValue() as string | number;
+                    const numericValue = parseFloat(value as string);
                     return isNaN(numericValue)
                         ? "Invalid"
                         : `$${numericValue.toFixed(2)}`;
                 },
             },
             {
-                header: "Quantity",
-                accessorKey: "quantity",
-            },
-
-            {
-                header: "Shipping",
-                accessorKey: "shipping_status",
+                header: "Delivery",
+                accessorKey: "delivery_status",
                 cell: ({ getValue }) => {
                     const value = String(getValue() ?? "N/A");
                     return <StatusBadge status={value} />;
@@ -90,22 +98,22 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                 accessorKey: "payment_status",
                 cell: ({ getValue }) => {
                     const value = String(getValue() ?? "N/A");
-                    return <StatusBadge status={value} type={"payment"} />;
+                    return <StatusBadge status={value} type="payment" />;
                 },
             },
             {
                 header: "Action",
                 accessorKey: "id",
                 cell: ({ getValue }) => {
-                    const orderId = getValue();
+                    const bookingId = getValue();
                     return (
                         <button
                             className="px-3 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700 cursor-pointer"
                             onClick={() => {
-                                window.location.href = `/orders/${orderId}`;
+                                window.location.href = `/bookings/${bookingId}`;
                             }}
                         >
-                            View Order
+                            View Booking
                         </button>
                     );
                 },
@@ -118,45 +126,45 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                     return formatHumanReadableDate(value);
                 },
             },
-
         ],
         []
     );
 
-    const fetchOrders = useCallback(async (pageIndex: number, search: string) => {
+
+    const fetchBookings = useCallback(async (pageIndex: number, search: string) => {
         try {
             setLoading(true);
             const offset = pageIndex * pagination.pageSize;
-            const response = await getRecentOrders(
+            const response = await getRecentBookings(
                 pagination.pageSize,
                 offset,
                 search,
                 status
             );
-            setOrders(response.orders);
-            setTotalOrders(response.total || 0);
+            setBookings(response.bookings);
+            setTotalBookings(response.total || 0);
         } catch (err) {
             console.error(err);
-            setError("An error occurred while fetching orders.");
+            setError("An error occurred while fetching bookings.");
         } finally {
             setLoading(false);
         }
     }, [pagination.pageSize, status]);
 
-    const debouncedFetchOrders = useMemo(
+    const debouncedFetchBookings = useMemo(
         () =>
             debounce((pageIndex: number, search: string) => {
-                fetchOrders(pageIndex, search);
+                fetchBookings(pageIndex, search);
             }, 300),
-        [fetchOrders]
+        [fetchBookings]
     );
 
     useEffect(() => {
-        debouncedFetchOrders(pagination.pageIndex, search);
+        debouncedFetchBookings(pagination.pageIndex, search);
         return () => {
-            debouncedFetchOrders.cancel();
+            debouncedFetchBookings.cancel();
         };
-    }, [pagination.pageIndex, debouncedFetchOrders, search]);
+    }, [pagination.pageIndex, debouncedFetchBookings, search]);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
@@ -165,7 +173,6 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
 
     return (
         <div>
-            {/* <p className="text-lg font-bold text-gray-900">Recent orders</p> */}
             <div className="mb-4">
                 <input
                     type="text"
@@ -176,14 +183,14 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                 />
             </div>
             <TanStackTable
-                data={orders}
+                data={bookings}
                 columns={columns}
                 loading={loading}
                 error={error}
                 pagination={{
                     pageIndex: pagination.pageIndex,
                     pageSize: pagination.pageSize,
-                    totalRows: totalOrders,
+                    totalRows: totalBookings,
                 }}
                 onPaginationChange={(updatedPagination) => {
                     setPagination({
@@ -196,4 +203,4 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
     );
 };
 
-export default OrderTable;
+export default BookingTable;

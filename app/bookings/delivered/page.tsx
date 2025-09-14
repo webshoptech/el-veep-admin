@@ -1,4 +1,4 @@
-import OrdersTable from "../components/OrdersTable";
+import OrdersTable from "../components/BookingsTable";
 
 export default function DeliveredOrders() {
     return (

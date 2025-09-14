@@ -1,8 +1,8 @@
 'use client';
 import React from "react";
-import OrdersTable from "./components/OrdersTable";
 import OrderAreaChart from "./components/OrderAreaChart";
 import { MetricCard } from "./components/MetricCard";
+import BookingsTable from "./components/BookingsTable";
 
 
 export default function Bookings() {
@@ -13,7 +13,7 @@ export default function Bookings() {
             <div className="space-y-6 mt-6">
                 <MetricCard />
                 <OrderAreaChart />
-                <OrdersTable limit={10} />
+                <BookingsTable limit={10} />
             </div>
         </div>
     );

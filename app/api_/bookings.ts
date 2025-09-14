@@ -1,13 +1,13 @@
 import axios from "@/app/lib/axios";
 import { OrderGraphPoint, OrderResponse, OrderStatsType } from "@/types/OrderType";
 
-export async function getRecentOrders(
+export async function getRecentBookings(
     limit: number,
     offset: number,
     search?: string,
     status?: string
 ) {
-    const response = await axios.get("/orders", {
+    const response = await axios.get("/bookings", {
         params: { limit, offset, search, status },
     });
     return response.data;

@@ -7,7 +7,7 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { OrderResponse } from "@/types/OrderType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { getRecentOrders } from "@/app/api_/orders";
+import { getRecentBookings } from "@/app/api_/bookings";
 import StatusBadge from "@/utils/StatusBadge";
 import Link from "next/link";
 
@@ -118,7 +118,7 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
     const fetchOrders = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await getRecentOrders(limit, 0);  
+            const response = await getRecentBookings(limit, 0);  
             setOrders(response.orders);
         } catch (err) {
             console.error(err);
@@ -135,7 +135,7 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
     return (
         <div>
             <div className="flex justify-between items-center mb-4">
-                <p className="text-lg font-bold text-gray-900">Recent orders</p>
+                <p className="text-lg font-bold text-gray-900">Recent bookings</p>
                 <Link href="/orders" className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-amber-50 py-2 px-4 rounded">
                     See all
                 </Link>
