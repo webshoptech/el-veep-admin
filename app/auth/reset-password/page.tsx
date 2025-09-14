@@ -44,7 +44,7 @@ export default function ResetPassword() {
 
             toast.success(result.message || "Password reset successful");
             sessionStorage.removeItem("resetEmail");
-            router.push("/login");
+            router.replace("/auth/login");
         } catch (err) {
             const error = err as { response?: { data?: ResetErrorResponse } };
             const errorDetail =

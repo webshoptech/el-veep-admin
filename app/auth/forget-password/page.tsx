@@ -27,12 +27,11 @@ export default function ForgetPassword() {
     try {
       setLoading(true);
       const result = await forgetPassword(formData);
-
-      // ✅ Save email in sessionStorage
       sessionStorage.setItem("resetEmail", email);
 
       toast.success(result.message || "Password reset link sent to your email.");
-      router.push("/confirm-reset-code");
+      router.replace("/auth/confirm-reset-code");
+
     } catch (err) {
       const error = err as { response?: { data?: ErrorResponse } };
       const errorDetail =
@@ -47,7 +46,6 @@ export default function ForgetPassword() {
 
   return (
     <div className="flex h-screen">
-      {/* Left side image */}
       <div
         className="w-1/2 bg-cover bg-center"
         style={{ backgroundImage: "url('/login.png')" }}

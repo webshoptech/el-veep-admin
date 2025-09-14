@@ -20,7 +20,6 @@ export default function ChangePassword() {
   const [current_password, setCurrentPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 👁️ toggles
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
 

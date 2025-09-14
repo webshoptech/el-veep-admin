@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import Image from 'next/image';
 import { SubmitButton } from '../../components/commons/SubmitButton';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function LoginScreen() {
 
       if (!result.data.password_changed_at) {
         toast('You must change your password before continuing');
-        router.push('/change-password');
+        router.replace('/auth/change-password');
         return;
       }
       toast.success('Login successful');
@@ -103,12 +104,12 @@ export default function LoginScreen() {
               </button>
             </div>
             <div className="text-right mt-1">
-              <a
-                href="#"
+              <Link
+                href="/auth/forget-password"
                 className="text-sm text-orange-500 hover:underline"
               >
                 Forgot Password?
-              </a>
+              </Link>
             </div>
           </div>
 
