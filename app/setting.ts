@@ -64,8 +64,21 @@ export const NAVIGATION = [
         ],
     },
     {
+        name: "Booking Management",
+        href: "/bookings",
+        icon: CreditCardIcon,
+        children: [
+            { name: "All bookings", href: "/bookings" },
+            { name: "Processing bookings", href: "/bookings/processing" },
+            { name: "Ongoing bookings", href: "/bookings/ongoing" },
+            { name: "Delivered bookings", href: "/bookings/delivered" },
+            { name: "Cancelled bookings", href: "/bookings/cancelled" },
+            { name: "Returns & Refunds bookings", href: "/bookings/returned" },
+        ],
+    },
+    {
         name: "Reviews Management",
-        href: "/orders",
+        href: "/reviews",
         icon: CreditCardIcon,
         children: [
             { name: "All Reviews", href: "/reviews" },
