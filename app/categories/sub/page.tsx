@@ -13,7 +13,7 @@ import { Transition, Dialog, TransitionChild, DialogPanel, DialogTitle } from "@
 
 const typeOptions = [
     { label: "Product Items", value: "products" },
-    { label: "Service Items", value: "services" },
+    
 ];
 
 export default function Sub() {
@@ -142,7 +142,7 @@ export default function Sub() {
                                             Cancel
                                         </button>
                                         <button
-                                            className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                                            className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
                                             onClick={handleDelete}
                                         >
                                             Proceed

@@ -82,7 +82,7 @@ export default function CategoryForm({ onClose, category }: Props) {
         <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category Name <span className='text-red-500'>*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Category Name <span className='text-green-500'>*</span></label>
                 <input
                     type="text"
                     placeholder="Enter category name"
@@ -94,7 +94,7 @@ export default function CategoryForm({ onClose, category }: Props) {
 
             {/* Type */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Type <span className='text-red-500'>*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Type <span className='text-green-500'>*</span></label>
                 <SelectDropdown
                     options={typeOptions}
                     value={type || { label: 'Select type', value: '' }}
@@ -104,7 +104,7 @@ export default function CategoryForm({ onClose, category }: Props) {
             </div>
             {/* Parent Category */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Parent Category <span className='text-yellow-500'>(optional)</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Parent Category <span className='text-green-500'>(optional)</span></label>
                 <SelectDropdown
                     options={categoryOptions}
                     value={selectedParent || { label: 'Select category', value: '' }}
@@ -115,7 +115,7 @@ export default function CategoryForm({ onClose, category }: Props) {
 
             {/* Description */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description <span className='text-red-500'>*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description <span className='text-green-500'>*</span></label>
                 <textarea
                     rows={4}
                     value={description}
@@ -126,7 +126,7 @@ export default function CategoryForm({ onClose, category }: Props) {
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Cat Image <span className='text-red-500'>*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Cat Image <span className='text-green-500'>*</span></label>
 
                 <label
                     htmlFor="categoryImage"
@@ -141,7 +141,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                             className="object-cover"
                         />
                     ) : (
-                        <div className="flex flex-col items-center justify-center text-center text-orange-600">
+                        <div className="flex flex-col items-center justify-center text-center text-green-600">
                             <svg
                                 className="w-12 h-12 text-gray-400"
                                 xmlns="http://www.w3.org/2000/svg"

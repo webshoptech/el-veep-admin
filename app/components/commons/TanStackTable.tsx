@@ -71,7 +71,7 @@ function TanStackTable<T>({
     <div className="w-full overflow-x-auto rounded-xl border border-amber-200 bg-white shadow-md">
       <table className="min-w-full divide-y divide-gray-200 text-sm">
         {/* Always show table head */}
-        <thead className="bg-yellow-50 text-xs font-semibold text-gray-700 uppercase">
+        <thead className="bg-green-50 text-xs font-semibold text-gray-700 uppercase">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
@@ -99,7 +99,7 @@ function TanStackTable<T>({
             ))
           ) : error ? (
             <tr>
-              <td colSpan={columns.length} className="text-red-500 p-4">
+              <td colSpan={columns.length} className="text-green-500 p-4">
                 Error: {error}
               </td>
             </tr>
@@ -111,7 +111,7 @@ function TanStackTable<T>({
             </tr>
           ) : (
             table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover:bg-yellow-50 transition">
+              <tr key={row.id} className="hover:bg-green-50 transition">
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="px-4 py-3 whitespace-nowrap">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -154,7 +154,7 @@ function TanStackTable<T>({
                 })
               }
               disabled={pagination.pageIndex === 0}
-              className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-yellow-800 text-white rounded-md disabled:opacity-40 transition"
+              className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-green-800 text-white rounded-md disabled:opacity-40 transition cursor-pointer"
             >
               <ArrowLeftIcon className="w-4 h-4 mr-1" />
               Previous
@@ -176,7 +176,7 @@ function TanStackTable<T>({
                 pagination.pageIndex >=
                 Math.ceil(pagination.totalRows / pagination.pageSize) - 1
               }
-              className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-yellow-800 text-white rounded-md disabled:opacity-40 transition"
+              className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-green-800 text-white rounded-md disabled:opacity-40 transition cursor-pointer"
             >
               Next
               <ArrowRightIcon className="w-4 h-4 ml-1" />

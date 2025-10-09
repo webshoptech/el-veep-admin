@@ -60,7 +60,7 @@ export function MetricCard() {
 
             {/* Inactive Shops */}
             <div className="bg-white border border-gray-200 shadow-sm rounded-lg p-4 flex items-center gap-4">
-                <div className="p-2 rounded-full bg-red-100 text-red-600">
+                <div className="p-2 rounded-full bg-green-100 text-green-600">
                     <ExclamationTriangleIcon className="w-6 h-6" />
                 </div>
                 <div>

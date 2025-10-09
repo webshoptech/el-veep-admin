@@ -36,7 +36,7 @@ export default function WalletSummary({
     {
       label: "Pending Amount",
       value: totalPending,
-      icon: <ClockIcon className="w-6 h-6 text-yellow-600" />,
+      icon: <ClockIcon className="w-6 h-6 text-green-600" />,
     },
   ];
 

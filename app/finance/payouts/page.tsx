@@ -115,7 +115,7 @@ export default function PayoutRequests() {
 
                     <button
                         onClick={() => handleDelete(row.original.id)}
-                        className="text-red-600 bg-red-100 p-1 rounded-lg hover:text-red-800"
+                        className="text-green-600 bg-green-100 p-1 rounded-lg hover:text-green-800"
                         title="Delete"
                     >
                         <TrashIcon className="w-5 h-5" />

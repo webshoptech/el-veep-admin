@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { getStats } from "../api_/orders";
+import { formatAmount } from "@/utils/formatCurrency";
 
 interface StatCardProps {
     title: string;
@@ -61,13 +62,13 @@ const Overview: React.FC<OverviewProps> = ({ period }) => {
     }, [period]);
 
     if (error) {
-        return <div className="card p-6 text-red-400">{error}</div>;
+        return <div className="card p-6 text-green-400">{error}</div>;
     }
 
     const statCards = [
         {
             title: "Total Revenue",
-            value: stats ? `$${Number(stats.total_revenue).toLocaleString()}` : undefined,
+            value: stats ? `${formatAmount(stats.total_revenue).toLocaleString()}` : undefined,
         },
         { title: "Total Orders", value: stats?.total_orders },
         { title: "Total Customers", value: stats?.total_customers },

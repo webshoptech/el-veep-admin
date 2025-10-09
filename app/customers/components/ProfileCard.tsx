@@ -61,7 +61,7 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
 
     return (
         <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
-            <div className="relative h-24 bg-gradient-to-r from-orange-400 to-yellow-400" />
+            <div className="relative h-24 bg-gradient-to-r from-green-400 to-green-400" />
 
             <div className="relative -mt-10 px-6 pb-24">
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
@@ -93,7 +93,7 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                                 <span
                                     className={clsx(
                                         "px-2 py-0.5 text-xs rounded-full font-semibold",
-                                        user?.is_active ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                                        user?.is_active ? "bg-green-100 text-green-700" : "bg-green-100 text-green-700"
                                     )}
                                 >
                                     {user?.is_active ? "Active" : "Inactive"}
@@ -170,7 +170,7 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                             {/* Delete Button */}
                             <button
                                 onClick={() => setIsDeleteModalOpen(true)}
-                                className="px-3 py-1.5 bg-red-600 text-white rounded-md text-sm hover:bg-red-700 transition"
+                                className="px-3 py-1.5 bg-green-600 text-white rounded-md text-sm hover:bg-green-700 transition"
                             >
                                 Delete
                             </button>
@@ -184,7 +184,7 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                                 title="Delete User"
                             >
                                 <p className="text-sm text-gray-600">
-                                    To confirm, please type <span className="font-semibold text-red-600">DELETE</span> below.
+                                    To confirm, please type <span className="font-semibold text-green-600">DELETE</span> below.
                                 </p>
 
                                 <input
@@ -215,8 +215,8 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                                             }
                                         }}
                                         className={`px-4 py-2 rounded-md text-white transition ${confirmText === "DELETE"
-                                            ? "bg-red-600 hover:bg-red-700"
-                                            : "bg-red-300 cursor-not-allowed"
+                                            ? "bg-green-600 hover:bg-green-700"
+                                            : "bg-green-300 cursor-not-allowed"
                                             }`}
                                     >
                                         Delete

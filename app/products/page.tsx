@@ -23,7 +23,7 @@ export default function Products() {
           <SelectDropdown
             options={[
               { label: "Product Items", value: "products" },
-              { label: "Service Items", value: "services" },
+              
             ]}
             value={selectedType}
             onChange={setSelectedType}

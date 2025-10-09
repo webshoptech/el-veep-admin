@@ -10,6 +10,7 @@ import { OrderResponse } from "@/types/OrderType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { getRecentOrders } from "@/app/api_/orders";
 import StatusBadge from "@/utils/StatusBadge";
+import { formatAmount } from "@/utils/formatCurrency";
 
 interface OrderTableProps {
     limit: number;
@@ -69,7 +70,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                     const numericValue = parseFloat(value);
                     return isNaN(numericValue)
                         ? "Invalid"
-                        : `$${numericValue.toFixed(2)}`;
+                         : `${formatAmount(numericValue)}`;
                 },
             },
             {
@@ -100,7 +101,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                     const orderId = getValue();
                     return (
                         <button
-                            className="px-3 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-700 cursor-pointer"
+                            className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
                             onClick={() => {
                                 window.location.href = `/orders/${orderId}`;
                             }}

@@ -96,7 +96,7 @@ export default function BannerForm({
 
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Banner Image <span className="text-red-500">*</span>
+                    Banner Image <span className="text-green-500">*</span>
                 </label>
 
                 <label
@@ -111,7 +111,7 @@ export default function BannerForm({
                             className="object-cover"
                         />
                     ) : (
-                        <div className="flex flex-col items-center justify-center text-center text-orange-600">
+                        <div className="flex flex-col items-center justify-center text-center text-green-600">
                             <svg
                                 className="w-12 h-12 text-gray-400"
                                 xmlns="http://www.w3.org/2000/svg"

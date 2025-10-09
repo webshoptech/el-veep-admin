@@ -14,8 +14,8 @@ export async function getRecentBookings(
 }
  
 
-export async function getOrderDetail(orderId: string): Promise<OrderResponse> {
-    const response = await axios.get<OrderResponse>(`/orders/${orderId}`);
+export async function getBookingDetail(bookingId: string): Promise<OrderResponse> {
+    const response = await axios.get<OrderResponse>(`/bookings/${bookingId}`);
     return response.data;
 }
 

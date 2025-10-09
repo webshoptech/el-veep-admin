@@ -85,7 +85,7 @@ function CategoryActionCell({
 
                 <button
                     title="Update"
-                    className="bg-yellow-500 text-white p-1.5 rounded-md hover:bg-yellow-600"
+                    className="bg-green-500 text-white p-1.5 rounded-md hover:bg-green-600"
                     onClick={() => {
                         onEdit(category);
                     }}
@@ -95,7 +95,7 @@ function CategoryActionCell({
 
                 <button
                     title="Delete"
-                    className="bg-red-500 text-white p-1.5 rounded-md hover:bg-red-600"
+                    className="bg-green-500 text-white p-1.5 rounded-md hover:bg-green-600"
                     onClick={() => setIsModalOpen(true)}
                 >
                     <TrashIcon className="w-4 h-4" />
@@ -114,7 +114,7 @@ function CategoryActionCell({
                         Cancel
                     </button>
                     <button
-                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                        className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
                         onClick={handleDelete}
                     >
                         Proceed

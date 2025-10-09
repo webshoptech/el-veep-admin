@@ -103,7 +103,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
             {/* Title */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Title <span className="text-red-500">*</span>
+                    Title <span className="text-green-500">*</span>
                 </label>
                 <input
                     type="text"
@@ -117,7 +117,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
             {/* Description */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Description <span className="text-red-500">*</span>
+                    Description <span className="text-green-500">*</span>
                 </label>
                 <textarea
                     rows={4}
@@ -168,7 +168,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
                             className="object-cover"
                         />
                     ) : (
-                        <div className="flex flex-col items-center text-orange-600">
+                        <div className="flex flex-col items-center text-green-600">
                             <svg className="w-12 h-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
                             </svg>
@@ -188,7 +188,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
             {/* Type */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Type <span className="text-red-500">*</span>
+                    Type <span className="text-green-500">*</span>
                 </label>
                 <SelectDropdown
                     options={typeOptions}

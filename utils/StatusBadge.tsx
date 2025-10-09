@@ -25,9 +25,9 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
                     return "bg-green-100 text-green-600";
                 case "unpaid":
                 case "pending":
-                    return "bg-yellow-100 text-yellow-600";
+                    return "bg-green-100 text-green-600";
                 case "cancelled":
-                    return "bg-red-100 text-red-600";
+                    return "bg-green-100 text-green-600";
                 case "refunded":
                 case "refund":
                     return "bg-blue-100 text-blue-600";
@@ -39,9 +39,9 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
         // shipping or general statuses
         switch (normalizedStatus) {
             case "processing":
-                return "bg-orange-100 text-orange-600";
+                return "bg-green-100 text-green-600";
             case "ongoing":
-                return "bg-yellow-100 text-yellow-600";
+                return "bg-green-100 text-green-600";
             case "active":
             case "approved":
             case "delivered":
@@ -51,7 +51,7 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({ status, type }) => {
             case "cancelled":
             case "declined":
             case "inactive":
-                return "bg-red-100 text-red-600";
+                return "bg-green-100 text-green-600";
             default:
                 return "bg-gray-100 text-gray-600";
         }

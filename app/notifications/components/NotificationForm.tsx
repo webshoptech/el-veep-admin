@@ -103,7 +103,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
             {/* Receiver */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Receiver <span className="text-red-500">*</span>
+                    Receiver <span className="text-green-500">*</span>
                 </label>
                 <SelectDropdown
                     options={receiverOptions}
@@ -115,7 +115,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
             {/* Channel */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Channel <span className="text-red-500">*</span>
+                    Channel <span className="text-green-500">*</span>
                 </label>
                 <SelectDropdown
                     options={typeOptions}
@@ -130,7 +130,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
                 <div className="space-y-2">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Select User <span className="text-red-500">*</span>
+                            Select User <span className="text-green-500">*</span>
                         </label>
                         <AsyncSelect
                             cacheOptions
@@ -149,8 +149,8 @@ export default function NotificationForm({ onClose, notification }: Props) {
                         <div className="text-xs text-gray-600 mt-1">
                             <span className="font-medium text-gray-700">Contact: </span>
                             {type.value === 'sms'
-                                ? selectedUser.phone || <span className="italic text-red-500">No phone available</span>
-                                : selectedUser.email || <span className="italic text-red-500">No email available</span>}
+                                ? selectedUser.phone || <span className="italic text-green-500">No phone available</span>
+                                : selectedUser.email || <span className="italic text-green-500">No email available</span>}
                         </div>
                     )}
                 </div>
@@ -158,7 +158,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
             {/* Body */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Message Body <span className="text-red-500">*</span>
+                    Message Body <span className="text-green-500">*</span>
                 </label>
                 <textarea
                     rows={4}
@@ -196,7 +196,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Image <span className="text-red-500">*</span>
+                            Image <span className="text-green-500">*</span>
                         </label>
                         <label
                             htmlFor="notificationImage"
@@ -205,7 +205,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
                             {imagePreview ? (
                                 <Image src={imagePreview} alt="Preview" fill className="object-cover" />
                             ) : (
-                                <div className="flex flex-col items-center justify-center text-center text-orange-600">
+                                <div className="flex flex-col items-center justify-center text-center text-green-600">
                                     <svg
                                         className="w-12 h-12 text-gray-400"
                                         xmlns="http://www.w3.org/2000/svg"

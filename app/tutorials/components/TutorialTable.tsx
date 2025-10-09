@@ -148,7 +148,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                                 setTutorialToDelete(row.original.id);
                                 setIsModalOpen(true);
                             }}
-                            className="p-2 text-white hover:text-red-800 bg-red-500 rounded-xl cursor-pointer"
+                            className="p-2 text-white hover:text-green-800 bg-green-500 rounded-xl cursor-pointer"
                         >
                             <TrashIcon className="w-5 h-5" />
                         </button>
@@ -270,7 +270,7 @@ const TutorialTable: React.FC<TutorialTableProps> = ({ limit, type }) => {
                         Cancel
                     </button>
                     <button
-                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
+                        className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
                         onClick={handleDelete}
                     >
                         {loading ? "Deleting..." : "Delete"}

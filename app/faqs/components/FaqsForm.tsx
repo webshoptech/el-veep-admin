@@ -70,7 +70,7 @@ export default function FaqForm({ onClose, faq }: Props) {
             {/* Question */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Question <span className="text-red-500">*</span>
+                    Question <span className="text-green-500">*</span>
                 </label>
                 <input
                     type="text"
@@ -84,7 +84,7 @@ export default function FaqForm({ onClose, faq }: Props) {
             {/* Answer */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Answer <span className="text-red-500">*</span>
+                    Answer <span className="text-green-500">*</span>
                 </label>
                 <textarea
                     rows={4}
@@ -98,7 +98,7 @@ export default function FaqForm({ onClose, faq }: Props) {
             {/* Type */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Type <span className="text-red-500">*</span>
+                    Type <span className="text-green-500">*</span>
                 </label>
                 <SelectDropdown
                     options={typeOptions}

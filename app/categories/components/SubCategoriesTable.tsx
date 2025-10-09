@@ -62,13 +62,13 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit, o
                     <div className="flex items-center gap-2">
                         <button
                             onClick={() => onEdit(row.original)}
-                            className="bg-yellow-500 text-white p-1.5 rounded hover:bg-yellow-600"
+                            className="bg-green-500 text-white p-1.5 rounded hover:bg-green-600"
                         >
                             <PencilSquareIcon className="w-4 h-4" />
                         </button>
                         <button
                             onClick={() => onDelete(row.original)}
-                            className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
+                            className="bg-green-500 text-white p-1.5 rounded hover:bg-green-600"
                         >
                             <TrashIcon className="w-4 h-4" />
                         </button>

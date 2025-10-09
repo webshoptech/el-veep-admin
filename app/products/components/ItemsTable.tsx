@@ -15,6 +15,7 @@ import { BuildingStorefrontIcon, EyeIcon, StarIcon } from "@heroicons/react/24/o
 import ProductAreaChart from "./ProductAreaChart";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
+import { formatAmount } from "@/utils/formatCurrency";
 
 interface ProductTableProps {
     limit: number;
@@ -58,7 +59,7 @@ function ProductActionCell({
         <div className="flex flex-col gap-2">
             <SelectDropdown value={status} options={statusOptions} onChange={handleStatusChange} />
             <button
-                className="text-sm bg-yellow-500 text-white px-2 py-1 rounded-xl hover:bg-yellow-600"
+                className="text-sm bg-green-500 text-white px-2 py-1 rounded-xl hover:bg-green-600"
                 onClick={() => (window.location.href = `/products/${productId}`)}
             >
                 View product
@@ -127,14 +128,14 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                 accessorKey: "average_rating",
                 cell: ({ getValue }) => {
                     const rating = parseFloat(getValue() as string) || 0;
-                    const stars = Math.round(rating); // Round to nearest whole number
+                    const stars = Math.round(rating); 
 
                     return (
                         <div className="flex items-center gap-0.5">
                             {[...Array(5)].map((_, index) => (
                                 <StarIcon
                                     key={index}
-                                    className={`w-4 h-4 ${index < stars ? "text-yellow-500" : "text-gray-300"
+                                    className={`w-4 h-4 ${index < stars ? "text-green-500" : "text-gray-300"
                                         }`}
                                 />
                             ))}
@@ -149,8 +150,8 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                     const salesPrice = parseFloat(row.original.sales_price || "0");
                     const regularPrice = parseFloat(row.original.regular_price || "0");
 
-                    const formattedSales = `$${salesPrice.toFixed(2)}`;
-                    const formattedRegular = `$${regularPrice.toFixed(2)}`;
+                    const formattedSales = `${formatAmount(salesPrice)}`;
+                    const formattedRegular = `${formatAmount(regularPrice)}`;
 
                     return (
                         <div className="flex flex-col text-xs">

@@ -26,7 +26,7 @@ export default function AdminSummary({ loading, stats }: AdminSummaryProps) {
         {
             label: "Inactive Admin",
             value: stats.inactive,
-            icon: <XCircleIcon className="w-6 h-6 text-red-600" />,
+            icon: <XCircleIcon className="w-6 h-6 text-green-600" />,
         }, 
     ];
 

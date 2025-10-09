@@ -33,7 +33,7 @@ function CustomerSummary({ customer, address, stats }: { customer: User; address
     return (
         <div className="bg-white rounded-xl p-6 flex items-center justify-between shadow-sm  border border-gray-200 text-sm text-gray-700">
             <div className="flex items-center gap-4 min-w-[200px]">
-                <div className="relative w-14 h-14 rounded-full border-4 border-orange-500 overflow-hidden">
+                <div className="relative w-14 h-14 rounded-full border-4 border-green-500 overflow-hidden">
                     <Image
                         src={customer.profile_photo}
                         alt={`${customer.name}'s profile`}
@@ -216,7 +216,7 @@ export default function OrderDetail() {
                 </h1>
                 <div className="flex items-center gap-2">
                     {orderMeta.shipping_status === "pending" && orderMeta.payment_status === "pending" && (
-                        <button className="bg-red-100 text-red-600 px-4 py-1 rounded-md text-sm font-medium">
+                        <button className="bg-green-100 text-green-600 px-4 py-1 rounded-md text-sm font-medium">
                             Cancel Order
                         </button>
                     )}

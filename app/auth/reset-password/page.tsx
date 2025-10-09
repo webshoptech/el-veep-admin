@@ -61,7 +61,7 @@ export default function ResetPassword() {
         <div className="flex h-screen">
             <div
                 className="w-1/2 bg-cover bg-center"
-                style={{ backgroundImage: "url('/login.png')" }}
+                style={{ backgroundImage: "url('/login.jpg')" }}
             ></div>
 
             <div className="w-1/2 flex flex-col justify-center items-center px-8">

@@ -50,7 +50,7 @@ export default function LoginScreen() {
       {/* Image */}
       <div
         className="h-40 md:h-full md:w-1/2 bg-cover bg-center"
-        style={{ backgroundImage: "url('/login.png')" }}
+        style={{ backgroundImage: "url('/login.jpg')" }}
       ></div>
 
       {/* Form */}
@@ -106,7 +106,7 @@ export default function LoginScreen() {
             <div className="text-right mt-1">
               <Link
                 href="/auth/forget-password"
-                className="text-sm text-orange-500 hover:underline"
+                className="text-sm text-green-500 hover:underline"
               >
                 Forgot Password?
               </Link>

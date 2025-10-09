@@ -80,14 +80,14 @@ export default function Commission() {
             cell: ({ row }) => (
                 <div className="flex items-center gap-3">
                     <button
-                        className="bg-yellow-500 text-white p-1.5 rounded hover:bg-yellow-600"
+                        className="bg-green-500 text-white p-1.5 rounded hover:bg-green-600"
                         onClick={() => handleEdit(row.original)}
                         title="Edit"
                     >
                         <PencilIcon className="w-5 h-5" />
                     </button>
                     <button
-                        className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
+                        className="bg-green-500 text-white p-1.5 rounded hover:bg-green-600"
                         onClick={() => setConfirmDeleteId(row.original.id)}
                         title="Delete"
                     >
@@ -173,7 +173,7 @@ export default function Commission() {
                                 setConfirmDeleteId(null);
                             }
                         }}
-                        className="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
+                        className="px-4 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-700"
                     >
                         Delete
                     </button>

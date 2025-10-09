@@ -95,7 +95,7 @@ export default function CommissionForm({ initialData, onClose, onSuccess }: Prop
                     onChange={(val: TypeOption) => setSelectedType(val)}
                     className='w-full'
                 />
-                {errors.type && <p className="text-red-500 text-sm mt-1">Type is required</p>}
+                {errors.type && <p className="text-green-500 text-sm mt-1">Type is required</p>}
             </div>
 
             <div>
@@ -107,7 +107,7 @@ export default function CommissionForm({ initialData, onClose, onSuccess }: Prop
                     className="w-full border border-gray-300 rounded-xl px-3 py-2"
                     placeholder="e.g. 10"
                 />
-                {errors.rate && <p className="text-red-500 text-sm mt-1">Rate is required</p>}
+                {errors.rate && <p className="text-green-500 text-sm mt-1">Rate is required</p>}
             </div>
 
             <div className="flex justify-end gap-3">

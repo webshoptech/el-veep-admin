@@ -11,6 +11,7 @@ import { User } from "@/types/UserType";
 import ReviewType from "@/types/ReviewType";
 import UnReviewOrderType from "@/types/UnReviewOrderType";
 import Link from "next/link";
+import { formatAmount } from "@/utils/formatCurrency";
 
 
 interface ReviewTableProps {
@@ -80,7 +81,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 accessorKey: "total",
                 cell: ({ getValue }) => {
                     const total = getValue() as string;
-                    return <span className="font-semibold">${Number(total).toLocaleString()}</span>;
+                    return <span className="font-semibold">{formatAmount(total).toLocaleString()}</span>;
                 },
             },
             {
@@ -92,7 +93,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                         <span
                             className={`px-2 py-1 text-xs rounded ${status === "delivered"
                                 ? "bg-green-100 text-green-700"
-                                : "bg-yellow-100 text-yellow-700"
+                                : "bg-green-100 text-green-700"
                                 }`}
                         >
                             {status}

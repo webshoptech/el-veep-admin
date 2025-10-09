@@ -24,7 +24,7 @@ export default function SelectDropdown({
     <Listbox value={value} onChange={onChange}>
       <div className="relative">
         <ListboxButton
-          className={`relative cursor-default rounded-xl border border-gray-300 bg-white py-2.5 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-yellow-500 focus:border-yellow-500 text-gray-700 text-sm ${className}`}
+          className={`relative cursor-default rounded-xl border border-gray-300 bg-white py-2.5 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 text-gray-700 text-sm ${className}`}
         >
           <span className="block truncate">{value.label}</span>
           <span className="pointer-events-none absolute inset-y-0 right-2 flex items-center pr-2">
@@ -45,7 +45,7 @@ export default function SelectDropdown({
                 value={option}
                 className={({ active }) =>
                   `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
-                    active ? "bg-yellow-100 text-yellow-700" : "text-gray-700"
+                    active ? "bg-green-100 text-green-700" : "text-gray-700"
                   }`
                 }
               >
@@ -55,7 +55,7 @@ export default function SelectDropdown({
                       {option.label}
                     </span>
                     {selected && (
-                      <span className="absolute inset-y-0 left-2 flex items-center text-yellow-600">
+                      <span className="absolute inset-y-0 left-2 flex items-center text-green-600">
                         <CheckIcon className="h-4 w-4" />
                       </span>
                     )}

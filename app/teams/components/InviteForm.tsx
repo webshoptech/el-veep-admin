@@ -103,7 +103,7 @@ export default function InviteForm({ onClose }: Props) {
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
-                {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
+                {errors.name && <p className="text-sm text-green-500">{errors.name}</p>}
             </div>
 
             {/* Last Name */}
@@ -116,7 +116,7 @@ export default function InviteForm({ onClose }: Props) {
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
-                {errors.last_name && <p className="text-sm text-red-500">{errors.last_name}</p>}
+                {errors.last_name && <p className="text-sm text-green-500">{errors.last_name}</p>}
             </div>
 
             {/* Email */}
@@ -129,7 +129,7 @@ export default function InviteForm({ onClose }: Props) {
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
-                {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+                {errors.email && <p className="text-sm text-green-500">{errors.email}</p>}
             </div>
 
             {/* Phone */}
@@ -142,7 +142,7 @@ export default function InviteForm({ onClose }: Props) {
                     onChange={handleChange}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 />
-                {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
+                {errors.phone && <p className="text-sm text-green-500">{errors.phone}</p>}
             </div>
 
             {/* Role */}
@@ -154,7 +154,7 @@ export default function InviteForm({ onClose }: Props) {
                     onChange={(option) => setFormData({ ...formData, role: option.value })}
                     className="w-full"
                 />
-                {errors.role && <p className="text-sm text-red-500">{errors.role}</p>}
+                {errors.role && <p className="text-sm text-green-500">{errors.role}</p>}
             </div>
 
 
@@ -181,7 +181,7 @@ export default function InviteForm({ onClose }: Props) {
                         )}
                     </button>
                 </div>
-                {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
+                {errors.password && <p className="text-sm text-green-500">{errors.password}</p>}
             </div>
             {/* Buttons */}
             <div className="flex justify-end space-x-2">

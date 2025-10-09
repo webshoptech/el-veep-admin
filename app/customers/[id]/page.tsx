@@ -39,7 +39,7 @@ export default function UserDetail() {
         fetchUser();
     }, [id, type]);
 
-    if (error) return <div className="text-red-500">{error}</div>;
+    if (error) return <div className="text-green-500">{error}</div>;
 
     return (
         <div className="space-y-6">

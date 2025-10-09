@@ -48,7 +48,7 @@ export default function ForgetPassword() {
     <div className="flex h-screen">
       <div
         className="w-1/2 bg-cover bg-center"
-        style={{ backgroundImage: "url('/login.png')" }}
+        style={{ backgroundImage: "url('/login.jpg')" }}
       ></div>
 
       {/* Form */}

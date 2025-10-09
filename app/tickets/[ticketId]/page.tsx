@@ -93,7 +93,7 @@ export default function TicketDetailPage() {
 
     if (!ticket) {
         return (
-            <div className="text-center p-10 text-red-500">Ticket not found.</div>
+            <div className="text-center p-10 text-green-500">Ticket not found.</div>
         );
     }
 
@@ -126,7 +126,7 @@ export default function TicketDetailPage() {
                         onClick={() => setConfirmDeleteId(ticket.ticket_id)}
                         title="Delete Ticket"
                     >
-                        <TrashIcon className="cursor-pointer hover:text-red-500 text-red-500 bg-red-100 p-2 rounded-full size-9 " />
+                        <TrashIcon className="cursor-pointer hover:text-green-500 text-green-500 bg-green-100 p-2 rounded-full size-9 " />
                     </button>
                     <SelectDropdown
                         options={statusOptions}
@@ -189,8 +189,8 @@ export default function TicketDetailPage() {
                             />
                             <div
                                 className={`p-4 rounded-b-2xl text-sm ${isAgent
-                                    ? "bg-gray-100 border border-orange-300 rounded-l-xl"
-                                    : "bg-orange-50 border border-orange-200 rounded-r-xl"
+                                    ? "bg-gray-100 border border-green-300 rounded-l-xl"
+                                    : "bg-green-50 border border-green-200 rounded-r-xl"
                                     }`}
                             >
                                 <div className="font-semibold mb-1">{sender?.name}</div>
@@ -238,7 +238,7 @@ export default function TicketDetailPage() {
                                 setConfirmDeleteId(null);
                             }
                         }}
-                        className="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
+                        className="px-4 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-700"
                     >
                         Delete
                     </button>
@@ -305,7 +305,7 @@ function TicketReply({
                 <button
                     onClick={handleSend}
                     disabled={sending}
-                    className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm hover:bg-orange-600 disabled:opacity-50"
+                    className="bg-green-500 text-white px-4 py-2 rounded-full text-sm hover:bg-green-600 disabled:opacity-50"
                 >
                     {sending ? "Sending..." : "Send"}
                 </button>

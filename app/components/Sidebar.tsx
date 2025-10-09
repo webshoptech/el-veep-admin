@@ -64,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
             <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
                 <DialogBackdrop className="fixed inset-0 bg-black/50 transition-opacity duration-300" />
                 <div className="fixed inset-0 flex">
-                    <DialogPanel className="relative mr-16 rounded-r-4xl border-orange-200 flex w-full max-w-xs flex-1 transform transition duration-700 ease-in data-closed:translate-x-full sm:duration-700 bg-white">
+                    <DialogPanel className="relative mr-16 rounded-r-4xl border-green-200 flex w-full max-w-xs flex-1 transform transition duration-700 ease-in data-closed:translate-x-full sm:duration-700 bg-white">
                         <TransitionChild>
                             <div className="absolute left-full top-0 flex w-16 justify-center pt-5">
                                 <button
@@ -87,13 +87,13 @@ const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
                 <button
                     type="button"
                     onClick={() => setSidebarOpen(true)}
-                    className="-m-2.5 p-2.5 text-orange-500 hover:text-orange-900"
+                    className="-m-2.5 p-2.5 text-green-500 hover:text-green-900"
                 >
                     <Bars3Icon className="size-6 mr-2" />
                 </button>
             </div>
 
-            <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col bg-white px-6 pb-4 border-r rounded-r-4xl border-orange-200">
+            <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col bg-white px-6 pb-4 border-r rounded-r-4xl border-green-200">
                 <SidebarContent collapsed={collapsed} setCollapsed={setCollapsed} user={user} onLogout={handleLogout} />
             </div>
         </>
@@ -177,11 +177,11 @@ function BottomMenu({
                         <button
                             key={item.name}
                             onClick={item.isLogout ? onLogout : undefined}
-                            className={`w-full text-left flex items-center cursor-pointer gap-x-3 rounded-md px-4 py-2 text-xs font-medium hover:bg-white/10 ${item.isLogout ? 'text-orange-500 font-bold bg-white border hover:bg-white hover:text-white' : ''
+                            className={`w-full text-left flex items-center cursor-pointer gap-x-3 rounded-md px-4 py-2 text-xs font-medium hover:bg-white/10 ${item.isLogout ? 'text-green-500 font-bold bg-white border hover:bg-white hover:text-white' : ''
                                 } ${collapsed ? 'justify-center' : ''}`}
                         >
                             <item.icon
-                                className={`size-4 ${item.isLogout ? 'text-red-500 hover:text-white font-bold' : 'text-white'
+                                className={`size-4 ${item.isLogout ? 'text-green-500 hover:text-white font-bold' : 'text-white'
                                     }`}
                             />
                             {!collapsed && <span>{item.name}</span>}

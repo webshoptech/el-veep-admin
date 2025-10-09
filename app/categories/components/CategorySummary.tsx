@@ -28,7 +28,7 @@ export default function CategorySummary({ loading, stats }: CategorySummaryProps
         {
             label: "Inactive Cat",
             value: stats.total_inactive,
-            icon: <XCircleIcon className="w-6 h-6 text-red-600" />,
+            icon: <XCircleIcon className="w-6 h-6 text-green-600" />,
         },
         {
             label: "Service Cat",
@@ -38,7 +38,7 @@ export default function CategorySummary({ loading, stats }: CategorySummaryProps
         {
             label: "Product Cat",
             value: stats.total_product,
-            icon: <ShoppingBagIcon className="w-6 h-6 text-yellow-600" />,
+            icon: <ShoppingBagIcon className="w-6 h-6 text-green-600" />,
         },
     ];
 

@@ -85,7 +85,7 @@ export default function SubCategoryForm({ onClose, category }: { onClose: () => 
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Parent Category <span className='text-red-500'>*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Parent Category <span className='text-green-500'>*</span></label>
                 <SelectDropdown
                     options={categoryOptions}
                     value={selectedParent || { label: 'Select category', value: '' }}

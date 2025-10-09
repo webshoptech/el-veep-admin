@@ -64,19 +64,6 @@ export const NAVIGATION = [
         ],
     },
     {
-        name: "Booking Management",
-        href: "/bookings",
-        icon: CreditCardIcon,
-        children: [
-            { name: "All bookings", href: "/bookings" },
-            { name: "Processing bookings", href: "/bookings/processing" },
-            { name: "Ongoing bookings", href: "/bookings/ongoing" },
-            { name: "Delivered bookings", href: "/bookings/delivered" },
-            { name: "Cancelled bookings", href: "/bookings/cancelled" },
-            { name: "Returns & Refunds bookings", href: "/bookings/returned" },
-        ],
-    },
-    {
         name: "Reviews Management",
         href: "/reviews",
         icon: CreditCardIcon,
@@ -84,16 +71,7 @@ export const NAVIGATION = [
             { name: "All Reviews", href: "/reviews" },
             { name: "Un-Reviews orders", href: "/reviews/un-reviews" },
         ],
-    },
-    {
-        name: "Vendor Management",
-        href: "/vendors",
-        icon: ShoppingBagIcon,
-        children: [
-            { name: "Vendor List", href: "/vendors" },
-            { name: "Vendor Performance", href: "/vendors/activities" },
-        ],
-    },
+    }, 
     {
         name: "Items Management",
         href: "/products",
@@ -131,16 +109,7 @@ export const NAVIGATION = [
             { name: "Banners", href: "/banners" },
             { name: "Banner types", href: "/banners/types" },
         ],
-    },
-    {
-        name: "Shop Management",
-        href: "/shops",
-        icon: BuildingStorefrontIcon,
-        children: [
-            { name: "Shop List", href: "/shops" },
-            { name: "Shop Performance", href: "/shops/performance" },
-        ], 
-    },
+    }, 
     {
         name: "FAQs Management",
         href: "/faqs",
@@ -148,23 +117,6 @@ export const NAVIGATION = [
         children: [
             { name: "FAQs", href: "/faqs" },
             { name: "Tutorials", href: "/tutorials" },
-        ],
-    },
-
-    {
-        name: "Financial Management",
-        href: "/finance",
-        icon: CurrencyDollarIcon,
-        children: [
-            { name: "Revenue Overview", href: "/finance" },
-            { name: "Payout Requests", href: "/finance/payouts" },
-            { name: "Transactions", href: "/finance/transactions" },
-            { name: "Commission Revenues", href: "/finance/revenues" },
-            { name: "Commission Rates", href: "/finance/commissions" },
-            {
-                name: "Settlment Accounts",
-                href: "/finance/settlement-accounts",
-            },
         ],
     },
     {
@@ -176,7 +128,6 @@ export const NAVIGATION = [
             { name: "Notifications", href: "/notifications" },
         ],
     },
-
     {
         name: "Security & Compliance",
         href: "/security",
