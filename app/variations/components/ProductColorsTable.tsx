@@ -55,9 +55,9 @@ const ProductColorsTable: React.FC<ColorProps> = ({ limit, onDelete }) => {
 
                         <button
                             onClick={() => onDelete(row.original)}
-                            className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600 cursor-pointer"
+                            className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600 cursor-pointer flex items-center"
                         >
-                            <TrashIcon className="w-4 h-4" />
+                            <TrashIcon className="w-4 h-4" /> Delete
                         </button>
                     </div>
                 ),

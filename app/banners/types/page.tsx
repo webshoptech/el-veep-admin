@@ -56,7 +56,7 @@ export default function BannerTypes() {
                             setEditingCategory(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600 cursor-pointer"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Banner Type
@@ -92,13 +92,13 @@ export default function BannerTypes() {
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button
-                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                         onClick={() => setIsModalOpen(false)}
                     >
                         Cancel
                     </button>
                     <button
-                        className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
+                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
                         onClick={handleDelete}
                     >
                         {loading ? "Deleting..." : "Delete"}

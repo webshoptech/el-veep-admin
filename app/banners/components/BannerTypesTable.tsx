@@ -37,9 +37,9 @@ const BannerTypesTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
 
                         <button
                             onClick={() => onDelete(row.original)}
-                            className="bg-green-500 text-white p-1.5 rounded hover:bg-green-600"
+                            className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600 items-center flex"
                         >
-                            <TrashIcon className="w-4 h-4" />
+                            <TrashIcon className="w-4 h-4" /> Delete
                         </button>
                     </div>
                 ),

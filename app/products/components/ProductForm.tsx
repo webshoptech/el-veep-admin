@@ -356,10 +356,10 @@ export default function ProductForm({ onClose, product }: Props) {
                                 <button
                                     type="button"
                                     onClick={() => removeImage(index)}
-                                    className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition cursor-pointer"
+                                    className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition cursor-pointer flex items-center justify-center"
                                     title="Remove"
                                 >
-                                    <TrashIcon className="w-4 h-4" />
+                                    <TrashIcon className="w-4 h-4" /> Delete
                                 </button>
                             </div>
                         ))}
