@@ -85,20 +85,20 @@ function CategoryActionCell({
 
                 <button
                     title="Update"
-                    className="bg-green-500 text-white p-1.5 rounded-md hover:bg-green-600"
+                    className="bg-yellow-500 text-white p-1.5 rounded-md hover:bg-yellow-600 flex items-center gap-1 cursor-pointer"
                     onClick={() => {
                         onEdit(category);
                     }}
                 >
-                    <PencilSquareIcon className="w-4 h-4" />
+                    <PencilSquareIcon className="w-4 h-4" /> Edit
                 </button>
 
                 <button
                     title="Delete"
-                    className="bg-green-500 text-white p-1.5 rounded-md hover:bg-green-600"
+                    className="bg-red-500 text-white p-1.5 rounded-md hover:bg-red-600 flex items-center gap-1 cursor-pointer"
                     onClick={() => setIsModalOpen(true)}
                 >
-                    <TrashIcon className="w-4 h-4" />
+                    <TrashIcon className="w-4 h-4" /> Delete
                 </button>
             </div>
 
@@ -108,19 +108,19 @@ function CategoryActionCell({
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button
-                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                         onClick={() => setIsModalOpen(false)}
                     >
                         Cancel
                     </button>
                     <button
-                        className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
+                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
                         onClick={handleDelete}
                     >
                         Proceed
                     </button>
                 </div>
-            </ConfirmationModal> 
+            </ConfirmationModal>
             <Drawer
                 isOpen={isDrawerOpen}
                 onClose={() => {
@@ -198,13 +198,6 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                     <span className="text-sm text-gray-700 truncate w-40 overflow-hidden whitespace-nowrap block">
                         {getValue() as string}
                     </span>
-                ),
-            },
-            {
-                header: "Type",
-                accessorKey: "type",
-                cell: ({ getValue }) => (
-                    <span className="capitalize text-sm text-gray-800">{getValue() as string}</span>
                 ),
             },
             {

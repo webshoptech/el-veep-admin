@@ -25,9 +25,6 @@ export default function CategoryForm({ onClose, category }: Props) {
     const [description, setDescription] = useState(category?.description || '');
     const [imagePreview, setImagePreview] = useState<string | null>(category?.image || null);
     const [imageFile, setImageFile] = useState<File | null>(null);
-    const [type, setType] = useState<{ label: string; value: string } | null>(
-        category?.type ? { label: category.type, value: category.type } : null
-    );
     const { categories } = useCategoryStore();
 
     const categoryOptions = useMemo(() => {
@@ -37,10 +34,6 @@ export default function CategoryForm({ onClose, category }: Props) {
         }));
     }, [categories]);
 
-    const typeOptions = [
-        { label: 'Product', value: 'products' },
-        { label: 'Service', value: 'services' },
-    ];
     const [loading, setLoading] = useState(false);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +51,6 @@ export default function CategoryForm({ onClose, category }: Props) {
         const formData = new FormData();
         formData.append('name', name);
         formData.append('description', description);
-        if (type?.value) formData.append('type', type.value);
         if (selectedParent?.value) formData.append('parent_id', selectedParent.value);
         if (imageFile) formData.append('image', imageFile);
 
@@ -92,16 +84,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                 />
             </div>
 
-            {/* Type */}
-            <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Type <span className='text-green-500'>*</span></label>
-                <SelectDropdown
-                    options={typeOptions}
-                    value={type || { label: 'Select type', value: '' }}
-                    onChange={(opt) => setType(opt)}
-                    className="w-full"
-                />
-            </div>
+
             {/* Parent Category */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Parent Category <span className='text-green-500'>(optional)</span></label>

@@ -2,7 +2,6 @@ import {
     CubeIcon,
     CheckCircleIcon,
     XCircleIcon,
-    Cog6ToothIcon,
     ShoppingBagIcon,
 } from "@heroicons/react/24/solid";
 import Skeleton from "react-loading-skeleton";
@@ -29,12 +28,7 @@ export default function ItemSummary({ loading, stats }: ItemSummaryProps) {
             label: "Inactive Items",
             value: stats.total_inactive,
             icon: <XCircleIcon className="w-6 h-6 text-green-600" />,
-        },
-        {
-            label: "Service Items",
-            value: stats.total_service,
-            icon: <Cog6ToothIcon className="w-6 h-6 text-purple-600" />,
-        },
+        }, 
         {
             label: "Product Items",
             value: stats.total_product,
@@ -44,7 +38,7 @@ export default function ItemSummary({ loading, stats }: ItemSummaryProps) {
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 {summaries.map(({ label, value, icon }) => (
                     <div
                         key={label}

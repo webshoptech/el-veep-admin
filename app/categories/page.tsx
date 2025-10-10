@@ -1,21 +1,14 @@
-// app/categories/page.tsx
 'use client';
 
 import { useState } from "react";
-import SelectDropdown from "../components/commons/Fields/SelectDropdown";
 import CategoriesTable from "./components/CategoriesTable";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import Drawer from "../components/commons/Drawer";
 import CategoryForm from "./components/CategoryForm";
-
-const typeOptions = [
-    { label: "Product Items", value: "products" },
-    
-];
+ 
 
 export default function Categories() {
-    const [selectedType, setSelectedType] = useState(typeOptions[0]);
-    const [isDrawerOpen, setDrawerOpen] = useState(false);
+     const [isDrawerOpen, setDrawerOpen] = useState(false);
 
     return (
         <div className="space-y-6 text-gray-800">
@@ -28,16 +21,12 @@ export default function Categories() {
 
                 <div className="flex gap-3 items-center">
                     <div className="w-48">
-                        <SelectDropdown
-                            options={typeOptions}
-                            value={selectedType}
-                            onChange={setSelectedType}
-                        />
+                        
                     </div>
 
                     <button
                         onClick={() => setDrawerOpen(true)}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600 cursor-pointer"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Category
@@ -47,7 +36,7 @@ export default function Categories() {
 
             <CategoriesTable
                 limit={10}
-                type={selectedType.value}
+                type="products"
                 status="active"
             />
 

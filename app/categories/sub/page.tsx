@@ -10,10 +10,11 @@ import { FlattenedSubCategory } from "@/types/CategoryType";
 import { deleteCategory } from "@/app/api_/categories";
 import toast from "react-hot-toast";
 import { Transition, Dialog, TransitionChild, DialogPanel, DialogTitle } from "@headlessui/react";
+import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 
 const typeOptions = [
     { label: "Product Items", value: "products" },
-    
+
 ];
 
 export default function Sub() {
@@ -46,7 +47,7 @@ export default function Sub() {
             toast.error("Failed to delete subcategory.");
         }
     };
- 
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -57,11 +58,7 @@ export default function Sub() {
 
                 <div className="flex gap-3 items-center">
                     <div className="w-48">
-                        <SelectDropdown
-                            options={typeOptions}
-                            value={selectedType}
-                            onChange={setSelectedType}
-                        />
+
                     </div>
 
                     <button
@@ -69,7 +66,7 @@ export default function Sub() {
                             setEditingCategory(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600 cursor-pointer"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Subcategory
@@ -101,59 +98,25 @@ export default function Sub() {
                 />
             </Drawer>
 
-            {/* Delete Confirmation Modal */}
-            <Transition appear show={isModalOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-50" onClose={() => setIsModalOpen(false)}>
-                    <TransitionChild
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
+            <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
+                <p className="mt-2 text-sm text-gray-500">
+                    Are you sure you want to delete this sub category? This action cannot be undone.
+                </p>
+                <div className="mt-4 flex justify-end gap-3">
+                    <button
+                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        onClick={() => setIsModalOpen(false)}
                     >
-                        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" />
-                    </TransitionChild>
-
-                    <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4">
-                            <TransitionChild
-                                as={Fragment}
-                                enter="ease-out duration-300"
-                                enterFrom="opacity-0 scale-95"
-                                enterTo="opacity-100 scale-100"
-                                leave="ease-in duration-200"
-                                leaveFrom="opacity-100 scale-100"
-                                leaveTo="opacity-0 scale-95"
-                            >
-                                <DialogPanel className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
-                                    <DialogTitle className="text-lg font-medium text-gray-900">
-                                        Confirm Deletion
-                                    </DialogTitle>
-                                    <p className="mt-2 text-sm text-gray-500">
-                                        Are you sure you want to delete this subcategory? This action cannot be undone.
-                                    </p>
-                                    <div className="mt-4 flex justify-end gap-3">
-                                        <button
-                                            className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            onClick={() => setIsModalOpen(false)}
-                                        >
-                                            Cancel
-                                        </button>
-                                        <button
-                                            className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
-                                            onClick={handleDelete}
-                                        >
-                                            Proceed
-                                        </button>
-                                    </div>
-                                </DialogPanel>
-                            </TransitionChild>
-                        </div>
-                    </div>
-                </Dialog>
-            </Transition>
+                        Cancel
+                    </button>
+                    <button
+                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
+                        onClick={handleDelete}
+                    >
+                        Proceed
+                    </button>
+                </div>
+            </ConfirmationModal>
         </div>
     );
 }

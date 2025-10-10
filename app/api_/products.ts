@@ -19,6 +19,16 @@ export async function getRecentProducts(
     return response.data;
 }
 
+
+export async function addProduct(productData: FormData) {
+    const response = await axios.post("/product", productData);
+    return response.data;
+}
+export async function updateProduct(productId: number, productData: FormData) {
+    const response = await axios.put(`/product/${productId}`, productData);
+    return response.data;
+}
+
 export async function productGraph(selectedPeriod?: string, type?: string, status?: string) {
     const response = await axios.get(
         `/product-graph?start_date=${selectedPeriod}&type=${type}&status=${status}`

@@ -78,7 +78,6 @@ export const NAVIGATION = [
         icon: CubeIcon,
         children: [
             { name: "All items", href: "/products" },
-            { name: "Pending Approvals", href: "/products/pending" },
             { name: "Item Analytics", href: "/products/analytics" },
         ],
     },
@@ -103,7 +102,7 @@ export const NAVIGATION = [
     },
     {
         name: "Banner Management",
-        href: "/categories",
+        href: "/banners",
         icon: FlagIcon,
         children: [
             { name: "Banners", href: "/banners" },

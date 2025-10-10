@@ -11,7 +11,7 @@ import { getRecentProducts, updateItemStatus } from "@/app/api_/products";
 import StatusBadge from "@/utils/StatusBadge";
 import ItemSummary from "./ItemSummary";
 import { getStockBadgeClass } from "@/utils/StockBadge";
-import { BuildingStorefrontIcon, EyeIcon, StarIcon } from "@heroicons/react/24/outline";
+import { ArrowUpRightIcon, BuildingStorefrontIcon, EyeIcon, StarIcon } from "@heroicons/react/24/outline";
 import ProductAreaChart from "./ProductAreaChart";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
@@ -48,7 +48,7 @@ function ProductActionCell({
         try {
             await updateItemStatus(productId, selected.value);
             toast.success("Status updated");
-            onStatusUpdate(selected.value); // 🔁 update parent state
+            onStatusUpdate(selected.value); 
         } catch {
             setStatus(previous);
             toast.error("Failed to update status");
@@ -56,13 +56,13 @@ function ProductActionCell({
     };
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex gap-2">
             <SelectDropdown value={status} options={statusOptions} onChange={handleStatusChange} />
             <button
                 className="text-sm bg-green-500 text-white px-2 py-1 rounded-xl hover:bg-green-600"
                 onClick={() => (window.location.href = `/products/${productId}`)}
             >
-                View product
+                View product <ArrowUpRightIcon className="w-4 h-4 inline-block" />
             </button>
         </div>
     );
@@ -178,30 +178,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                         </span>
                     );
                 },
-            },
-
-            {
-                header: "Vendor",
-                accessorKey: "vendor.name",
-                cell: ({ row }) => {
-                    const vendor = row.original.vendor;
-                    const type = row.original.type;
-
-                    return vendor ? (
-                        <div className="flex flex-col text-gray-700">
-                            <div className="flex items-center gap-2">
-                                <BuildingStorefrontIcon className="w-4 h-4 text-green-600" />
-                                <span>{vendor.name}</span>
-                            </div>
-                            <span className="text-xs text-gray-500 mt-0.5 ml-6">
-                                {type === "services" ? "Service Provider" : "Product Seller"}
-                            </span>
-                        </div>
-                    ) : (
-                        <span className="text-gray-400 italic">N/A</span>
-                    );
-                },
-            },
+            }, 
             {
                 header: "Views",
                 accessorKey: "views",
@@ -304,7 +281,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
             <div className="mb-4">
                 <input
                     type="text"
-                    placeholder="Search by product or vendor name..."
+                    placeholder="Search by product name..."
                     value={search}
                     onChange={handleSearchChange}
                     className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900"
