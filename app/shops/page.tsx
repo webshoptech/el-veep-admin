@@ -175,7 +175,7 @@ export default function Shops() {
                     <input
                         type="text"
                         placeholder="Search shops..."
-                        className="w-full px-10 py-2 border border-amber-600 rounded-md text-gray-900 focus:outline-none focus:border-amber-600 focus:ring-0"
+                        className="w-full px-10 py-2 border border-green-600 rounded-md text-gray-900 focus:outline-none focus:border-green-600 focus:ring-0"
                         value={search}
                         onChange={(e) => {
                             setPagination((prev) => ({ ...prev, pageIndex: 0 }));

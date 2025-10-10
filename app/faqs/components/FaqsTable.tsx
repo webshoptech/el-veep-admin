@@ -137,7 +137,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                                 setEditingFaq(row.original);
                                 setDrawerOpen(true);
                             }}
-                            className="p-2 text-white hover:text-blue-800 bg-amber-500 rounded-xl cursor-pointer"
+                            className="p-2 text-white hover:text-blue-800 bg-green-500 rounded-xl cursor-pointer"
                         >
                             <PencilIcon className="w-5 h-5" />
                         </button>
@@ -212,7 +212,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                     placeholder="Search by question..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900"
                 />
             </div>
 

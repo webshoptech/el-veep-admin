@@ -165,7 +165,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
                     maxLength={maxLength}
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     placeholder={isSMS
                         ? 'Max 160 characters for SMS'
                         : isEmail
@@ -190,7 +190,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
                             placeholder="https://example.com"
                             value={cta}
                             onChange={(e) => setCta(e.target.value)}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                         />
                     </div>
 
@@ -200,7 +200,7 @@ export default function NotificationForm({ onClose, notification }: Props) {
                         </label>
                         <label
                             htmlFor="notificationImage"
-                            className="relative w-full h-50 aspect-square border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors overflow-hidden flex items-center justify-center"
+                            className="relative w-full h-50 aspect-square border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors overflow-hidden flex items-center justify-center"
                         >
                             {imagePreview ? (
                                 <Image src={imagePreview} alt="Preview" fill className="object-cover" />

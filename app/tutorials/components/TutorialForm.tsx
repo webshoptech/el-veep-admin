@@ -110,7 +110,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
                     placeholder="Enter title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 />
             </div>
 
@@ -124,7 +124,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
                     placeholder="Enter description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 />
             </div>
 
@@ -137,7 +137,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
                     value={videoPreview}
                     onChange={(e) => handleVideoChange(e.target.value)}
                     placeholder="https://example.com/video.mp4"
-                    className="w-full border border-gray-300 rounded-lg p-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full border border-gray-300 rounded-lg p-2 focus:ring-green-500 focus:border-green-500"
                 />
                 {videoPreview && (
                     <div className="mt-4">
@@ -157,7 +157,7 @@ export default function TutorialForm({ onClose, tutorial }: Props) {
                 </label>
                 <label
                     htmlFor="imageFile"
-                    className="relative w-full aspect-[3/2] border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors overflow-hidden flex items-center justify-center"
+                    className="relative w-full aspect-[3/2] border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors overflow-hidden flex items-center justify-center"
                 >
                     {imagePreview ? (
                         <Image

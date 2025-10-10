@@ -77,7 +77,7 @@ export default function FaqForm({ onClose, faq }: Props) {
                     placeholder="Enter question"
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 />
             </div>
 
@@ -91,7 +91,7 @@ export default function FaqForm({ onClose, faq }: Props) {
                     placeholder="Enter answer"
                     value={answer}
                     onChange={(e) => setAnswer(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                 />
             </div>
 

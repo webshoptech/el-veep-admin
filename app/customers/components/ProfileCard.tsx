@@ -191,7 +191,7 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                                     type="text"
                                     value={confirmText}
                                     onChange={(e) => setConfirmText(e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 mt-2"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 mt-2"
                                 />
 
                                 <div className="mt-6 flex justify-end gap-3">

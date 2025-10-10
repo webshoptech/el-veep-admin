@@ -121,7 +121,7 @@ export default function Transactions() {
                         placeholder="Search by vendor name..."
                         value={search}
                         onChange={handleSearchChange}
-                        className="mb-4 w-full max-w-sm text-gray-800 px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-600"
+                        className="mb-4 w-full max-w-sm text-gray-800 px-3 py-2 border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600"
                     />
                 </div>
             </div>

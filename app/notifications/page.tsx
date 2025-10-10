@@ -200,7 +200,7 @@ export default function Notifications() {
                 <div className="flex gap-3 items-center">
                     <button
                         onClick={() => setDrawerOpen(true)}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Send New Notification

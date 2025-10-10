@@ -57,7 +57,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                     return (
                         <Link
                             href={`/orders/${orderId}`}
-                            className="text-amber-600 font-medium hover:underline"
+                            className="text-green-600 font-medium hover:underline"
                         >
                             #{orderId}
                         </Link>
@@ -162,7 +162,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                     placeholder="Search by customer name or comment..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900"
                 />
             </div>
             <TanStackTable

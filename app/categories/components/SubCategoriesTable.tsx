@@ -133,7 +133,7 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit, o
                     setSearch(e.target.value);
                     setPagination((prev) => ({ ...prev, pageIndex: 0 }));
                 }}
-                className="w-full px-3 py-2 border border-amber-600 rounded-md text-gray-900"
+                className="w-full px-3 py-2 border border-green-600 rounded-md text-gray-900"
             />
 
             <TanStackTable

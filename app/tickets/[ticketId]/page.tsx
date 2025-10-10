@@ -116,7 +116,7 @@ export default function TicketDetailPage() {
         <div className="p-6 bg-white h-screen rounded-xl w-full shadow">
             <div className="flex items-center justify-between mb-6">
                 <button
-                    className="text-white  hover:text-black bg-amber-500 rounded-full p-2 cursor-pointer"
+                    className="text-white  hover:text-black bg-green-500 rounded-full p-2 cursor-pointer"
                     onClick={() => history.back()}
                 >
                     <ArrowLeftIcon className="h-5 w-5 font-bold" />

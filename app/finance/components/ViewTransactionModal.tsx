@@ -42,7 +42,7 @@ export default function ViewTransactionModal({
           </div>
           <div className="flex justify-between text-sm">
             <span className="font-semibold">Amount:</span>
-            <span className="text-amber-600 font-bold">{formatAmount(transaction.amount)}</span>
+            <span className="text-green-600 font-bold">{formatAmount(transaction.amount)}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="font-semibold">Created At:</span>

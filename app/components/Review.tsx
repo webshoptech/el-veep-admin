@@ -97,7 +97,7 @@ export function RecentReviews() {
                 <p className="text-lg font-bold text-gray-900">Recent Reviews</p>
                 <Link
                     href="/reviews"
-                    className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-amber-50 py-2 px-4 rounded"
+                    className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-green-50 py-2 px-4 rounded"
                 >
                     See all
                 </Link>

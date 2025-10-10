@@ -296,7 +296,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                     placeholder="Search by category name..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900"
                 />
             </div>
 

@@ -121,7 +121,7 @@ export default function CommissionForm({ initialData, onClose, onSuccess }: Prop
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-4 py-2 text-sm rounded-md bg-amber-600 text-white hover:bg-amber-700 disabled:opacity-60"
+                    className="px-4 py-2 text-sm rounded-md bg-green-600 text-white hover:bg-green-700 disabled:opacity-60"
                 >
                     {initialData ? 'Update' : 'Create'}
                 </button>

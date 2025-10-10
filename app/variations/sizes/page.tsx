@@ -54,7 +54,7 @@ export default function ProductSizes() {
                         onClick={() => {
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-amber-500 text-white hover:bg-amber-600"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Product Size

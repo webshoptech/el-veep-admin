@@ -136,7 +136,7 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
         <div>
             <div className="flex justify-between items-center mb-4">
                 <p className="text-lg font-bold text-gray-900">Recent bookings</p>
-                <Link href="/orders" className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-amber-50 py-2 px-4 rounded">
+                <Link href="/orders" className="text-sm bg-gray-300 hover:bg-gray-400 text-gray-600 hover:text-green-50 py-2 px-4 rounded">
                     See all
                 </Link>
             </div>

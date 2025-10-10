@@ -68,7 +68,7 @@ function TanStackTable<T>({
   });
 
   return (
-    <div className="w-full overflow-x-auto rounded-xl border border-amber-200 bg-white shadow-md">
+    <div className="w-full overflow-x-auto rounded-xl border border-green-200 bg-white shadow-md">
       <table className="min-w-full divide-y divide-gray-200 text-sm">
         {/* Always show table head */}
         <thead className="bg-green-50 text-xs font-semibold text-gray-700 uppercase">

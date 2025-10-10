@@ -128,7 +128,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                 accessorKey: "average_rating",
                 cell: ({ getValue }) => {
                     const rating = parseFloat(getValue() as string) || 0;
-                    const stars = Math.round(rating); 
+                    const stars = Math.round(rating);
 
                     return (
                         <div className="flex items-center gap-0.5">
@@ -190,7 +190,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                     return vendor ? (
                         <div className="flex flex-col text-gray-700">
                             <div className="flex items-center gap-2">
-                                <BuildingStorefrontIcon className="w-4 h-4 text-amber-600" />
+                                <BuildingStorefrontIcon className="w-4 h-4 text-green-600" />
                                 <span>{vendor.name}</span>
                             </div>
                             <span className="text-xs text-gray-500 mt-0.5 ml-6">
@@ -210,7 +210,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
 
                     return (
                         <div className="flex items-center gap-1 text-gray-700">
-                            <EyeIcon className="w-4 h-4 text-amber-600" />
+                            <EyeIcon className="w-4 h-4 text-green-600" />
                             <span>{views}</span>
                         </div>
                     );
@@ -307,7 +307,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                     placeholder="Search by product or vendor name..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900"
                 />
             </div>
 

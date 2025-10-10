@@ -154,7 +154,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
             cell: ({ row }) => {
                 return (
                     <div className="flex items-center gap-2 text-indigo-600 cursor-pointer">
-                        <button onClick={() => router.push(`/orders/${row.original.id}`)} className="px-3 py-1 bg-amber-600 text-white rounded hover:bg-amber-700 cursor-pointer">
+                        <button onClick={() => router.push(`/orders/${row.original.id}`)} className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer">
                             View
                         </button>
                     </div>
@@ -179,7 +179,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                                     placeholder="Search by name, or order id..."
                                     value={searchInput}
                                     onChange={handleSearchChange}
-                                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900 focus:outline-none focus:ring-0 focus:border-amber-400"
+                                    className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900 focus:outline-none focus:ring-0 focus:border-green-400"
                                 />
                             </div>
 
@@ -202,7 +202,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                             />
                         </>
                     ) : (
-                        <p className="flex items-center justify-center w-full text-green-900 p-4 border border-amber-500 bg-amber-50 rounded-xl text-sm text-center">
+                        <p className="flex items-center justify-center w-full text-green-900 p-4 border border-green-500 bg-green-50 rounded-xl text-sm text-center">
                             {searchInput
                                 ? `No orders found for “${searchInput}”.`
                                 : `This ${type} does not have any orders yet.`}

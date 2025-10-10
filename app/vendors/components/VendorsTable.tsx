@@ -74,7 +74,7 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
                     const userId = getValue();
                     return (
                         <button
-                            className="px-3 py-1 bg-amber-600 text-white rounded hover:bg-amber-700 cursor-pointer"
+                            className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
                             onClick={() => {
                                 window.location.href = `/vendors/${userId}`;
                             }}
@@ -131,7 +131,7 @@ const VendorsTable: React.FC<VendorsTableProps> = ({ limit }) => {
                     placeholder="Search by name, or phone..."
                     value={search}
                     onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-amber-600 text-gray-900"
+                    className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900"
                 />
             </div>
             <TanStackTable
