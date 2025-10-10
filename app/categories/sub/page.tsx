@@ -9,20 +9,14 @@ import SubCategoryForm from "../components/SubCategoryForm";
 import { FlattenedSubCategory } from "@/types/CategoryType";
 import { deleteCategory } from "@/app/api_/categories";
 import toast from "react-hot-toast";
-import { Transition, Dialog, TransitionChild, DialogPanel, DialogTitle } from "@headlessui/react";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 
-const typeOptions = [
-    { label: "Product Items", value: "products" },
-
-];
-
 export default function Sub() {
-    const [selectedType, setSelectedType] = useState(typeOptions[0]);
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [editingCategory, setEditingCategory] = useState<FlattenedSubCategory | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [categoryToDelete, setCategoryToDelete] = useState<FlattenedSubCategory | null>(null);
+    const [loading, setLoading] = useState(false);
 
     const handleEdit = (category: FlattenedSubCategory) => {
         setEditingCategory(category);
@@ -36,6 +30,7 @@ export default function Sub() {
 
     const handleDelete = async () => {
         if (!categoryToDelete) return;
+        setLoading(true);
         try {
             await deleteCategory(categoryToDelete.id);
             toast.success("Subcategory deleted successfully.");
@@ -45,6 +40,8 @@ export default function Sub() {
         } catch (error) {
             console.error(error);
             toast.error("Failed to delete subcategory.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -76,7 +73,7 @@ export default function Sub() {
 
             <SubCategoriesTable
                 limit={10}
-                type={selectedType.value}
+                type={"products"}
                 onEdit={handleEdit}
                 onDelete={confirmDelete}
             />
@@ -113,7 +110,7 @@ export default function Sub() {
                         className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
                         onClick={handleDelete}
                     >
-                        Proceed
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
             </ConfirmationModal>

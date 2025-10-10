@@ -3,11 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { categoryAnalytics } from "@/app/api_/categories";
 import { CategoryAnalyticsItem, CategoryAnalyticsType } from "@/types/CategoryType";
-import { CubeIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/solid";
-import { ColumnDef } from "@tanstack/react-table";
-import TanStackTable from "@/app/components/commons/TanStackTable";
-import { EyeIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
+ import { ColumnDef } from "@tanstack/react-table";
+import TanStackTable from "@/app/components/commons/TanStackTable"; 
 
 export default function Analytics() {
     const [data, setData] = useState<CategoryAnalyticsItem[]>([]);
@@ -47,23 +44,7 @@ export default function Analytics() {
                 cell: ({ row }) => (
                     <span className="text-gray-800 font-medium">{row.original.name}</span>
                 ),
-            }, 
-            {
-                header: "Type",
-                accessorKey: "type",
-                cell: ({ row }) => {
-                    const type = row.original.type;
-                    const isProduct = type === "products";
-                    const Icon = isProduct ? CubeIcon : WrenchScrewdriverIcon;
-
-                    return (
-                        <div className="flex items-center gap-2 text-gray-800 font-medium">
-                            <Icon className="w-4 h-4 text-green-600" />
-                            {type.charAt(0).toUpperCase() + type.slice(1)}
-                        </div>
-                    );
-                },
-            },
+            },  
             {
                 header: "Sales Count",
                 accessorKey: "total_sales_count",
@@ -86,22 +67,7 @@ export default function Analytics() {
                 cell: ({ row }) => (
                     <span className="text-gray-900">{row.original.total_orders}</span>
                 ),
-            },
-            {
-                header: "Action",
-                accessorKey: "id",
-                cell: ({ row }) => (
-                    <div className="flex items-center gap-2">
-                        <Link
-                            href={`/categories/${row.original.slug}`}
-                            className="bg-blue-500 text-white p-1.5 rounded hover:bg-blue-600 flex items-center gap-1"
-                        >
-                            <EyeIcon className="w-4 h-4" />
-                            View
-                        </Link>
-                    </div>
-                ),
-            },
+            }, 
         ],
         []
     );

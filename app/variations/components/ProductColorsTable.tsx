@@ -55,7 +55,7 @@ const ProductColorsTable: React.FC<ColorProps> = ({ limit, onDelete }) => {
 
                         <button
                             onClick={() => onDelete(row.original)}
-                            className="bg-green-500 text-white p-1.5 rounded hover:bg-green-600"
+                            className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600 cursor-pointer"
                         >
                             <TrashIcon className="w-4 h-4" />
                         </button>
@@ -71,7 +71,6 @@ const ProductColorsTable: React.FC<ColorProps> = ({ limit, onDelete }) => {
             setLoading(true);
             const response = await listColours(pageSize, offset);
             setColors(response.data);
-            console.log(response);
             setTotal(response.total);
         } catch (err) {
             console.error(err);

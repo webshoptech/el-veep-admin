@@ -71,7 +71,7 @@ export const NAVIGATION = [
             { name: "All Reviews", href: "/reviews" },
             { name: "Un-Reviews orders", href: "/reviews/un-reviews" },
         ],
-    }, 
+    },
     {
         name: "Items Management",
         href: "/products",
@@ -108,7 +108,7 @@ export const NAVIGATION = [
             { name: "Banners", href: "/banners" },
             { name: "Banner types", href: "/banners/types" },
         ],
-    }, 
+    },
     {
         name: "FAQs Management",
         href: "/faqs",
@@ -116,15 +116,6 @@ export const NAVIGATION = [
         children: [
             { name: "FAQs", href: "/faqs" },
             { name: "Tutorials", href: "/tutorials" },
-        ],
-    },
-    {
-        name: "Support Tickets",
-        href: "/tickets",
-        icon: MegaphoneIcon,
-        children: [
-            { name: "Tickets", href: "/tickets" },
-            { name: "Notifications", href: "/notifications" },
         ],
     },
     {
@@ -144,7 +135,7 @@ export const NAVIGATION = [
             { name: "Team members", href: "/teams" },
         ],
     },
-]; 
+];
 
 export const PrivacyPages = [
     { name: "Privacy Policy", type: "privacy" },

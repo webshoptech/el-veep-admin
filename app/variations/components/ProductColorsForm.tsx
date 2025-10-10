@@ -67,6 +67,7 @@ export default function ProductColorsForm({ onClose }: { onClose: () => void }) 
                 <input
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
                     type="text"
+                    readOnly
                     value={hexcode}
                     onChange={(e) => setHexcode(e.target.value)}
                 />

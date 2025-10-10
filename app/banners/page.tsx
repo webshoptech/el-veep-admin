@@ -15,8 +15,9 @@ export default function Banners() {
     const [editingCategory, setEditingCategory] = useState<BannerType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [categoryToDelete, setCategoryToDelete] = useState<BannerType | null>(null);
+    const [loading, setLoading] = useState(false);
 
-     
+
 
     const confirmDelete = (category: BannerType) => {
         setCategoryToDelete(category);
@@ -25,6 +26,8 @@ export default function Banners() {
 
     const handleDelete = async () => {
         if (!categoryToDelete) return;
+        setLoading(true);
+
         try {
             await deleteBanner(categoryToDelete.id);
             toast.success("Banner deleted successfully.");
@@ -34,9 +37,11 @@ export default function Banners() {
         } catch (error) {
             console.error(error);
             toast.error("Failed to delete subcategory.");
+        } finally {
+            setLoading(false);
         }
     };
- 
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -46,7 +51,7 @@ export default function Banners() {
                 </div>
 
                 <div className="flex gap-3 items-center">
-                    
+
 
                     <button
                         onClick={() => {
@@ -63,7 +68,7 @@ export default function Banners() {
 
             <BannersTable
                 limit={10}
-                 onDelete={confirmDelete}
+                onDelete={confirmDelete}
             />
 
             <Drawer
@@ -127,8 +132,7 @@ export default function Banners() {
                                             className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
                                             onClick={handleDelete}
                                         >
-                                            Proceed
-                                        </button>
+                                            {loading ? "Deleting..." : "Delete"}                                            </button>
                                     </div>
                                 </DialogPanel>
                             </TransitionChild>

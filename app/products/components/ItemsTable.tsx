@@ -11,7 +11,7 @@ import { getRecentProducts, updateItemStatus } from "@/app/api_/products";
 import StatusBadge from "@/utils/StatusBadge";
 import ItemSummary from "./ItemSummary";
 import { getStockBadgeClass } from "@/utils/StockBadge";
-import { ArrowUpRightIcon, BuildingStorefrontIcon, EyeIcon, StarIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, StarIcon } from "@heroicons/react/24/outline";
 import ProductAreaChart from "./ProductAreaChart";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
@@ -48,7 +48,7 @@ function ProductActionCell({
         try {
             await updateItemStatus(productId, selected.value);
             toast.success("Status updated");
-            onStatusUpdate(selected.value); 
+            onStatusUpdate(selected.value);
         } catch {
             setStatus(previous);
             toast.error("Failed to update status");
@@ -58,12 +58,7 @@ function ProductActionCell({
     return (
         <div className="flex gap-2">
             <SelectDropdown value={status} options={statusOptions} onChange={handleStatusChange} />
-            <button
-                className="text-sm bg-green-500 text-white px-2 py-1 rounded-xl hover:bg-green-600"
-                onClick={() => (window.location.href = `/products/${productId}`)}
-            >
-                View product <ArrowUpRightIcon className="w-4 h-4 inline-block" />
-            </button>
+
         </div>
     );
 }
@@ -178,7 +173,7 @@ const ItemsTable: React.FC<ProductTableProps> = ({ limit, type, status }) => {
                         </span>
                     );
                 },
-            }, 
+            },
             {
                 header: "Views",
                 accessorKey: "views",

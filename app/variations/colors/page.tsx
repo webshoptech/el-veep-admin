@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import { ColorType } from "@/types/ColorType";
-import toast from "react-hot-toast"; 
+import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 import ProductColorsTable from "../components/ProductColorsTable";
 import ProductColorsForm from "../components/ProductColorsForm";
@@ -15,6 +15,7 @@ export default function ProductColors() {
     const [editingColor, setEditingColor] = useState<ColorType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [colorToDelete, setcolorToDelete] = useState<ColorType | null>(null);
+    const [loading, setLoading] = useState(false);
 
     const confirmDelete = (color: ColorType) => {
         setcolorToDelete(color);
@@ -23,6 +24,8 @@ export default function ProductColors() {
 
     const handleDelete = async () => {
         if (!colorToDelete) return;
+        setLoading(true);
+
         try {
             await deleteColour(colorToDelete.id);
             toast.success("Color deleted successfully.");
@@ -32,6 +35,8 @@ export default function ProductColors() {
         } catch (error) {
             console.error(error);
             toast.error("Failed to delete subcolor.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -51,7 +56,7 @@ export default function ProductColors() {
                             setEditingColor(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600 cursor-pointer"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Product Colors
@@ -86,16 +91,16 @@ export default function ProductColors() {
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button
-                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                         onClick={() => setIsModalOpen(false)}
                     >
                         Cancel
                     </button>
                     <button
-                        className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
+                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
                         onClick={handleDelete}
                     >
-                        Proceed
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
             </ConfirmationModal>

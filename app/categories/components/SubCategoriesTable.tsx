@@ -62,15 +62,15 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit, o
                     <div className="flex items-center gap-2">
                         <button
                             onClick={() => onEdit(row.original)}
-                            className="bg-green-500 text-white p-1.5 rounded hover:bg-green-600"
+                            className="bg-yellow-500 text-white p-1.5 rounded hover:bg-yellow-600 cursor-pointer flex items-center"
                         >
-                            <PencilSquareIcon className="w-4 h-4" />
+                            <PencilSquareIcon className="w-4 h-4" /> Edit
                         </button>
                         <button
                             onClick={() => onDelete(row.original)}
-                            className="bg-green-500 text-white p-1.5 rounded hover:bg-green-600"
+                            className="bg-red-500 text-white p-1.5 rounded hover:bg-red-600 cursor-pointer flex items-center"
                         >
-                            <TrashIcon className="w-4 h-4" />
+                            <TrashIcon className="w-4 h-4" /> Delete
                         </button>
                     </div>
                 ),
@@ -79,7 +79,6 @@ const SubCategoriesTable: React.FC<SubcategoryProps> = ({ limit, type, onEdit, o
         [onEdit, onDelete]
     );
 
-    // ✅ Async fetch function
     const fetchSubCategories = async ({ offset, pageSize, searchTerm, type }: FetchArgs) => {
         try {
             setLoading(true);
