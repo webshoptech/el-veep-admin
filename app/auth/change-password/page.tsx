@@ -76,7 +76,7 @@ export default function ChangePassword() {
                 type={showCurrent ? "text" : "password"}
                 value={current_password}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                placeholder="Current Password"
+                placeholder="Enter current password"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 pr-10 focus:outline-none"
                 required
               />
@@ -104,7 +104,7 @@ export default function ChangePassword() {
                 type={showNew ? "text" : "password"}
                 value={new_password}
                 onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="New Password"
+                placeholder="New password"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 pr-10 focus:outline-none"
                 required
               />
