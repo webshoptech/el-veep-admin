@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
 import { useCategoryStore } from '@/app/store/CategoryStore';
@@ -8,6 +8,8 @@ import { addCategory, updateCategory } from '@/app/api_/categories';
 import toast from 'react-hot-toast';
 import { SubmitButton } from '@/app/components/commons/SubmitButton';
 import { CategoryType } from '@/types/CategoryType';
+import { fetchDescription } from '@/app/api_/ai_gemini';
+import debounce from 'lodash.debounce';
 
 interface Props {
   onClose: () => void;
@@ -24,6 +26,7 @@ export default function CategoryForm({ onClose, category }: Props) {
   const [description, setDescription] = useState(category?.description || '');
   const [imagePreview, setImagePreview] = useState<string | null>(category?.image || null);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { categories } = useCategoryStore();
@@ -34,6 +37,38 @@ export default function CategoryForm({ onClose, category }: Props) {
       value: String(cat.id),
     }));
   }, [categories]);
+
+  /** ✅ Stable debounced AI generation (no ESLint warning) */
+  const debouncedGenerate = useRef(
+    debounce(async (value: string) => {
+      const wordCount = value.trim().split(/\s+/).filter(Boolean).length;
+      if (wordCount >= 3) {
+        setIsGenerating(true);
+        try {
+          const res = await fetchDescription(value, 'category');
+          if (res?.description) setDescription(res.description);
+        } catch (error) {
+          console.error('AI generation failed:', error);
+        } finally {
+          setIsGenerating(false);
+        }
+      }
+    }, 1000)
+  ).current;
+
+  /** Cleanup debounce on unmount */
+  useEffect(() => {
+    return () => {
+      debouncedGenerate.cancel();
+    };
+  }, [debouncedGenerate]);
+
+  /** Handle input name changes */
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setName(value);
+    debouncedGenerate(value);
+  };
 
   /** Handle image selection */
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,18 +111,42 @@ export default function CategoryForm({ onClose, category }: Props) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Category Name */}
-      <div>
+      <div className="relative">
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-          Name <span className="text-green-500">*</span>
+          Name
         </label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter category name"
+        <div className="flex items-center gap-2">
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={onInputChange}
+            placeholder="Enter category name"
           className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-        />
+          />
+          {isGenerating && (
+            <svg
+              className="animate-spin h-5 w-5 text-green-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+              ></path>
+            </svg>
+          )}
+        </div>
       </div>
 
       {/* Parent Category */}
