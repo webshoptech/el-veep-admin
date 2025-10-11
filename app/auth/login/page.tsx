@@ -46,7 +46,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row h-screen">
+    <div className="flex flex-col md:flex-row h-screen bg-green-950">
       {/* Image */}
       <div
         className="h-40 md:h-full md:w-1/2 bg-cover bg-center"

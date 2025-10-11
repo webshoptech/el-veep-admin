@@ -65,7 +65,7 @@ const FinanceAreaChart = ({ selectedPeriod }: AreaChartProps) => {
         stroke: {
             curve: "smooth",
             width: 1.5,
-            colors: ["#F97316"],
+            colors: ["#00B05E"],
         },
         fill: {
             type: "gradient",
@@ -76,7 +76,7 @@ const FinanceAreaChart = ({ selectedPeriod }: AreaChartProps) => {
                 opacityTo: 0.05,
                 stops: [0, 90, 100],
             },
-            colors: ["#F97316"],
+            colors: ["#00B05E"],
         },
         series: [{ name: "Total Earned", data: chartData.series }],
         xaxis: {
@@ -97,7 +97,7 @@ const FinanceAreaChart = ({ selectedPeriod }: AreaChartProps) => {
         },
         markers: {
             size: 4,
-            colors: ["#F97316"],
+            colors: ["#00B05E"],
             strokeColors: "#ffffff",
             strokeWidth: 2,
             hover: { size: 6 },

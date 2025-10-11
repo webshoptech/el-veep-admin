@@ -24,7 +24,7 @@ export default function SelectDropdown({
     <Listbox value={value} onChange={onChange}>
       <div className="relative">
         <ListboxButton
-          className={`relative cursor-default rounded-xl border border-gray-300 bg-white py-2.5 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 text-gray-700 text-sm ${className}`}
+          className={`relative rounded-xl border cursor-pointer border-gray-300 bg-white py-2.5 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 text-gray-700 text-sm ${className}`}
         >
           <span className="block truncate">{value.label}</span>
           <span className="pointer-events-none absolute inset-y-0 right-2 flex items-center pr-2">

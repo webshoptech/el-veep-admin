@@ -59,7 +59,7 @@ export default function AdminsTable() {
                 cell: ({ row }) => (
                     <button
                         onClick={() => setConfirmDeleteId(row.original.id)}
-                        className=" flex items-center bg-green-500 text-white p-1.5 rounded hover:bg-green-600"
+                        className="flex items-center bg-red-500 text-white p-1.5 rounded hover:bg-red-600"
                     >
                         <TrashIcon className="w-4 h-4 mr-1" /> Revoke
                     </button>
@@ -177,9 +177,9 @@ export default function AdminsTable() {
                                 setConfirmDeleteId(null);
                             }
                         }}
-                        className="px-4 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-700"
+                        className="px-4 py-2 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
                     >
-                         {loading ? "Deleting..." : "Delete"}
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
             </ConfirmationModal>

@@ -65,7 +65,7 @@ const AreaChart = ({ type }: AreaChartProps) => {
             },
             grid: {
                 show: true,
-                gradientToColors: ["rgba(249, 115, 22, 0.15)"],
+                 gradientToColors: ["rgba(0, 176, 94, 0.15)"],
                 strokeDashArray: 4,
                 padding: {
                     top: 10,
@@ -78,7 +78,7 @@ const AreaChart = ({ type }: AreaChartProps) => {
             stroke: {
                 curve: "smooth",
                 width: 1.5,
-                colors: ["#F97316"],
+                colors: ["#00B05E"],
             },
             fill: {
                 type: "gradient",
@@ -93,17 +93,17 @@ const AreaChart = ({ type }: AreaChartProps) => {
                     colorStops: [
                         {
                             offset: 0,
-                            color: "rgba(249, 115, 22, 0.4)",
+                            color: "rgba(0, 176, 94, 0.4)",
                             opacity: 0.4,
                         },
                         {
                             offset: 100,
-                            color: "rgba(249, 115, 22, 0.05)",
+                            color: "rgba(0, 176, 94, 0.05)",
                             opacity: 0.05,
                         },
                     ],
                 },
-                colors: ["#F97316"],
+                colors: ["#00B05E"],
 
             },
             series: [{ name: "Activity", data: chartData.series }],
@@ -129,7 +129,7 @@ const AreaChart = ({ type }: AreaChartProps) => {
             },
             markers: {
                 size: 4,
-                colors: ["#F97316"],
+                colors: ["#00B05E"],
                 strokeColors: "#ffffff",
                 strokeWidth: 2,
                 hover: { size: 6 },

@@ -25,8 +25,8 @@ interface ProductTableProps {
 type Option = { label: string; value: string };
 
 const statusOptions: Option[] = [
-    { label: 'Active', value: 'active' },
-    { label: 'Inactive', value: 'inactive' },
+    { label: 'Published', value: 'active' },
+    { label: 'Draft', value: 'inactive' },
 ];
 
 function ProductActionCell({

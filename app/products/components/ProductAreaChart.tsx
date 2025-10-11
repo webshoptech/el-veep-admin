@@ -55,6 +55,7 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
         fetchChartData(selected.value);
     }, [fetchChartData, selected]);
 
+
     const options: ApexOptions = useMemo(
         () => ({
             chart: {
@@ -66,7 +67,7 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
             },
             grid: {
                 show: true,
-                gradientToColors: ["rgba(249, 115, 22, 0.15)"],
+                gradientToColors: ["rgba(0, 176, 94, 0.15)"], 
                 strokeDashArray: 4,
                 padding: {
                     top: 10,
@@ -79,7 +80,7 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
             stroke: {
                 curve: "smooth",
                 width: 1.5,
-                colors: ["#F97316"],
+                colors: ["#00B05E"],  
             },
             fill: {
                 type: "gradient",
@@ -94,18 +95,17 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
                     colorStops: [
                         {
                             offset: 0,
-                            color: "rgba(249, 115, 22, 0.4)",
+                            color: "rgba(0, 176, 94, 0.4)",  
                             opacity: 0.4,
                         },
                         {
                             offset: 100,
-                            color: "rgba(249, 115, 22, 0.05)",
+                            color: "rgba(0, 176, 94, 0.05)",  
                             opacity: 0.05,
                         },
                     ],
                 },
-                colors: ["#F97316"],
-
+                colors: ["#00B05E"], 
             },
             series: [{ name: "Products", data: chartData.series }],
             xaxis: {
@@ -130,7 +130,7 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
             },
             markers: {
                 size: 4,
-                colors: ["#F97316"],
+                colors: ["#00B05E"], 
                 strokeColors: "#ffffff",
                 strokeWidth: 2,
                 hover: { size: 6 },
@@ -138,6 +138,7 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
         }),
         [chartData]
     );
+
     return (
         <div className="p-6 card text-gray-950">
             <div className="flex items-center justify-between mb-6">

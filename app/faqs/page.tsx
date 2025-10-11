@@ -10,8 +10,7 @@ import FaqsForm from "./components/FaqsForm";
 const typeOptions = [
     { label: "All Faqs", value: "" },
     { label: "Customer Faqs", value: "customer" },
-    { label: "Vendor Faqs", value: "vendor" },
-    { label: "App Faqs", value: "system" },
+     { label: "App Faqs", value: "system" },
 ];
 
 export default function Faqs() {
@@ -38,7 +37,7 @@ export default function Faqs() {
 
                     <button
                         onClick={() => setDrawerOpen(true)}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600 cursor-pointer"
                     >
                         <PlusIcon className="w-4 h-4" />
                         Create Faqs

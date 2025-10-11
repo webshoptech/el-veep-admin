@@ -137,9 +137,9 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                                 setEditingFaq(row.original);
                                 setDrawerOpen(true);
                             }}
-                            className="p-2 text-white hover:text-blue-800 bg-green-500 rounded-xl cursor-pointer"
+                            className="p-2 text-white hover:text-blue-800 bg-yellow-500 rounded-xl cursor-pointer flex items-center gap-1"
                         >
-                            <PencilIcon className="w-5 h-5" />
+                            <PencilIcon className="w-4 h-4" /> Edit
                         </button>
 
                         {/* Delete button (opens modal) */}
@@ -148,9 +148,9 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                                 setFaqToDelete(row.original.id);
                                 setIsModalOpen(true);
                             }}
-                            className="p-2 text-white hover:text-green-800 bg-green-500 rounded-xl cursor-pointer"
+                            className="p-2 text-white hover:text-red-800 bg-red-500 rounded-xl cursor-pointer flex items-center gap-1"
                         >
-                            <TrashIcon className="w-5 h-5" />
+                            <TrashIcon className="w-5 h-5" /> Delete
                         </button>
                     </div>
                 ),
@@ -261,13 +261,13 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                 </p>
                 <div className="mt-4 flex justify-end gap-3">
                     <button
-                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="rounded-md border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                         onClick={() => setIsModalOpen(false)}
                     >
                         Cancel
                     </button>
                     <button
-                        className="rounded-md bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700"
+                        className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
                         onClick={handleDelete}
                     >
                        {loading ? "Deleting..." : "Delete"}
