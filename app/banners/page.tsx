@@ -1,11 +1,10 @@
 'use client';
 
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import { BannerType } from "@/types/CategoryType";
 import toast from "react-hot-toast";
-import { Transition, Dialog, TransitionChild, DialogPanel, DialogTitle } from "@headlessui/react";
 import BannersForm from "../categories/components/BannersForm";
 import BannersTable from "../categories/components/BannersTable";
 import { deleteBanner } from "../api_/banners";

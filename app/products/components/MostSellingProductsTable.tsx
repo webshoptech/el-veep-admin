@@ -10,7 +10,6 @@ import { mostSellingProducts } from "@/app/api_/products";
 import StatusBadge from "@/utils/StatusBadge";
 import { getStockBadgeClass } from "@/utils/StockBadge";
 import {
-    BuildingStorefrontIcon,
     EyeIcon,
     StarIcon,
 } from "@heroicons/react/24/outline";

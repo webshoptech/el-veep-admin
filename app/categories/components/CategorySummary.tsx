@@ -2,7 +2,6 @@ import {
     CubeIcon,
     CheckCircleIcon,
     XCircleIcon,
-    ShoppingBagIcon,
 } from "@heroicons/react/24/solid";
 import Skeleton from "react-loading-skeleton";
 import { Stats } from "@/types/ProductType";

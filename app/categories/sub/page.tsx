@@ -1,8 +1,7 @@
 'use client';
 
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import SubCategoriesTable from "../components/SubCategoriesTable";
-import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import SubCategoryForm from "../components/SubCategoryForm";
