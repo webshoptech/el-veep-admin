@@ -55,7 +55,6 @@ export default function ProductForm({ onClose, product }: Props) {
 
     const [loading, setLoading] = useState(false);
 
-    // ✅ SKU Auto-Generator Function
     const generateSKU = (title: string) => {
         const initials = title
             .split(" ")

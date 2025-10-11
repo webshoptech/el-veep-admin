@@ -58,11 +58,12 @@ export default function ResetPassword() {
     };
 
     return (
-        <div className="flex h-screen">
-            <div
-                className="w-1/2 bg-cover bg-center"
-                style={{ backgroundImage: "url('/login.jpg')" }}
-            ></div>
+   <div className="flex flex-col md:flex-row h-screen bg-green-950">
+      {/* Image */}
+      <div
+        className="h-40 md:h-full md:w-1/2 bg-cover bg-center"
+        style={{ backgroundImage: "url('/login.jpg')" }}
+      ></div>
 
             <div className="w-1/2 flex flex-col justify-center items-center px-8">
                 <Image

@@ -69,16 +69,6 @@ export const NAVIGATION = [
         ],
     },
     {
-        name: "Products Management",
-        href: "/products",
-        icon: CubeIcon,
-        children: [
-            { name: "Published products", href: "/products" },
-            { name: "Draft products", href: "/products/pending" },
-            { name: "Item Analytics", href: "/products/analytics" },
-        ],
-    },
-    {
         name: "Category Management",
         href: "/categories",
         icon: Squares2X2Icon,
@@ -86,6 +76,16 @@ export const NAVIGATION = [
             { name: "All categories", href: "/categories" },
             { name: "Sub-categories", href: "/categories/sub" },
             { name: "Category Analytics", href: "/categories/analytics" },
+        ],
+    },
+    {
+        name: "Products Management",
+        href: "/products",
+        icon: CubeIcon,
+        children: [
+            { name: "Published products", href: "/products" },
+            { name: "Draft products", href: "/products/pending" },
+            { name: "Item Analytics", href: "/products/analytics" },
         ],
     },
     {

@@ -21,11 +21,11 @@ export async function getRecentProducts(
 
 
 export async function addProduct(productData: FormData) {
-    const response = await axios.post("/product", productData);
+    const response = await axios.post("/items/create", productData);
     return response.data;
 }
 export async function updateProduct(productId: number, productData: FormData) {
-    const response = await axios.put(`/product/${productId}`, productData);
+    const response = await axios.put(`/items/update/${productId}`, productData);
     return response.data;
 }
 

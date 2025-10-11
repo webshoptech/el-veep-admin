@@ -6,6 +6,7 @@ import { confirmResetCode } from "../../api_/login";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { SubmitButton } from "../../components/commons/SubmitButton";
+import AuthHeader from "@/app/components/commons/AuthHeader";
 
 type ErrorResponse = {
     message?: string;
@@ -54,27 +55,11 @@ export default function ConfirmResetCode() {
     };
 
     return (
-        <div className="flex h-screen">
-            <div
-                className="w-1/2 bg-cover bg-center"
-                style={{ backgroundImage: "url('/login.jpg')" }}
-            ></div>
-
-            <div className="w-1/2 flex flex-col justify-center items-center px-8">
-                <Image
-                    width={200}
-                    height={200}
-                    src="/logo.svg"
-                    alt="Logo"
-                    className="mb-10"
-                />
-
-                <h1 className="text-2xl font-bold mb-6">Confirm Reset Code</h1>
-
-                <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-8">
-                    <div>
-                        <label className="block text-sm font-medium mb-1">
-                            Reset Code
+        <AuthHeader title="Confirm Reset Code" subtitle="Enter the code sent to your email">
+            <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-8 text-gray-500">
+                <div>
+                    <label className="block text-sm font-medium mb-1">
+                        Reset Code
                         </label>
                         <input
                             type="tel"
@@ -88,8 +73,7 @@ export default function ConfirmResetCode() {
                     </div>
 
                     <SubmitButton label="Verify Code" loading={loading} />
-                </form>
-            </div>
-        </div>
+                </form> 
+        </AuthHeader>
     );
 }
