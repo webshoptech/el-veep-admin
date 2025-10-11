@@ -144,7 +144,7 @@ function BottomMenu({
 
     return (
         <Popover className="relative w-1/2">
-            <div className="fixed bottom-0 z-50 bg-hub-primary-400 text-white rounded-xl shadow-inner px-1.5 py-1.5 flex items-center justify-between">
+            <div className="fixed bottom-0 z-50 bg-green-950 text-white rounded-xl shadow-inner px-1.5 py-1.5 flex items-center justify-between cursor-pointer">
                 <div className="flex items-center gap-x-1">
                     <Image
                         className="size-5 rounded-full object-cover"
@@ -165,7 +165,7 @@ function BottomMenu({
 
                 <PopoverButton className="text-white hover:text-white transition" aria-label="Toggle menu">
                     {({ open }) => (
-                        <ChevronUpIcon className={`h-4 w-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+                        <ChevronUpIcon className={`h-4 w-4 transition-transform duration-200 cursor-pointer ${open ? 'rotate-180' : ''}`} />
                     )}
                 </PopoverButton>
             </div>
@@ -177,7 +177,7 @@ function BottomMenu({
                         <button
                             key={item.name}
                             onClick={item.isLogout ? onLogout : undefined}
-                            className={`w-full text-left flex items-center cursor-pointer gap-x-3 rounded-md px-4 py-2 text-xs font-medium hover:bg-white/10 ${item.isLogout ? 'text-green-500 font-bold bg-white border hover:bg-white hover:text-white' : ''
+                            className={`w-full text-left flex items-center cursor-pointer  gap-x-3 rounded-md px-4 py-2 text-xs font-medium hover:bg-white/10 ${item.isLogout ? 'text-green-500 font-bold bg-white border hover:bg-white hover:text-green-900' : ''
                                 } ${collapsed ? 'justify-center' : ''}`}
                         >
                             <item.icon

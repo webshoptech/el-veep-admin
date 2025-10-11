@@ -72,7 +72,6 @@ const Overview: React.FC<OverviewProps> = ({ period }) => {
         },
         { title: "Total Orders", value: stats?.total_orders },
         { title: "Total Customers", value: stats?.total_customers },
-        { title: "Total Vendors", value: stats?.total_vendors },
         { title: "Total Products", value: stats?.total_products },
     ];
 

@@ -1,5 +1,5 @@
-export const APP_NAME = "African Hub Marketplace";
-export const APP_DESCRIPTION = "Your go to marketplace for African products";
+export const APP_NAME = "El Veep Superstore and Event Center";
+export const APP_DESCRIPTION = "Groceries to Gathering - We Make It Happen";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -19,15 +19,11 @@ export const MONTHS = [
 ];
 import {
     HomeIcon,
-    ShoppingBagIcon,
     CreditCardIcon,
     Cog6ToothIcon,
     QuestionMarkCircleIcon,
     UserCircleIcon,
-    ArrowRightStartOnRectangleIcon,
-    CurrencyDollarIcon,
-    MegaphoneIcon,
-    BuildingStorefrontIcon,
+    ArrowRightStartOnRectangleIcon, 
     Squares2X2Icon,
     CubeIcon,
     AdjustmentsHorizontalIcon,
@@ -73,11 +69,12 @@ export const NAVIGATION = [
         ],
     },
     {
-        name: "Items Management",
+        name: "Products Management",
         href: "/products",
         icon: CubeIcon,
         children: [
-            { name: "All items", href: "/products" },
+            { name: "Published products", href: "/products" },
+            { name: "Draft products", href: "/products/pending" },
             { name: "Item Analytics", href: "/products/analytics" },
         ],
     },
