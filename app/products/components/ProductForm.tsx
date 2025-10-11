@@ -17,14 +17,15 @@ import type { Editor as TinyMCEEditor } from "tinymce";
 interface Props {
     onClose: () => void;
     product?: Product;
+    onSuccess?: () => void;
 }
 
-export default function ProductForm({ onClose, product }: Props) {
+export default function ProductForm({ onClose, product, onSuccess }: Props) {
     const [title, setTitle] = useState(product?.title || "");
     const [description, setDescription] = useState(product?.description || "");
     const [regularPrice, setRegularPrice] = useState(product?.regular_price || "");
     const [salesPrice, setSalesPrice] = useState(product?.sales_price || "");
-    const [quantity, setQuantity] = useState(product?.quantity || 0);
+    const [quantity, setQuantity] = useState(product?.quantity?.toString() || "");
     const [sku, setSku] = useState(product?.sku || "");
     const [skuManuallyEdited, setSkuManuallyEdited] = useState(false);
     const [status, setStatus] = useState<{ label: string; value: string } | null>(
@@ -39,7 +40,12 @@ export default function ProductForm({ onClose, product }: Props) {
             : null
     );
 
-    const { categories } = useCategoryStore();
+
+    const { categories, fetchCategories } = useCategoryStore();
+
+    useEffect(() => {
+        fetchCategories();
+    }, [fetchCategories]);
 
     const categoryOptions = useMemo(() => {
         return categories.map((cat) => ({
@@ -102,7 +108,7 @@ export default function ProductForm({ onClose, product }: Props) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         // ✅ Basic validation before submitting
-        if (!title || !description || !regularPrice || !salesPrice || !quantity || !sku) {
+        if (!title || !description || !regularPrice || !salesPrice || !quantity) {
             toast.error("Please fill in all the required fields.");
             return;
         }
@@ -134,7 +140,8 @@ export default function ProductForm({ onClose, product }: Props) {
                 toast.success("Product added successfully");
             }
             onClose();
-            window.location.reload();
+            onSuccess?.();
+            // window.location.reload();
         } catch (error) {
             console.error(error);
             toast.error(`Failed to ${product?.id ? "update" : "add"} product`);
@@ -156,7 +163,7 @@ export default function ProductForm({ onClose, product }: Props) {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-                     
+
                 />
             </div>
 
@@ -234,12 +241,12 @@ export default function ProductForm({ onClose, product }: Props) {
                     type="number"
                     min="0"
                     value={quantity}
-                    onChange={(e) => setQuantity(Number(e.target.value))}
+                    onChange={(e) => setQuantity(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
                     placeholder="e.g. 50"
-                     
                 />
             </div>
+
 
 
 

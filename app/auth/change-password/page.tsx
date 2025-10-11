@@ -3,8 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { changePassword } from "../../api_/login";
-import Image from "next/image";
-import toast from "react-hot-toast";
+ import toast from "react-hot-toast";
 import { SubmitButton } from "../../components/commons/SubmitButton";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import AuthHeader from "@/app/components/commons/AuthHeader";

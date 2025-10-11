@@ -1,13 +1,13 @@
-import axios from "../lib/axios"; // This is already configured
+import axios from "../lib/axios";  
 
-export async function getRecentProducts(
+export async function listProducts(
     limit: number,
     offset: number,
     search?: string,
     type?: string,
     status?: string
 ) {
-    const response = await axios.get("/products", {
+    const response = await axios.get("/items", {
         params: {
             limit,
             offset,
@@ -19,6 +19,10 @@ export async function getRecentProducts(
     return response.data;
 }
 
+export async function deleteProduct(productId: number) {
+    const response = await axios.delete(`/items/delete/${productId}`);
+    return response.data;
+}
 
 export async function addProduct(productData: FormData) {
     const response = await axios.post("/items/create", productData);

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import ProductsTable from "../components/ItemsTable";
+import ProductsTable from "../components/ProductsTable";
 
 export default function Pending() {
      const [selectedType, setSelectedType] = useState({

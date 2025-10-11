@@ -27,12 +27,12 @@ export default function ItemSummary({ loading, stats }: ItemSummaryProps) {
         {
             label: "Inactive Items",
             value: stats.total_inactive,
-            icon: <XCircleIcon className="w-6 h-6 text-green-600" />,
-        }, 
+            icon: <XCircleIcon className="w-6 h-6 text-yellow-600" />,
+        },
         {
-            label: "Product Items",
-            value: stats.total_product,
-            icon: <ShoppingBagIcon className="w-6 h-6 text-green-600" />,
+            label: "Out of Stock Items",
+            value: stats.total_out_of_stock,
+            icon: <ShoppingBagIcon className="w-6 h-6 text-red-600" />,
         },
     ];
 
