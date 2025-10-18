@@ -5,9 +5,8 @@ import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import clsx from "clsx";
 import { UserDetailResponse } from "@/types/UserType";
-import { changeUserStatus, deleteUser } from "@/app/api_/users";
-import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import toast from "react-hot-toast";
+import { deleteUser } from "@/app/api_/users";
+ import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 
 interface ProfileCardProps {
@@ -16,52 +15,23 @@ interface ProfileCardProps {
 }
 
 export default function ProfileCard({ user: initialUser, loading }: ProfileCardProps) {
-    const [user, setUser] = useState<UserDetailResponse | null>(initialUser);
-    const [updating, setUpdating] = useState(false);
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [user, setUser] = useState<UserDetailResponse | null>(
+        initialUser
+            ? { ...initialUser, is_active: Boolean(initialUser.is_active) }
+            : null
+    );
+     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [confirmText, setConfirmText] = useState("");
 
     useEffect(() => {
-        setUser(initialUser);
-    }, [initialUser]);
-
-    const [selectedStatus, setSelectedStatus] = useState({
-        label: initialUser?.is_active ? "Active" : "Inactive",
-        value: initialUser?.is_active ? "true" : "false",
-    });
-
-    const handleStatusChange = async (option: { label: string; value: string }) => {
-        if (!user?.id) return;
-
-        setSelectedStatus(option);
-        setUpdating(true);
-
-        try {
-            const isActiveBoolean = option.value === "true";
-            await changeUserStatus(user.id.toString(), isActiveBoolean);
-
-            setUser((prev) =>
-                prev ? { ...prev, is_active: isActiveBoolean } : prev
-            );
-
-            toast.success("Status updated successfully");
-        } catch (error) {
-            console.error("Failed to update user status", error);
-            toast.error("Failed to update status");
-        } finally {
-            setUpdating(false);
+        if (initialUser) {
+            setUser({ ...initialUser, is_active: Boolean(initialUser.is_active) });
         }
-    };
-
-    const statusOptions = [
-        { label: "Active", value: "true" },
-        { label: "Inactive", value: "false" },
-    ];
-
-
+    }, [initialUser]);
+ 
     return (
         <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
-            <div className="relative h-24 bg-gradient-to-r from-green-400 to-green-400" />
+            <div className="relative h-24 bg-gradient-to-r from-red-400 to-green-400" />
 
             <div className="relative -mt-10 px-6 pb-24">
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
@@ -83,22 +53,10 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                             {loading ? <Skeleton width={120} /> : `${user?.name} ${user?.last_name}`}
                         </h3>
                         <p className="text-sm text-gray-600">
-                            {loading ? <Skeleton width={160} /> : user?.email}
+                            {loading ? <Skeleton width={160} /> : user?.email}  {user?.is_active }
+               
                         </p>
-
-                        <div className="flex gap-2 mt-2 items-center">
-                            {loading ? (
-                                <Skeleton width={100} height={30} />
-                            ) : (
-                                <span
-                                    className={clsx(
-                                        "px-2 py-0.5 text-xs rounded-full font-semibold",
-                                        user?.is_active ? "bg-green-100 text-green-700" : "bg-green-100 text-green-700"
-                                    )}
-                                >
-                                    {user?.is_active ? "Active" : "Inactive"}
-                                </span>
-                            )}
+                        <div className="flex gap-2 mt-2 items-center"> 
                             {loading ? (
                                 <Skeleton width={80} />
                             ) : (
@@ -142,9 +100,9 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                         <p className="text-gray-400 font-semibold uppercase text-xs mb-1">Shipping Address</p>
                         {loading ? (
                             <Skeleton width={180} />
-                        ) : user?.address ? (
+                        ) : user?.street ? (
                             <p className="text-gray-700">
-                                {[user.address.street_address, user.address.city, user.address.state, user.address.country]
+                                {[user.street, user.zip, user.city, user.state, user.country]
                                     .filter(Boolean)
                                     .join(", ")}
                             </p>
@@ -156,21 +114,12 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                     <div>
                         <p className="text-gray-400 font-semibold uppercase text-xs mb-1">User Status</p>
                         <div className="flex items-center gap-2">
-                            <div className="w-40">
-                                {selectedStatus && (
-                                    <SelectDropdown
-                                        options={statusOptions}
-                                        value={selectedStatus}
-                                        onChange={handleStatusChange}
-                                        disabled={updating}
-                                    />
-                                )}
-                            </div>
+                            
 
                             {/* Delete Button */}
                             <button
                                 onClick={() => setIsDeleteModalOpen(true)}
-                                className="px-3 py-1.5 bg-green-600 text-white rounded-md text-sm hover:bg-green-700 transition"
+                                className="px-6 py-2 bg-red-600 text-white font-bold rounded-md text-sm hover:bg-red-700 transition cursor-pointer"
                             >
                                 Delete
                             </button>
@@ -184,27 +133,27 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                                 title="Delete User"
                             >
                                 <p className="text-sm text-gray-600">
-                                    To confirm, please type <span className="font-semibold text-green-600">DELETE</span> below.
+                                    To confirm, please type <span className="font-bold text-red-600">DELETE</span> below.
                                 </p>
 
                                 <input
                                     type="text"
                                     value={confirmText}
                                     onChange={(e) => setConfirmText(e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 mt-2"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 mt-2"
                                 />
 
                                 <div className="mt-6 flex justify-end gap-3">
                                     <button
                                         onClick={() => setIsDeleteModalOpen(false)}
-                                        className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition"
+                                        className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition cursor-pointer"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         disabled={confirmText !== "DELETE"}
                                         onClick={async () => {
-                                            try {
+                                            try {   
                                                 await deleteUser(user?.id?.toString() ?? "");
                                                 toast.success("User deleted successfully");
                                                 setIsDeleteModalOpen(false);
@@ -215,7 +164,7 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                                             }
                                         }}
                                         className={`px-4 py-2 rounded-md text-white transition ${confirmText === "DELETE"
-                                            ? "bg-green-600 hover:bg-green-700"
+                                            ? "bg-red-600 hover:bg-red-700 cursor-pointer"
                                             : "bg-green-300 cursor-not-allowed"
                                             }`}
                                     >

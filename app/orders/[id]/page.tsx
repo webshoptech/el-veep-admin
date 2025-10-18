@@ -137,7 +137,6 @@ export default function OrderDetail() {
 
     const { product, quantity, price, subtotal, order: orderMeta } = order;
     const customer = orderMeta.customer;
-    const address = orderMeta.address;
 
 
 

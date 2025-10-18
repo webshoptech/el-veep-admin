@@ -6,8 +6,7 @@ import { getUserDetail } from "@/app/api_/users";
 import { UserDetailResponse } from "@/types/UserType";
 import UserOrders from "../components/UserOrders";
 import ProfileCard from "../components/ProfileCard";
-import WalletSummary from "../components/WalletSummary";
-
+ 
 export default function UserDetail() {
     const params = useParams();
     const id = params?.id;
@@ -43,13 +42,7 @@ export default function UserDetail() {
 
     return (
         <div className="space-y-6">
-
-            <WalletSummary
-                loading={loading}
-                totalSpent={user?.wallet?.total_earning ?? 0}
-                totalRefunded={user?.wallet?.available_to_withdraw ?? 0}
-                totalPending={user?.wallet?.pending ?? 0}
-            />
+ 
 
             <ProfileCard user={user} loading={loading} />
 

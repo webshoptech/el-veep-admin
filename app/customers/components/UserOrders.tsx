@@ -11,6 +11,7 @@ import Image from "next/image";
 import StatusBadge from "@/utils/StatusBadge";
 import { debounce } from "lodash";
 import TableSkeleton from "@/app/components/Skeletons/TableSkeleton";
+import { ArrowTurnRightUpIcon } from "@heroicons/react/24/outline";
 
 interface UserOrdersProps {
     userId: string;
@@ -127,15 +128,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                 const value = String(getValue() ?? "N/A");
                 return <StatusBadge status={value} type={"payment"} />;
             },
-        },
-        {
-            header: "Vendor Payout",
-            accessorKey: "order.vendor_payment_settlement_status",
-            cell: ({ getValue }) => {
-                const value = String(getValue() ?? "N/A");
-                return <StatusBadge status={value} type={"payment"} />;
-            },
-        },
+        }, 
         {
             header: "Date",
             accessorKey: "created_at",
@@ -154,8 +147,8 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
             cell: ({ row }) => {
                 return (
                     <div className="flex items-center gap-2 text-indigo-600 cursor-pointer">
-                        <button onClick={() => router.push(`/orders/${row.original.id}`)} className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer">
-                            View
+                        <button onClick={() => router.push(`/orders/${row.original.id}`)} className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer items-center flex">
+                            View <ArrowTurnRightUpIcon className="w-4 h-4" />
                         </button>
                     </div>
                 );

@@ -1,7 +1,7 @@
 import Address from "./AddressType";
 import Wallet from "./WalletType";
 
-export interface User  {
+export interface User {
     id: number;
     name: string;
     last_name: string;
@@ -14,7 +14,7 @@ export interface User  {
     is_active: number;
     city: string;
     street: string;
-zip: string;
+    zip: string;
     state: string;
     country: string;
     profile_photo: string;
@@ -23,7 +23,7 @@ zip: string;
     deleted_at: string | null;
     created_at: string;
     updated_at: string;
-};
+}
 
 export interface UserResponse {
     status: "success";
@@ -62,9 +62,11 @@ export interface UserDetailResponse {
     email_verified_at: string | null;
     phone_verified_at: string | null;
     role: "customer" | "vendor" | string;
-    is_active: boolean;
+    is_active: number | boolean;
     city: string;
     state: string;
+    street: string;
+    zip: string;
     country: string;
     profile_photo: string;
     google_id: string | null;
