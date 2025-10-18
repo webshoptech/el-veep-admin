@@ -51,7 +51,7 @@ const PrintableOrderTable = ({
                             <td className="py-3 px-4 align-top">1</td>
                             <td className="py-3 px-4 flex items-center gap-3">
                                 <Image
-                                    src={product.images?.[0] || "/no-image.png"}
+                                    src={product.images?.[0] || "/placeholder.png"}
                                     width={50}
                                     height={50}
                                     alt={product.title}

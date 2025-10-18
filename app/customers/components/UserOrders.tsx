@@ -83,7 +83,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                         <Image
                             width={40}
                             height={40}
-                            src={product?.images?.[0] || "/no-image.png"}
+                            src={product?.images?.[0] || "/placeholder.png"}
                             alt={product?.title}
                             className="w-10 h-10 object-cover rounded-md border"
                         />
