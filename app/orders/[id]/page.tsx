@@ -8,7 +8,6 @@ import Skeleton from "react-loading-skeleton";
 import { OrderItem, OrderResponse } from "@/types/OrderType";
 import { User } from "@/types/UserType";
 import dayjs from "dayjs";
-import Address from "@/types/AddressType";
 import { formatAmount } from "@/utils/formatCurrency";
 import PrintableOrderTable from "../components/PrintableOrderTable";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
@@ -29,7 +28,7 @@ const paymentStatusOptions = [
     { label: "Refund", value: "refunded" },
 ];
 
-function CustomerSummary({ customer, address, stats }: { customer: User; address: Address; stats?: OrderResponse["data"]["stats"] }) {
+function CustomerSummary({ customer,  stats }: { customer: User;  stats?: OrderResponse["data"]["stats"] }) {
     return (
         <div className="bg-white rounded-xl p-6 flex items-center justify-between shadow-sm  border border-gray-200 text-sm text-gray-700">
             <div className="flex items-center gap-4 min-w-[200px]">
@@ -68,9 +67,9 @@ function CustomerSummary({ customer, address, stats }: { customer: User; address
             <div className="flex flex-col gap-2 min-w-[300px]">
                 <div>
                     <p className="text-xs text-gray-500 font-medium uppercase mb-1">Shipping Address</p>
-                    {address ? (
+                    {customer.country ? (
                         <p className="text-gray-700">
-                            {[address.street_address, address.zip_code, address.state, address.city, address.country]
+                            {[customer.street, customer.zip, customer.state, customer.city, customer.country]
                                 .filter(Boolean)
                                 .join(", ")}
                         </p>
@@ -241,7 +240,7 @@ export default function OrderDetail() {
                 </div>
             </div>
 
-            <CustomerSummary customer={customer} address={address} stats={stats} />
+            <CustomerSummary customer={customer} stats={stats} />
 
             <PrintableOrderTable
                 product={product}

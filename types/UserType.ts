@@ -13,6 +13,8 @@ export interface User  {
     role: string;
     is_active: number;
     city: string;
+    street: string;
+zip: string;
     state: string;
     country: string;
     profile_photo: string;

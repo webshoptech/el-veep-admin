@@ -40,8 +40,7 @@ const PrintableOrderTable = ({
                             <th className="py-3 px-4 text-left">#</th>
                             <th className="py-3 px-4 text-left">Product</th>
                             <th className="py-3 px-4 text-left">Qty</th>
-                            <th className="py-3 px-4 text-left">Vendor</th>
-                            <th className="py-3 px-4 text-left">Unit Price</th>
+                             <th className="py-3 px-4 text-left">Unit Price</th>
                             <th className="py-3 px-4 text-left">Total</th>
                             <th className="py-3 px-4 text-left">Shipping Status</th>
                         </tr>
