@@ -27,7 +27,7 @@ export interface Product {
     description: string;
     sales_price: string;
     regular_price: string;
-    quantity: number;
+    quantity: number;   
     notify_user: number;
     images: string[];
     image_public_ids: string[];

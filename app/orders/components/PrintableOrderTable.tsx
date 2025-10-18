@@ -18,11 +18,7 @@ interface Props {
         shipping_fee: string | number;
         total: string | number;
         payment_status: string;
-    };
-    shop?: {
-        name: string;
-        logo: string;
-    };
+    }; 
 }
 
 const PrintableOrderTable = ({
@@ -30,7 +26,6 @@ const PrintableOrderTable = ({
     quantity,
     price,
     orderMeta,
-    shop,
 }: Props) => {
     const productSubtotal = Number(price) * Number(quantity);
     const shippingFee = Number(orderMeta.shipping_fee);
@@ -71,7 +66,6 @@ const PrintableOrderTable = ({
                             </td>
 
                             <td className="py-3 px-4 align-top">{quantity}</td>
-                            <td className="py-3 px-4 align-top">{shop?.name || "N/A"}</td>
                             <td className="py-3 px-4 align-top font-medium">
                                 {formatAmount(price)}
                             </td>

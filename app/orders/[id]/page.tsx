@@ -137,7 +137,6 @@ export default function OrderDetail() {
     if (loading || !order) return <Skeleton count={10} />;
 
     const { product, quantity, price, subtotal, order: orderMeta } = order;
-    const { shop } = product;
     const customer = orderMeta.customer;
     const address = orderMeta.address;
 
@@ -250,7 +249,6 @@ export default function OrderDetail() {
                 price={price}
                 subtotal={subtotal}
                 orderMeta={orderMeta}
-                shop={shop}
             />
 
         </div>
