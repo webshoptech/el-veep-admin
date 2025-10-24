@@ -49,7 +49,7 @@ export async function addCategory(formData: FormData) {
 }
 
 export async function updateCategory(categoryId: number, formData: FormData) {
-    const response = await axios.post(
+    const response = await axios.put(
         `/category/${categoryId}/update`,
         formData,
         {
