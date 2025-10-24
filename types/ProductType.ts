@@ -7,6 +7,7 @@ export interface ProductResponse {
     stats: [
         {
             total_items: number;
+            total_categories: number;
             total_active: number;
             total_inactive: number;
             total_out_of_stock: number;
@@ -15,6 +16,7 @@ export interface ProductResponse {
 }
 export interface Stats {
     total_items: number;
+    total_categories: number;
     total_active: number;
     total_inactive: number;
     total_out_of_stock?: number;

@@ -1,6 +1,5 @@
 import {
     CubeIcon,
-    CheckCircleIcon,
     XCircleIcon,
 } from "@heroicons/react/24/solid";
 import Skeleton from "react-loading-skeleton";
@@ -15,24 +14,19 @@ export default function CategorySummary({ loading, stats }: CategorySummaryProps
     const summaries = [
         {
             label: "Total categories",
-            value: stats.total_items,
-            icon: <CubeIcon className="w-6 h-6 text-blue-600" />,
-        },
-        {
-            label: "Active categories",
-            value: stats.total_active,
-            icon: <CheckCircleIcon className="w-6 h-6 text-green-600" />,
-        },
+            value: stats.total_categories,
+            icon: <CubeIcon className="w-6 h-6 text-green-600" />,
+        }, 
         {
             label: "Inactive categories",
             value: stats.total_inactive,
-            icon: <XCircleIcon className="w-6 h-6 text-green-600" />,
+            icon: <XCircleIcon className="w-6 h-6 text-red-600" />,
         },  
     ];
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {summaries.map(({ label, value, icon }) => (
                     <div
                         key={label}

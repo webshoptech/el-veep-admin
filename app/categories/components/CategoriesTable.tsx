@@ -156,6 +156,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
     const [totalCategories, setTotalCategories] = useState(0);
     const [itemStats, setItemStats] = useState({
         total_items: 0,
+        total_categories: 0,
         total_active: 0,
         total_inactive: 0,
         total_service: 0,
