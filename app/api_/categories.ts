@@ -49,16 +49,19 @@ export async function addCategory(formData: FormData) {
 }
 
 export async function updateCategory(categoryId: number, formData: FormData) {
-    const response = await axios.put(
-        `/category/${categoryId}/update`,
-        formData,
-        {
-            headers: { "Content-Type": "multipart/form-data" },
-        }
-    );
+  formData.append('_method', 'PUT'); // Laravel expects this
 
-    return response.data;
+  const response = await axios.post(
+    `/category/${categoryId}/update`,
+    formData,
+    {
+      headers: { "Content-Type": "multipart/form-data" },
+    }
+  );
+
+  return response.data;
 }
+
 
 export async function listBanners(limit?: number, offset?: number) {
     const response = await axios.get("/banners", {
