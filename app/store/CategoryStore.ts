@@ -1,23 +1,11 @@
 import { create } from "zustand";
 import { getCategories } from "../api_/categories";
-
-interface Category {
-    id: number;
-    name: string;
-    type: string;
-    image?: string;
-    description?: string;
-    status?: string;
-    parent_id?: number | null;
-    created_at?: string;
-    updated_at?: string;
-    children?: Category[];
-}
+import { CategoryType } from "@/types/CategoryType"; 
 
 interface CategoryStore {
-    categories: Category[];
-    setCategories: (categories: Category[]) => void;
-    addCategory: (category: Category) => void;
+    categories: CategoryType[];
+    setCategories: (categories: CategoryType[]) => void;
+    addCategory: (category: CategoryType) => void;
     clearCategories: () => void;
     fetchCategories: (force?: boolean) => Promise<void>;
 }

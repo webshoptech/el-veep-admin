@@ -34,9 +34,9 @@ export default function SubCategoryForm({ onClose, category }: { onClose: () => 
         if (categories.length === 0) {
             fetchCategories();
         } else {
-            setLocalCategories(localCategories);
+            setLocalCategories(categories);  
         }
-    }, [categories, saveToStore, localCategories]);
+    }, [categories, saveToStore]);
 
     const categoryOptions = useMemo(() => {
         return localCategories.map((cat) => ({

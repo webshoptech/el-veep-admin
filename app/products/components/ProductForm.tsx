@@ -28,10 +28,10 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
     const [quantity, setQuantity] = useState(product?.quantity?.toString() || "");
     const [sku, setSku] = useState(product?.sku || "");
     const [skuManuallyEdited, setSkuManuallyEdited] = useState(false);
-    const [status, setStatus] = useState<{ label: string; value: string } | null>(
-        product?.status
-            ? { label: product.status === "active" ? "Active" : "Inactive", value: product.status }
-            : { label: "Active", value: "active" }
+    const [type, setType] = useState<{ label: string; value: string } | null>(
+        product?.type
+            ? { label: product.type === "products" ? "Products" : "Services", value: product.type }
+            : { label: "Products", value: "services" }
     );
 
     const [selectedCategory, setSelectedCategory] = useState<{ label: string; value: string } | null>(
@@ -54,9 +54,9 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
         }));
     }, [categories]);
 
-    const statusOptions = [
-        { label: "Active", value: "active" },
-        { label: "Inactive", value: "inactive" },
+    const typeOptions = [
+        { label: "Services", value: "services" },
+        { label: "Products", value: "products" },
     ];
 
     const [loading, setLoading] = useState(false);
@@ -90,6 +90,27 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
             toast.error("You can only upload up to 4 images");
             return;
         }
+        // ✅ Validate file sizes (max 2MB)
+        const MAX_SIZE_MB = 2;
+        const validFiles: File[] = [];
+        const invalidFiles: string[] = [];
+
+        files.forEach((file) => {
+            const fileSizeMB = file.size / (1024 * 1024);
+            if (fileSizeMB > MAX_SIZE_MB) {
+                invalidFiles.push(`${file.name} (${fileSizeMB.toFixed(2)}MB)`);
+            } else {
+                validFiles.push(file);
+            }
+        });
+
+        if (invalidFiles.length > 0) {
+            toast.error(
+                `The following files exceed ${MAX_SIZE_MB}MB:\n${invalidFiles.join(", ")}`
+            );
+        }
+        if (validFiles.length === 0) return;
+
 
         const newPreviews = files.map((file) => URL.createObjectURL(file));
 
@@ -129,7 +150,7 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
         formData.append("sales_price", salesPrice.toString());
         formData.append("quantity", quantity.toString());
         formData.append("sku", sku);
-        formData.append("status", status?.value || "active");
+        formData.append("type", type?.value || "products");
         if (selectedCategory?.value) formData.append("category_id", selectedCategory.value);
 
         // images
@@ -145,6 +166,7 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
             } else {
                 await addProduct(formData);
                 toast.success("Product added successfully");
+                window.location.reload();
             }
             onClose();
             onSuccess?.();
@@ -258,12 +280,12 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
 
 
             {/* Status */}
-            <div hidden>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+            <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
                 <SelectDropdown
-                    options={statusOptions}
-                    value={status || { label: "Select status", value: "" }}
-                    onChange={(opt) => setStatus(opt)}
+                    options={typeOptions}
+                    value={type || { label: "Select type", value: "" }}
+                    onChange={(opt) => setType(opt)}
                     className="w-full"
                 />
             </div>
