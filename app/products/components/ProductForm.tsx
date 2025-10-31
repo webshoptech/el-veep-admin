@@ -104,18 +104,22 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
 
     const editorRef = useRef<TinyMCEEditor | null>(null);
 
+    useEffect(() => {
+        if (product?.category_id && categories.length > 0) {
+            const matchedCategory = categories.find(
+                (cat) => String(cat.id) === String(product.category_id)
+            );
+            if (matchedCategory) {
+                setSelectedCategory({
+                    label: matchedCategory.name,
+                    value: String(matchedCategory.id),
+                });
+            }
+        }
+    }, [categories, product?.category_id]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // ✅ Basic validation before submitting
-        if (!title || !description || !regularPrice || !salesPrice || !quantity) {
-            toast.error("Please fill in all the required fields.");
-            return;
-        }
-        if (salesPrice && regularPrice && Number(salesPrice) > Number(regularPrice)) {
-            toast.error("Sale price cannot be higher than the regular price.");
-            return;
-        }
         setLoading(true);
 
         const formData = new FormData();
@@ -127,10 +131,13 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
         formData.append("sku", sku);
         formData.append("status", status?.value || "active");
         if (selectedCategory?.value) formData.append("category_id", selectedCategory.value);
+
+        // images
         imageFiles.forEach((file) => {
             formData.append("images[]", file);
         });
 
+        if (product?.id) formData.append("_method", "PUT");
         try {
             if (product?.id) {
                 await updateProduct(product.id, formData);
@@ -141,7 +148,6 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
             }
             onClose();
             onSuccess?.();
-            // window.location.reload();
         } catch (error) {
             console.error(error);
             toast.error(`Failed to ${product?.id ? "update" : "add"} product`);
@@ -149,6 +155,7 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
             setLoading(false);
         }
     };
+
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -168,7 +175,7 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
             </div>
 
             {/* SKU */}
-            <div>
+            <div hidden>
                 <label className="block text-sm font-medium text-gray-700 mb-1">SKU</label>
                 <input
                     type="text"
@@ -251,7 +258,7 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
 
 
             {/* Status */}
-            <div>
+            <div hidden>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
                 <SelectDropdown
                     options={statusOptions}
@@ -261,19 +268,6 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
                 />
             </div>
 
-            {/* Description */}
-            {/* <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Description
-                </label>
-                <textarea
-                    rows={4}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-                    placeholder="Describe your product..."
-                />
-            </div> */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                     Description <span className="text-green-500">*</span>

@@ -28,9 +28,23 @@ export async function addProduct(productData: FormData) {
     const response = await axios.post("/items/create", productData);
     return response.data;
 }
-export async function updateProduct(productId: number, productData: FormData) {
-    const response = await axios.put(`/items/update/${productId}`, productData);
-    return response.data;
+// export async function updateProduct(productId: number, productData: FormData) {
+//     const response = await axios.put(`/items/update/${productId}`, productData);
+//     return response.data;
+// }
+
+export async function updateProduct(productId: number | string, productData: FormData) {
+  try {
+    const res = await axios.post(`/items/update/${productId}`, productData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.error("Update product error:", error);
+    throw error;
+  }
 }
 
 export async function productGraph(selectedPeriod?: string, type?: string, status?: string) {
