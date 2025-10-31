@@ -59,6 +59,7 @@ export default function ProductsTable({
         total_active: 0,
         total_inactive: 0,
         total_out_of_stock: 0,
+        total_categories: 0,
     });
 
     useEffect(() => {
@@ -73,9 +74,11 @@ export default function ProductsTable({
         }
     }, [externalProducts, externalTotal]);
 
-    const updateProductStatusInState = (id: number, newStatus: "active" | "inactive") => {
-        setProducts((prev: Product[]) => prev.map((p) => (p.id === id ? { ...p, status: newStatus } : p)));
-    };
+    const updateProductStatusInState = useCallback((id: number, newStatus: "active" | "inactive") => {
+        setProducts((prev: Product[]) =>
+            prev.map((p) => (p.id === id ? { ...p, status: newStatus } : p))
+        );
+    }, []);
 
     const fetchProducts = useCallback(
         async (pageIndex: number, search: string = "") => {
@@ -119,15 +122,10 @@ export default function ProductsTable({
         setPagination((prev) => ({ ...prev, pageIndex: 0 }));
     };
 
-    const handleEdit = (product: Product) => {
-        onEdit?.(product);
-    };
+    const handleEdit = useCallback((product: Product) => onEdit?.(product), [onEdit]);
+    const handleDeleteConfirm = useCallback((productId: number) => onDeleteConfirm?.(productId), [onDeleteConfirm]);
 
-    const handleDeleteConfirm = (productId: number) => {
-        onDeleteConfirm?.(productId);
-    };
-
-    const handleStatusChange = async (productId: number, selected: Option, revert: () => void) => {
+    const handleStatusChange = useCallback(async (productId: number, selected: Option, revert: () => void) => {
         try {
             await updateItemStatus(productId, selected.value);
             toast.success("Status updated");
@@ -136,7 +134,7 @@ export default function ProductsTable({
             toast.error("Failed to update status");
             revert();
         }
-    };
+    }, [updateProductStatusInState]);
 
     const columns: ColumnDef<Product>[] = useMemo(
         () => [
@@ -281,7 +279,7 @@ export default function ProductsTable({
                 },
             },
         ],
-        []
+        [handleDeleteConfirm, handleEdit, handleStatusChange]
     );
 
     return (

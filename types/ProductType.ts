@@ -16,10 +16,10 @@ export interface ProductResponse {
 }
 export interface Stats {
     total_items: number;
-    total_categories: number;
     total_active: number;
     total_inactive: number;
     total_out_of_stock?: number;
+     total_categories?: number;
 }
 
 export interface Product {
