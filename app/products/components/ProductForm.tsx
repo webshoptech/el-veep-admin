@@ -11,7 +11,7 @@ import { Product } from "@/types/ProductType";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { Editor } from "@tinymce/tinymce-react";
 import { useRef } from "react";
-import type { Editor as TinyMCEEditor } from "tinymce";
+import type { Editor as TinyMCEEditor } from "tinymce"; 
 
 
 interface Props {
