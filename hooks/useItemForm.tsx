@@ -283,6 +283,7 @@ export function useItemForm(item: any) {
         const fd = new FormData();
         fd.append("title", title);
         fd.append("description", description);
+        fd.append("type", shopType);
         const categoryId = selectedChildCategory.value || selectedCategory.value;
         if (categoryId) fd.append("category_id", categoryId);
 
