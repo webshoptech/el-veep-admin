@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { CommissionFormType } from '@/types/CommissionFormType';
-import { createCommission, updateCommission } from '@/app/api_/commissions';
+import { createCommission, updateCommission } from '@/lib/api/commissions';
 import toast from 'react-hot-toast';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
 import { AxiosError } from 'axios';

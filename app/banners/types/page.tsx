@@ -7,7 +7,7 @@ import { BannerType } from "@/types/CategoryType";
 import toast from "react-hot-toast";
 import BannerTypesTable from "../components/BannerTypesTable";
 import BannerTypesForm from "../components/BannerTypesForm";
-import { deleteBannerType } from "@/app/api_/banners";
+import { deleteBannerType } from "@/lib/api/banners";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 
 

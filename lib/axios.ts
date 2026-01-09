@@ -2,8 +2,10 @@ import axios from 'axios';
 import { setupCache } from 'axios-cache-interceptor';
 
 const base = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://veep.vaspayment.com/api/v1/admin',
-  withCredentials: true,
+    baseURL:
+        process.env.NEXT_PUBLIC_API_URL ||
+        "https://api.olajumokehospital.com.ng/api/v1/admin",
+    withCredentials: true,
 });
 
 const axiosInstance = setupCache(base, {

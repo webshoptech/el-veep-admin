@@ -4,13 +4,13 @@ import React, { useEffect, useState, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
 import { formatDate } from "@/utils/formatHumanReadableDate";
- import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
-import { getFinanceGraph } from "@/app/api_/finance";
+import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
+import { getFinanceGraph } from "@/lib/api/finance";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 interface AreaChartProps {
-    selectedPeriod: string;  
+    selectedPeriod: string;
 }
 
 const FinanceAreaChart = ({ selectedPeriod }: AreaChartProps) => {
@@ -25,7 +25,7 @@ const FinanceAreaChart = ({ selectedPeriod }: AreaChartProps) => {
     const fetchChartData = useCallback(async () => {
         setLoading(true);
         try {
-            const response = await getFinanceGraph({ start_date: selectedPeriod }); 
+            const response = await getFinanceGraph({ start_date: selectedPeriod });
             const raw = response.data ?? [];
             if (response?.status === "success" && Array.isArray(raw) && raw.length > 0) {
                 const categories = raw.map((item: { day: string }) => formatDate(new Date(item.day)));
@@ -42,7 +42,7 @@ const FinanceAreaChart = ({ selectedPeriod }: AreaChartProps) => {
         } finally {
             setLoading(false);
         }
-    }, [selectedPeriod]);  
+    }, [selectedPeriod]);
 
     useEffect(() => {
         fetchChartData();
@@ -108,7 +108,7 @@ const FinanceAreaChart = ({ selectedPeriod }: AreaChartProps) => {
         <div className="p-6 card text-gray-950">
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-medium">Revenue Graph</h2>
-             </div>
+            </div>
 
             {loading ? (
                 <AreaChartSkeleton />

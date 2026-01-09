@@ -1,7 +1,14 @@
-import axios from "@/app/lib/axios";
+import axios from "../axios";
 
-export async function listTutorials(limit?: number, offset?: number, search?: string, type?: string) {
-    const response = await axios.get(`/tutorials?limit=${limit}&offset=${offset}&search=${search}&type=${type}`);
+export async function listTutorials(
+    limit?: number,
+    offset?: number,
+    search?: string,
+    type?: string
+) {
+    const response = await axios.get(
+        `/tutorials?limit=${limit}&offset=${offset}&search=${search}&type=${type}`
+    );
     return response.data;
 }
 

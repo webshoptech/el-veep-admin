@@ -1,4 +1,4 @@
-import axios from "../lib/axios";  
+import axios from "../axios";
 
 export async function listProducts(
     limit: number,
@@ -33,21 +33,32 @@ export async function addProduct(productData: FormData) {
 //     return response.data;
 // }
 
-export async function updateProduct(productId: number | string, productData: FormData) {
-  try {
-    const res = await axios.post(`/items/update/${productId}`, productData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    return res.data;
-  } catch (error) {
-    console.error("Update product error:", error);
-    throw error;
-  }
+export async function updateProduct(
+    productId: number | string,
+    productData: FormData
+) {
+    try {
+        const res = await axios.post(
+            `/items/update/${productId}`,
+            productData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+        return res.data;
+    } catch (error) {
+        console.error("Update product error:", error);
+        throw error;
+    }
 }
 
-export async function productGraph(selectedPeriod?: string, type?: string, status?: string) {
+export async function productGraph(
+    selectedPeriod?: string,
+    type?: string,
+    status?: string
+) {
     const response = await axios.get(
         `/product-graph?start_date=${selectedPeriod}&type=${type}&status=${status}`
     );
@@ -69,7 +80,8 @@ export async function mostSellingProductGraph(selectedPeriod?: string) {
 }
 
 export async function updateItemStatus(productId: number, status: string) {
-    const response = await axios.patch(`/product/${productId}/status/${status}`);
+    const response = await axios.patch(
+        `/product/${productId}/status/${status}`
+    );
     return response.data;
 }
-

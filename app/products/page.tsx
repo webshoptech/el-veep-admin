@@ -6,7 +6,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "../components/commons/Drawer";
 import ProductForm from "./components/ProductForm";
 import ConfirmationModal from "../components/commons/ConfirmationModal";
-import { listProducts, deleteProduct } from "../api_/products";
+import { listProducts, deleteProduct } from "@/lib/api/products";
 import { Product } from "@/types/ProductType";
 
 export default function Products() {
@@ -81,7 +81,7 @@ export default function Products() {
 
                 <button
                     onClick={() => {
-                        setEditingProduct(null);  
+                        setEditingProduct(null);
                         setDrawerOpen(true);
                     }}
                     className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600 cursor-pointer"
@@ -118,7 +118,7 @@ export default function Products() {
                 </div>
             </ConfirmationModal>
 
-             <Drawer
+            <Drawer
                 isOpen={isDrawerOpen}
                 onClose={() => {
                     setDrawerOpen(false);
@@ -136,7 +136,7 @@ export default function Products() {
                 />
             </Drawer>
 
-             <ProductsTable
+            <ProductsTable
                 limit={LIMIT}
                 type="products"
                 status="active"

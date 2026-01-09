@@ -6,7 +6,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "@/app/components/commons/Drawer";
 import SubCategoryForm from "../components/SubCategoryForm";
 import { FlattenedSubCategory } from "@/types/CategoryType";
-import { deleteCategory } from "@/app/api_/categories";
+import { deleteCategory } from "@/lib/api/categories";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 

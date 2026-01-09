@@ -5,7 +5,7 @@ import Image from "next/image";
 import ReviewType from "@/types/ReviewType";
 import { formatHumanReadableDate } from "../../utils/formatHumanReadableDate";
 import RecentReviewsSkeleton from "./Skeletons/RecentReviewsSkeleton";
-import { listReviews } from "../api_/reviews";
+import { listReviews } from "@/lib/api/reviews";
 import Link from "next/link";
 
 function StarRating({ rating }: { rating: number }) {

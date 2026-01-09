@@ -7,7 +7,7 @@ import AreaChartSkeleton from "../Skeletons/AreaChartSkeleton";
 import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
 import SelectDropdown from "./Fields/SelectDropdown";
-import { getSalesGraph } from "@/app/api_/orders";
+import { getSalesGraph } from "@/lib/api/orders";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -62,7 +62,7 @@ const AreaChart = () => {
             },
             grid: {
                 show: true,
-                 gradientToColors: ["rgba(0, 176, 94, 0.15)"],
+                gradientToColors: ["rgba(0, 176, 94, 0.15)"],
                 strokeDashArray: 4,
                 padding: {
                     top: 10,

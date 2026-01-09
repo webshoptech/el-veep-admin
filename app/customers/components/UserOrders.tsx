@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getUserOrder } from "@/app/api_/users";
+import { getUserOrder } from "@/lib/api/users";
 import { Order } from "@/types/OrderType";
 import { ColumnDef } from "@tanstack/react-table";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
@@ -128,7 +128,7 @@ export default function UserOrders({ userId, type }: UserOrdersProps) {
                 const value = String(getValue() ?? "N/A");
                 return <StatusBadge status={value} type={"payment"} />;
             },
-        }, 
+        },
         {
             header: "Date",
             accessorKey: "created_at",

@@ -1,4 +1,4 @@
-import axios from "@/app/lib/axios";
+import axios from "../axios";
 import { CommissionRevenuesType } from "@/types/CommissionRevenueType";
 import {
     FinanceGraph,

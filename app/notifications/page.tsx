@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import SelectDropdown from "../components/commons/Fields/SelectDropdown";
-import { getNotifications } from "../api_/notifications";
+import { getNotifications } from "@/lib/api/notifications";
 import { NotificationResponse, NotificationType } from "@/types/NotificationsType";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import { ColumnDef } from "@tanstack/react-table";
@@ -17,7 +17,7 @@ import NotificationForm from "./components/NotificationForm";
 import NotificationStats from "./components/NotificationStats";
 import { receiverOptions } from "../setting";
 
- 
+
 
 export default function Notifications() {
     const [selectedReceiver, setselectedReceiver] = useState(receiverOptions[0]);

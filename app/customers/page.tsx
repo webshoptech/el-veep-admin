@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { userStats } from "../api_/users";
+import { userStats } from "@/lib/api/users";
 import UsersTable from "./components/UsersTable";
 import { UserGroupIcon, CheckBadgeIcon, ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import Skeleton from "react-loading-skeleton";

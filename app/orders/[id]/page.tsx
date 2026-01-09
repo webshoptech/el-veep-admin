@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { changeOrderPaymentStatus, changeOrderStatus, getOrderDetail } from "@/app/api_/orders";
+import { changeOrderPaymentStatus, changeOrderStatus, getOrderDetail } from "@/lib/api/orders";
 import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import { OrderItem, OrderResponse } from "@/types/OrderType";
@@ -28,7 +28,7 @@ const paymentStatusOptions = [
     { label: "Refund", value: "refunded" },
 ];
 
-function CustomerSummary({ customer,  stats }: { customer: User;  stats?: OrderResponse["data"]["stats"] }) {
+function CustomerSummary({ customer, stats }: { customer: User; stats?: OrderResponse["data"]["stats"] }) {
     return (
         <div className="bg-white rounded-xl p-6 flex items-center justify-between shadow-sm  border border-gray-200 text-sm text-gray-700">
             <div className="flex items-center gap-4 min-w-[200px]">

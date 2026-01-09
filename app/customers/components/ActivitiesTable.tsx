@@ -6,7 +6,7 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { Activities } from "@/types/UserType";
-import { getUserActivities } from "@/app/api_/users";
+import { getUserActivities } from "@/lib/api/users";
 
 interface ActivitiesTableProps {
     limit: number;

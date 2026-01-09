@@ -1,9 +1,10 @@
 import { SizeType } from "@/types/SizeType";
-import axios from "../lib/axios";
-
+import axios from "../axios";
 
 export async function listSizes(limit?: number, offset?: number) {
-    const response = await axios.get<SizeType>(`/sizes?limit=${limit}&offset=${offset}`);
+    const response = await axios.get<SizeType>(
+        `/sizes?limit=${limit}&offset=${offset}`
+    );
     return response.data;
 }
 

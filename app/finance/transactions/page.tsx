@@ -1,6 +1,6 @@
 'use client';
 
-import { getTransactions } from "@/app/api_/transactions";
+import { getTransactions } from "@/lib/api/transactions";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { Summary, Transaction, TransactionResponse } from "@/types/TransactionType";
 import { formatAmount } from "@/utils/formatCurrency";

@@ -1,5 +1,5 @@
 'use client';
-import { getCommissionRevenues } from '@/app/api_/finance';
+import { getCommissionRevenues } from '@/lib/api/finance';
 import TanStackTable from '@/app/components/commons/TanStackTable';
 import { CommissionRevenueItem, CommissionRevenuesType } from '@/types/CommissionRevenueType';
 import { MetricCardProps } from '@/types/FinanceType';
@@ -63,7 +63,7 @@ export default function Revenues() {
             accessorKey: 'amount',
             cell: ({ getValue }) => <span>{formatAmount(Number(getValue()))}</span>,
         },
-        
+
         {
             header: 'Created At',
             accessorKey: 'created_at',

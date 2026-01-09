@@ -6,7 +6,7 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listReviews } from "@/app/api_/reviews";
+import { listReviews } from "@/lib/api/reviews";
 import ReviewType from "@/types/ReviewType";
 import Image from "next/image";
 import Link from "next/link";

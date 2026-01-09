@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listBanners } from "@/app/api_/categories";
+import { listBanners } from "@/lib/api/categories";
 import { BannerType } from "@/types/CategoryType";
 import { CubeIcon, TrashIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";

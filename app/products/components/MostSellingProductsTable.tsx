@@ -6,7 +6,7 @@ import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import { ColumnDef } from "@tanstack/react-table";
 import { Product } from "@/types/ProductType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { mostSellingProducts } from "@/app/api_/products";
+import { mostSellingProducts } from "@/lib/api/products";
 import StatusBadge from "@/utils/StatusBadge";
 import { getStockBadgeClass } from "@/utils/StockBadge";
 import {

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { SubmitButton } from '@/app/components/commons/SubmitButton';
-import { addColours } from '@/app/api_/colours';
+import { addColours } from '@/lib/api/colours';
 import axios from 'axios';
 import { colornames } from 'color-name-list';
 

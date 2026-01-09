@@ -5,12 +5,12 @@ import Image from "next/image";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
-import { updateItemStatus } from "@/app/api_/products";
+import { updateItemStatus } from "@/lib/api/products";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import StatusBadge from "@/utils/StatusBadge";
 import toast from "react-hot-toast";
-import { deleteCategory, getCategories } from "@/app/api_/categories";
+import { deleteCategory, getCategories } from "@/lib/api/categories";
 import CategorySummary from "./CategorySummary";
 import { CategoryType } from "@/types/CategoryType";
 import { useCategoryStore } from "@/app/store/CategoryStore";
@@ -105,7 +105,7 @@ function CategoryActionCell({
                     <TrashIcon className="w-4 h-4" /> Delete
                 </button>
             </div>
- 
+
             <ConfirmationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Confirm Deletion">
                 <p className="mt-2 text-sm text-gray-500">
                     Are you sure you want to delete this category? This action cannot be undone.

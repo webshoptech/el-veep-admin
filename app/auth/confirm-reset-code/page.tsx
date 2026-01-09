@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { confirmResetCode } from "../../api_/login";
- import toast from "react-hot-toast";
+import { confirmResetCode } from "@/lib/api/login";
+import toast from "react-hot-toast";
 import { SubmitButton } from "../../components/commons/SubmitButton";
 import AuthHeader from "@/app/components/commons/AuthHeader";
 
@@ -59,20 +59,20 @@ export default function ConfirmResetCode() {
                 <div>
                     <label className="block text-sm font-medium mb-1">
                         Reset Code
-                        </label>
-                        <input
-                            type="tel"
-                            maxLength={6}
-                            value={code}
-                            onChange={(e) => setCode(e.target.value)}
-                            placeholder="Enter the code from your email"
-                            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none"
-                            required
-                        />
-                    </div>
+                    </label>
+                    <input
+                        type="tel"
+                        maxLength={6}
+                        value={code}
+                        onChange={(e) => setCode(e.target.value)}
+                        placeholder="Enter the code from your email"
+                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none"
+                        required
+                    />
+                </div>
 
-                    <SubmitButton label="Verify Code" loading={loading} />
-                </form> 
+                <SubmitButton label="Verify Code" loading={loading} />
+            </form>
         </AuthHeader>
     );
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { reviewStats } from '@/app/api_/reviews';
+import { reviewStats } from '@/lib/api/reviews';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { ReviewMetricType } from '@/types/ReviewType';
 

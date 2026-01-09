@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { listColours } from "@/app/api_/colours";
+import { listColours } from "@/lib/api/colours";
 import { ColorType } from "@/types/ColorType";
 
 type ColorProps = {

@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { BannerType } from "@/types/CategoryType";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { listBannerTypes } from "@/app/api_/banners";
+import { listBannerTypes } from "@/lib/api/banners";
 
 type BannerProps = {
     limit: number;
@@ -28,7 +28,7 @@ const BannerTypesTable: React.FC<BannerProps> = ({ limit, onDelete }) => {
                 header: "Banner Type",
                 accessorKey: "name",
             },
-            
+
             {
                 header: "Action",
                 accessorKey: "id",

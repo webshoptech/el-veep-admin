@@ -7,13 +7,13 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { OrderResponse } from "@/types/OrderType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { getRecentOrders } from "@/app/api_/orders";
+import { getRecentOrders } from "@/lib/api/orders";
 import StatusBadge from "@/utils/StatusBadge";
 import Link from "next/link";
 import { formatAmount } from "@/utils/formatCurrency";
 
 interface RecentOrdersTableProps {
-    limit: number;   
+    limit: number;
     status?: string;
 }
 
@@ -119,7 +119,7 @@ const RecentOrdersTable: React.FC<RecentOrdersTableProps> = ({ limit }) => {
     const fetchOrders = useCallback(async () => {
         try {
             setLoading(true);
-            const response = await getRecentOrders(limit, 0);  
+            const response = await getRecentOrders(limit, 0);
             setOrders(response.orders);
         } catch (err) {
             console.error(err);

@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useMemo, useState } from "react";
-import { categoryAnalytics } from "@/app/api_/categories";
+import { categoryAnalytics } from "@/lib/api/categories";
 import { CategoryAnalyticsItem, CategoryAnalyticsType } from "@/types/CategoryType";
- import { ColumnDef } from "@tanstack/react-table";
-import TanStackTable from "@/app/components/commons/TanStackTable"; 
+import { ColumnDef } from "@tanstack/react-table";
+import TanStackTable from "@/app/components/commons/TanStackTable";
 
 export default function Analytics() {
     const [data, setData] = useState<CategoryAnalyticsItem[]>([]);
@@ -44,7 +44,7 @@ export default function Analytics() {
                 cell: ({ row }) => (
                     <span className="text-gray-800 font-medium">{row.original.name}</span>
                 ),
-            },  
+            },
             {
                 header: "Sales Count",
                 accessorKey: "total_sales_count",
@@ -67,7 +67,7 @@ export default function Analytics() {
                 cell: ({ row }) => (
                     <span className="text-gray-900">{row.original.total_orders}</span>
                 ),
-            }, 
+            },
         ],
         []
     );
@@ -86,7 +86,7 @@ export default function Analytics() {
                     pagination={{
                         pageIndex: pagination.pageIndex,
                         pageSize: pagination.pageSize,
-                        totalRows: total, 
+                        totalRows: total,
                     }}
                     onPaginationChange={setPagination}
                 />

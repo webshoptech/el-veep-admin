@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
-import { deleteAdmin, listInvites } from "@/app/api_/team";
+import { deleteAdmin, listInvites } from "@/lib/api/team";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { Stats, Team } from "@/types/TeamType";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";

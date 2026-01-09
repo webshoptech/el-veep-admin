@@ -4,7 +4,7 @@ import { useState, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
 import { useCategoryStore } from '@/app/store/CategoryStore';
-import { addCategory, updateCategory } from '@/app/api_/categories';
+import { addCategory, updateCategory } from '@/lib/api/categories';
 import toast from 'react-hot-toast';
 import { SubmitButton } from '@/app/components/commons/SubmitButton';
 import { CategoryType } from '@/types/CategoryType';
@@ -106,7 +106,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                 />
             </div>
 
-            {/* Description */} 
+            {/* Description */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                     Description <span className="text-green-500">*</span>

@@ -7,7 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import { Product, Stats } from "@/types/ProductType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listProducts, updateItemStatus } from "@/app/api_/products";
+import { listProducts, updateItemStatus } from "@/lib/api/products";
 import ItemSummary from "./ItemSummary";
 import { getStockBadgeClass } from "@/utils/StockBadge";
 import { EyeIcon, PencilIcon, StarIcon, TrashIcon } from "@heroicons/react/24/outline";

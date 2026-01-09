@@ -6,12 +6,12 @@ import toast from "react-hot-toast";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import { useCategoryStore } from "@/app/store/CategoryStore";
-import { addProduct, updateProduct } from "@/app/api_/products";
+import { addProduct, updateProduct } from "@/lib/api/products";
 import { Product } from "@/types/ProductType";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { Editor } from "@tinymce/tinymce-react";
 import { useRef } from "react";
-import type { Editor as TinyMCEEditor } from "tinymce"; 
+import type { Editor as TinyMCEEditor } from "tinymce";
 
 
 interface Props {

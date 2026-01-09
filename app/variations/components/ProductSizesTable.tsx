@@ -4,8 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { Sizes} from "@/types/SizeType";
-import { listSizes } from "@/app/api_/sizes";
+import { Sizes } from "@/types/SizeType";
+import { listSizes } from "@/lib/api/sizes";
 
 type SizeProps = {
     limit: number;

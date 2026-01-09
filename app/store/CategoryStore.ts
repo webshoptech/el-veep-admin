@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { getCategories } from "../api_/categories";
-import { CategoryType } from "@/types/CategoryType"; 
+import { getCategories } from "@/lib/api/categories";
+import { CategoryType } from "@/types/CategoryType";
 
 interface CategoryStore {
     categories: CategoryType[];

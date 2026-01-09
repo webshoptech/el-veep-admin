@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { resetPassword } from "../../api_/login";
+import { resetPassword } from "@/lib/api/login";
 import Image from "next/image";
 import toast from "react-hot-toast";
 import { SubmitButton } from "../../components/commons/SubmitButton";
@@ -58,12 +58,12 @@ export default function ResetPassword() {
     };
 
     return (
-   <div className="flex flex-col md:flex-row h-screen bg-green-950">
-      {/* Image */}
-      <div
-        className="h-40 md:h-full md:w-1/2 bg-cover bg-center"
-        style={{ backgroundImage: "url('/login.jpg')" }}
-      ></div>
+        <div className="flex flex-col md:flex-row h-screen bg-green-950">
+            {/* Image */}
+            <div
+                className="h-40 md:h-full md:w-1/2 bg-cover bg-center"
+                style={{ backgroundImage: "url('/login.jpg')" }}
+            ></div>
 
             <div className="w-1/2 flex flex-col justify-center items-center px-8">
                 <Image

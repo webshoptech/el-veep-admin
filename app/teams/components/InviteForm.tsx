@@ -4,7 +4,7 @@ import { useState } from 'react';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
 import { SubmitButton } from '@/app/components/commons/SubmitButton';
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { sendInvite } from '@/app/api_/team';
+import { sendInvite } from '@/lib/api/team';
 import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
 

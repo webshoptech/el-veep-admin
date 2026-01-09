@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import toast from "react-hot-toast";
-import { deleteFaq, listFaqs, updateStatus } from "@/app/api_/faqs";
+import { deleteFaq, listFaqs, updateStatus } from "@/lib/api/faqs";
 import { Faq } from "@/types/FaqType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { formatHumanReadableDate } from "@/utils/formatHumanReadableDate";
@@ -76,7 +76,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
         try {
             await deleteFaq(faqToDelete);
             toast.success("FAQ deleted successfully");
-            setFaqs((prev) => prev.filter((f) => f.id !== faqToDelete));  
+            setFaqs((prev) => prev.filter((f) => f.id !== faqToDelete));
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const message =
@@ -270,7 +270,7 @@ const FaqsTable: React.FC<FaqsTableProps> = ({ limit, type }) => {
                         className="rounded-md bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 cursor-pointer"
                         onClick={handleDelete}
                     >
-                       {loading ? "Deleting..." : "Delete"}
+                        {loading ? "Deleting..." : "Delete"}
                     </button>
                 </div>
             </ConfirmationModal>

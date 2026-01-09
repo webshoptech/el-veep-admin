@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { login } from '../../api_/login';
+import { login } from '@/lib/api/login';
 import toast from 'react-hot-toast';
- import { SubmitButton } from '../../components/commons/SubmitButton';
+import { SubmitButton } from '../../components/commons/SubmitButton';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import AuthHeader from '@/app/components/commons/AuthHeader';

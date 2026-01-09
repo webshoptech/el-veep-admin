@@ -5,8 +5,8 @@ import Skeleton from "react-loading-skeleton";
 import Image from "next/image";
 import clsx from "clsx";
 import { UserDetailResponse } from "@/types/UserType";
-import { deleteUser } from "@/app/api_/users";
- import toast from "react-hot-toast";
+import { deleteUser } from "@/lib/api/users";
+import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
 
 interface ProfileCardProps {
@@ -20,7 +20,7 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
             ? { ...initialUser, is_active: Boolean(initialUser.is_active) }
             : null
     );
-     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [confirmText, setConfirmText] = useState("");
 
     useEffect(() => {
@@ -28,7 +28,7 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
             setUser({ ...initialUser, is_active: Boolean(initialUser.is_active) });
         }
     }, [initialUser]);
- 
+
     return (
         <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm bg-white">
             <div className="relative h-24 bg-gradient-to-r from-red-400 to-green-400" />
@@ -53,10 +53,10 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                             {loading ? <Skeleton width={120} /> : `${user?.name} ${user?.last_name}`}
                         </h3>
                         <p className="text-sm text-gray-600">
-                            {loading ? <Skeleton width={160} /> : user?.email}  {user?.is_active }
-               
+                            {loading ? <Skeleton width={160} /> : user?.email}  {user?.is_active}
+
                         </p>
-                        <div className="flex gap-2 mt-2 items-center"> 
+                        <div className="flex gap-2 mt-2 items-center">
                             {loading ? (
                                 <Skeleton width={80} />
                             ) : (
@@ -114,7 +114,7 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                     <div>
                         <p className="text-gray-400 font-semibold uppercase text-xs mb-1">User Status</p>
                         <div className="flex items-center gap-2">
-                            
+
 
                             {/* Delete Button */}
                             <button
@@ -153,7 +153,7 @@ export default function ProfileCard({ user: initialUser, loading }: ProfileCardP
                                     <button
                                         disabled={confirmText !== "DELETE"}
                                         onClick={async () => {
-                                            try {   
+                                            try {
                                                 await deleteUser(user?.id?.toString() ?? "");
                                                 toast.success("User deleted successfully");
                                                 setIsDeleteModalOpen(false);

@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listSubCategories } from "@/app/api_/categories";
+import { listSubCategories } from "@/lib/api/categories";
 import { CategoryType, FlattenedSubCategory } from "@/types/CategoryType";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 

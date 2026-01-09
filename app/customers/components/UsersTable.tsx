@@ -8,7 +8,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
 import { User } from "@/types/UserType";
-import { getRecentUsers } from "@/app/api_/users";
+import { getRecentUsers } from "@/lib/api/users";
 import StatusBadge from "@/utils/StatusBadge";
 
 interface UsersTableProps {

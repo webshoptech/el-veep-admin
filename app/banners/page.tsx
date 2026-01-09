@@ -7,7 +7,7 @@ import { BannerType } from "@/types/CategoryType";
 import toast from "react-hot-toast";
 import BannersForm from "../categories/components/BannersForm";
 import BannersTable from "../categories/components/BannersTable";
-import { deleteBanner } from "../api_/banners";
+import { deleteBanner } from "@/lib/api/banners";
 import ConfirmationModal from "../components/commons/ConfirmationModal";
 
 export default function Banners() {

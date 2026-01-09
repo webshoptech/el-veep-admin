@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
 import { useCategoryStore } from '@/app/store/CategoryStore';
-import { addCategory, getCategories, updateCategory } from '@/app/api_/categories';
+import { addCategory, getCategories, updateCategory } from '@/lib/api/categories';
 import toast from 'react-hot-toast';
 import { SubmitButton } from '@/app/components/commons/SubmitButton';
 import { CategoryType, FlattenedSubCategory } from '@/types/CategoryType';
@@ -34,7 +34,7 @@ export default function SubCategoryForm({ onClose, category }: { onClose: () => 
         if (categories.length === 0) {
             fetchCategories();
         } else {
-            setLocalCategories(categories);  
+            setLocalCategories(categories);
         }
     }, [categories, saveToStore]);
 

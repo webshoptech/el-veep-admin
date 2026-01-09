@@ -7,7 +7,7 @@ import { formatDate } from "@/utils/formatHumanReadableDate";
 import { MONTHS } from "@/app/setting";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { productGraph } from "@/app/api_/products";
+import { productGraph } from "@/lib/api/products";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -67,7 +67,7 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
             },
             grid: {
                 show: true,
-                gradientToColors: ["rgba(0, 176, 94, 0.15)"], 
+                gradientToColors: ["rgba(0, 176, 94, 0.15)"],
                 strokeDashArray: 4,
                 padding: {
                     top: 10,
@@ -80,7 +80,7 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
             stroke: {
                 curve: "smooth",
                 width: 1.5,
-                colors: ["#00B05E"],  
+                colors: ["#00B05E"],
             },
             fill: {
                 type: "gradient",
@@ -95,17 +95,17 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
                     colorStops: [
                         {
                             offset: 0,
-                            color: "rgba(0, 176, 94, 0.4)",  
+                            color: "rgba(0, 176, 94, 0.4)",
                             opacity: 0.4,
                         },
                         {
                             offset: 100,
-                            color: "rgba(0, 176, 94, 0.05)",  
+                            color: "rgba(0, 176, 94, 0.05)",
                             opacity: 0.05,
                         },
                     ],
                 },
-                colors: ["#00B05E"], 
+                colors: ["#00B05E"],
             },
             series: [{ name: "Products", data: chartData.series }],
             xaxis: {
@@ -130,7 +130,7 @@ const AreaChart = ({ type, status }: AreaChartProps) => {
             },
             markers: {
                 size: 4,
-                colors: ["#00B05E"], 
+                colors: ["#00B05E"],
                 strokeColors: "#ffffff",
                 strokeWidth: 2,
                 hover: { size: 6 },

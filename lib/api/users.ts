@@ -1,4 +1,4 @@
-import axios from "@/app/lib/axios";
+import axios from "../axios";
 
 export async function getRecentUsers(
     limit?: number,

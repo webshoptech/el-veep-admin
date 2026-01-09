@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import {
-   ArrowPathIcon,
-     CheckCircleIcon,
+    ArrowPathIcon,
+    CheckCircleIcon,
     XCircleIcon,
     TruckIcon,
 } from '@heroicons/react/24/outline';
 import Skeleton from 'react-loading-skeleton';
-import { orderStats } from '@/app/api_/orders';
+import { orderStats } from '@/lib/api/orders';
 import { OrderStatsType } from '@/types/OrderType';
 
 export function MetricCard() {

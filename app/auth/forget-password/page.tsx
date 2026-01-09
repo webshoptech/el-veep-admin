@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { forgetPassword } from "../../api_/login";
- import toast from "react-hot-toast";
+import { forgetPassword } from "@/lib/api/login";
+import toast from "react-hot-toast";
 import { SubmitButton } from "../../components/commons/SubmitButton";
 import AuthHeader from "@/app/components/commons/AuthHeader";
 

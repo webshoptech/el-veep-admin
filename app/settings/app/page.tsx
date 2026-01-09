@@ -8,7 +8,7 @@ import Textarea from "@/app/components/commons/Fields/TextArea";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import Skeleton from 'react-loading-skeleton'
 import toast from "react-hot-toast";
-import { getAppSettings, saveAppSettings } from "@/app/api_/settings";
+import { getAppSettings, saveAppSettings } from "@/lib/api/settings";
 
 interface AppSettingsData {
     app_name: string;

@@ -8,7 +8,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import { OrderResponse } from "@/types/OrderType";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { getRecentOrders } from "@/app/api_/orders";
+import { getRecentOrders } from "@/lib/api/orders";
 import StatusBadge from "@/utils/StatusBadge";
 import { formatAmount } from "@/utils/formatCurrency";
 
@@ -70,7 +70,7 @@ const OrderTable: React.FC<OrderTableProps> = ({ limit, status }) => {
                     const numericValue = parseFloat(value);
                     return isNaN(numericValue)
                         ? "Invalid"
-                         : `${formatAmount(numericValue)}`;
+                        : `${formatAmount(numericValue)}`;
                 },
             },
             {

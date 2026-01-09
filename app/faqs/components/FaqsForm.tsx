@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import SelectDropdown from '@/app/components/commons/Fields/SelectDropdown';
-import { create, updateFaq } from '@/app/api_/faqs';
+import { create, updateFaq } from '@/lib/api/faqs';
 import toast from 'react-hot-toast';
 import { SubmitButton } from '@/app/components/commons/SubmitButton';
 import { Faq } from '@/types/FaqType';
@@ -30,7 +30,7 @@ export default function FaqForm({ onClose, faq }: Props) {
         e.preventDefault();
         if (!type?.value) {
             toast.error("Type is required");
-            return;  
+            return;
         }
         if (!String(question).trim()) {
             toast.error("Question is required");

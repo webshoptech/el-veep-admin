@@ -6,7 +6,7 @@ import Avatar from "@/utils/Avatar";
 import { ColumnDef } from "@tanstack/react-table";
 import { debounce } from "lodash";
 import TanStackTable from "@/app/components/commons/TanStackTable";
-import { listUnReviews } from "@/app/api_/reviews";
+import { listUnReviews } from "@/lib/api/reviews";
 import { User } from "@/types/UserType";
 import ReviewType from "@/types/ReviewType";
 import UnReviewOrderType from "@/types/UnReviewOrderType";
@@ -166,7 +166,7 @@ const UnReviewTable: React.FC<ReviewTableProps> = ({ limit }) => {
                 />
             </div>
             <TanStackTable
-                data={reviews as unknown as UnReviewOrderType[]}  
+                data={reviews as unknown as UnReviewOrderType[]}
                 columns={columns}
                 loading={loading}
                 error={error}
