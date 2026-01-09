@@ -15,7 +15,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "../components/commons/Drawer";
 import NotificationForm from "./components/NotificationForm";
 import NotificationStats from "./components/NotificationStats";
-import { receiverOptions } from "../setting";
+import { receiverOptions } from "../../setting";
 
 
 

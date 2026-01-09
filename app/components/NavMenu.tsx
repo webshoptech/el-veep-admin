@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NAVIGATION } from "@/app/setting";
+import { NAVIGATION } from "@/setting";
 import clsx from "clsx";
 import { useState, useMemo } from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/20/solid";

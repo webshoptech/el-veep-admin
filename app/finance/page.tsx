@@ -3,8 +3,8 @@ import { useState } from "react";
 import SelectDropdown from "../components/commons/Fields/SelectDropdown";
 import FinanceAreaChart from "./components/FinanceAreaChart";
 import { Overview } from "./components/Overview";
-import { MONTHS } from "../setting";
- 
+import { MONTHS } from "../../setting";
+
 // Convert MONTHS array into dropdown options
 const monthOptions = MONTHS.map(month => ({
     label: month,
@@ -12,7 +12,7 @@ const monthOptions = MONTHS.map(month => ({
 }));
 
 export default function Finance() {
-    const [selectedMonth, setSelectedMonth] = useState(monthOptions[0]);  
+    const [selectedMonth, setSelectedMonth] = useState(monthOptions[0]);
 
     return (
         <div className="space-y-6 text-gray-800">

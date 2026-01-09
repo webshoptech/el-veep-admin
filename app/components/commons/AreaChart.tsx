@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
 import AreaChartSkeleton from "../Skeletons/AreaChartSkeleton";
 import { formatDate } from "@/utils/formatHumanReadableDate";
-import { MONTHS } from "@/app/setting";
+import { MONTHS } from "@/setting";
 import SelectDropdown from "./Fields/SelectDropdown";
 import { getSalesGraph } from "@/lib/api/orders";
 

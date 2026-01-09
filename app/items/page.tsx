@@ -8,6 +8,7 @@ import ProductForm from "./components/ProductForm";
 import ConfirmationModal from "../components/commons/ConfirmationModal";
 import { listProducts, deleteProduct } from "@/lib/api/products";
 import { Product } from "@/types/ProductType";
+import ItemForm from "./components/ItemForm";
 
 export default function Products() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -126,13 +127,9 @@ export default function Products() {
                 }}
                 title={editingProduct ? "Edit Product" : "Create Product"}
             >
-                <ProductForm
-                    product={editingProduct ?? undefined}
-                    onClose={() => {
-                        setDrawerOpen(false);
-                        setEditingProduct(null);
-                    }}
-                    onSuccess={handleFormSuccess}
+                <ItemForm
+                    item={editingProduct}
+                    onClose={() => setDrawerOpen(false)}
                 />
             </Drawer>
 

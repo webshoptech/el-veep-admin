@@ -17,13 +17,46 @@ export const MONTHS = [
     "November",
     "December",
 ];
+export const DIMENSION_OPTIONS = [
+    { label: "pound", value: "lbs" },
+    { label: "ounce", value: "oz" },
+    { label: "kilogram", value: "kg" },
+    { label: "gram", value: "g" },
+];
+
+export const SIZE_UNIT_OPTIONS = [
+    { label: "inch", value: "in" },
+    { label: "centimeter", value: "cm" },
+];
+
+export const PRICING_MODEL_OPTIONS = [
+    { value: "fixed", label: "Fixed" },
+    { value: "negotiable", label: "Negotiable" },
+];
+
+export const DELIVERY_METHOD_OPTIONS = [
+    { value: "remote", label: "Remote" },
+    { value: "onsite", label: "Onsite" },
+    { value: "hybrid", label: "Hybrid" },
+];
+
+export const MAX_IMAGES = 7;
+export const MAX_IMAGE_SIZE = 2 * 1024 * 1024;
+
+export const VALID_IMAGE_TYPES = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/webp",
+];
+
 import {
     HomeIcon,
     CreditCardIcon,
     Cog6ToothIcon,
     QuestionMarkCircleIcon,
     UserCircleIcon,
-    ArrowRightStartOnRectangleIcon, 
+    ArrowRightStartOnRectangleIcon,
     Squares2X2Icon,
     CubeIcon,
     AdjustmentsHorizontalIcon,
@@ -60,15 +93,6 @@ export const NAVIGATION = [
         ],
     },
     {
-        name: "Reviews Management",
-        href: "/reviews",
-        icon: CreditCardIcon,
-        children: [
-            { name: "All Reviews", href: "/reviews" },
-            { name: "Un-Reviews orders", href: "/reviews/un-reviews" },
-        ],
-    },
-    {
         name: "Category Management",
         href: "/categories",
         icon: Squares2X2Icon,
@@ -79,22 +103,13 @@ export const NAVIGATION = [
         ],
     },
     {
-        name: "Products Management",
-        href: "/products",
+        name: "Items Management",
+        href: "/items",
         icon: CubeIcon,
         children: [
-            { name: "Published products", href: "/products" },
-            { name: "Draft products", href: "/products/pending" },
-            { name: "Item Analytics", href: "/products/analytics" },
-        ],
-    },
-    {
-        name: "Variation Management",
-        href: "/variations",
-        icon: AdjustmentsHorizontalIcon,
-        children: [
-            { name: "Product colors", href: "/variations/colors" },
-            { name: "Product sizes", href: "/variations/sizes" },
+            { name: "Published products", href: "/items" },
+            { name: "Draft products", href: "/items/pending" },
+            { name: "Item Analytics", href: "/items/analytics" },
         ],
     },
     {
@@ -110,9 +125,7 @@ export const NAVIGATION = [
         name: "FAQs Management",
         href: "/faqs",
         icon: QuestionMarkCircleIcon,
-        children: [
-            { name: "FAQs", href: "/faqs" },
-        ],
+        children: [{ name: "FAQs", href: "/faqs" }],
     },
     {
         name: "Security & Compliance",
@@ -126,10 +139,7 @@ export const NAVIGATION = [
         name: "Platform Settings",
         href: "/settings/app",
         icon: AdjustmentsHorizontalIcon,
-        children: [
-            { name: "Settings", href: "/settings/app" },
-            { name: "Team members", href: "/teams" },
-        ],
+        children: [{ name: "Team members", href: "/teams" }],
     },
 ];
 

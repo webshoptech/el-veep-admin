@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { PrivacyPages } from "@/app/setting";
+import { PrivacyPages } from "@/setting";
 
 const PolicyEditor = dynamic(
     () => import("@/app/settings/policies/components/PolicyEditor"),

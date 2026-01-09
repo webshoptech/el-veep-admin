@@ -24,34 +24,49 @@ export async function deleteProduct(productId: number) {
     return response.data;
 }
 
-export async function addProduct(productData: FormData) {
-    const response = await axios.post("/items/create", productData);
+export async function addItem(formData: FormData) {
+    const response = await axios.post("/items/create", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+
     return response.data;
 }
-// export async function updateProduct(productId: number, productData: FormData) {
-//     const response = await axios.put(`/items/update/${productId}`, productData);
-//     return response.data;
-// }
 
-export async function updateProduct(
+export async function updateItem(ItemId: number, formData: FormData) {
+    formData.append("_method", "PUT");
+    const response = await axios.post(
+        `/items/update/${ItemId}`,
+        formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }
+    );
+    return response.data;
+}
+
+export async function deleteItem(productId: number) {
+    const { data } = await axios.delete(`/items/delete/${productId}`);
+    return data.data;
+}
+
+export async function deleteItemPhoto(
     productId: number | string,
-    productData: FormData
+    publicId: string
 ) {
-    try {
-        const res = await axios.post(
-            `/items/update/${productId}`,
-            productData,
-            {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            }
-        );
-        return res.data;
-    } catch (error) {
-        console.error("Update product error:", error);
-        throw error;
-    }
+    const { data } = await axios.delete(
+        `/vendor/items/image/delete/${productId}`,
+        {
+            data: {
+                delete_public_ids: [publicId],
+            },
+        }
+    );
+
+    return data.data;
 }
 
 export async function productGraph(

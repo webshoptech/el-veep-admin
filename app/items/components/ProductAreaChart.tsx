@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
 import { formatDate } from "@/utils/formatHumanReadableDate";
-import { MONTHS } from "@/app/setting";
+import { MONTHS } from "@/setting";
 import AreaChartSkeleton from "@/app/components/Skeletons/AreaChartSkeleton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import { productGraph } from "@/lib/api/products";

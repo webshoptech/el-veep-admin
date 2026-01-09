@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import { SubmitButton } from "@/app/components/commons/SubmitButton";
 import { useCategoryStore } from "@/app/store/CategoryStore";
-import { addProduct, updateProduct } from "@/lib/api/products";
 import { Product } from "@/types/ProductType";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { Editor } from "@tinymce/tinymce-react";
@@ -34,12 +33,13 @@ export default function ProductForm({ onClose, product, onSuccess }: Props) {
             : { label: "Products", value: "services" }
     );
 
-    const [selectedCategory, setSelectedCategory] = useState<{ label: string; value: string } | null>(
-        product?.category_id
-            ? { label: product.category_name || "", value: String(product.category_id) }
-            : null
-    );
-
+    // const [selectedCategory, setSelectedCategory] = useState<{ label: string; value: string } | null>(
+    //     product?.category_id
+    //         ? { label: product.category_name || "", value: String(product.category_id) }
+    //         : null
+    // );
+    const [selectedChildCategory, setSelectedChildCategory] = useState<any>(null);
+    const [selectedCategory, setSelectedCategory] = useState<any>(null);
 
     const { categories, fetchCategories } = useCategoryStore();
 

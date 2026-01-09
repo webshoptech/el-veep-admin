@@ -17,7 +17,7 @@ import {
 import Image from 'next/image';
 import NavMenu from '@/app/components/NavMenu';
 import { useEffect, useState } from 'react';
-import { bottomNavigation } from '@/app/setting';
+import { bottomNavigation } from '@/setting';
 import { useRouter } from 'next/navigation';
 import { User } from '@/types/UserType';
 
