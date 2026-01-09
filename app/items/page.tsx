@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import ProductsTable from "./components/ProductsTable";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "../components/commons/Drawer";
-import ProductForm from "./components/ProductForm";
 import ConfirmationModal from "../components/commons/ConfirmationModal";
 import { listProducts, deleteProduct } from "@/lib/api/products";
 import { Product } from "@/types/ProductType";
