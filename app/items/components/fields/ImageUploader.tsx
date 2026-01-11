@@ -15,11 +15,11 @@ export default function ImageUploader(props: any) {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-2">
-        Item Images (min 2, max 7, 2MB each){" "}
+        Item Images (min 2, max 4, 2MB each){" "}
         <span className="text-red-500">*</span>
       </label>
 
-      {existingImages.urls.length + newPreviews.length < 7 && (
+      {existingImages.urls.length + newPreviews.length < 4 && (
         <label className="relative w-full aspect-square border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors overflow-hidden flex items-center justify-center p-4">
           <div className="flex flex-col items-center justify-center text-center text-gray-500">
             <HiOutlineUpload className="text-3xl" />

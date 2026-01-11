@@ -58,7 +58,7 @@ export async function deleteItemPhoto(
     publicId: string
 ) {
     const { data } = await axios.delete(
-        `/vendor/items/image/delete/${productId}`,
+        `/items/image/delete/${productId}`,
         {
             data: {
                 delete_public_ids: [publicId],
