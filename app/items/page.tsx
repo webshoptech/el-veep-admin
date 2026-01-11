@@ -87,7 +87,7 @@ export default function Products() {
                     className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600 cursor-pointer"
                 >
                     <PlusIcon className="w-4 h-4" />
-                    Create Product
+                    Add Item
                 </button>
             </div>
 
@@ -98,7 +98,7 @@ export default function Products() {
                 title="Confirm Product Deletion"
             >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this product? This action cannot be undone.
+                    Are you sure you want to delete this item? This action cannot be undone.
                 </p>
 
                 <div className="mt-4 flex justify-end gap-3">
@@ -124,7 +124,7 @@ export default function Products() {
                     setDrawerOpen(false);
                     setEditingProduct(null);
                 }}
-                title={editingProduct ? "Edit Product" : "Create Product"}
+                title={editingProduct ? "Edit Item" : "Create Item"}
             >
                 <ItemForm
                     item={editingProduct}
@@ -137,8 +137,8 @@ export default function Products() {
                 type="products"
                 status="active"
                 products={products}
-                onEdit={handleEditProduct} // called when user clicks Edit in the table
-                onDeleteConfirm={handleConfirmDelete} // called when user clicks Delete in the table
+                onEdit={handleEditProduct}
+                onDeleteConfirm={handleConfirmDelete} 
                 loading={loading}
                 total={total}
             />

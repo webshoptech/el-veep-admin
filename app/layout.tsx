@@ -6,14 +6,13 @@ import { Toaster } from "react-hot-toast";
 import 'react-loading-skeleton/dist/skeleton.css'
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/next"
-
-
+import { APP_DESCRIPTION, APP_NAME } from "@/setting";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: process.env.NEXT_PUBLIC_APP_NAME || "My App",
-    description: process.env.NEXT_PUBLIC_APP_DESCRIPTION || "Welcome to my app",
+    title: APP_NAME,
+    description: APP_DESCRIPTION,
 };
 
 export default function RootLayout({

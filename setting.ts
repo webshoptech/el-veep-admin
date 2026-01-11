@@ -40,7 +40,7 @@ export const DELIVERY_METHOD_OPTIONS = [
     { value: "hybrid", label: "Hybrid" },
 ];
 
-export const MAX_IMAGES = 7;
+export const MAX_IMAGES = 4;
 export const MAX_IMAGE_SIZE = 2 * 1024 * 1024;
 
 export const VALID_IMAGE_TYPES = [
@@ -107,8 +107,8 @@ export const NAVIGATION = [
         href: "/items",
         icon: CubeIcon,
         children: [
-            { name: "Published products", href: "/items" },
-            { name: "Draft products", href: "/items/pending" },
+            { name: "All items", href: "/items" },
+            { name: "Draft items", href: "/items/pending" },
             { name: "Item Analytics", href: "/items/analytics" },
         ],
     },

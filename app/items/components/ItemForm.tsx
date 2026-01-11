@@ -2,13 +2,11 @@
 import BasicInfoFields from "./fields/BasicInfoFields";
 import CategoryFields from "./fields/CategoryFields";
 import PriceFields from "./fields/PriceFields";
-import ProductDimensionFields from "./fields/ProductDimensionFields";
 import ServiceFields from "./fields/ServiceFields";
 import ImageUploader from "./fields/ImageUploader";
 import { useItemForm } from "@/hooks/useItemForm";
 import { SubmitButton as OriginalSubmitButton } from "../../components/commons/SubmitButton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
-import { useState } from "react";
 
 interface Props {
     onClose: () => void;
