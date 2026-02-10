@@ -14,7 +14,9 @@ export default function Products() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-    const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+    const [selectedProductId, setSelectedProductId] = useState<number | null>(
+        null,
+    );
 
     const [products, setProducts] = useState<Product[]>([]);
     const [total, setTotal] = useState<number>(0);
@@ -23,7 +25,13 @@ export default function Products() {
     const fetchProducts = async (limit = LIMIT, offset = 0, search = "") => {
         try {
             setLoading(true);
-            const resp = await listProducts(limit, offset, search, "products", "active");
+            const resp = await listProducts(
+                limit,
+                offset,
+                search,
+                "products",
+                "active",
+            );
             setProducts(resp?.data || []);
             setTotal(resp?.total ?? 0);
         } catch (err) {
@@ -51,15 +59,27 @@ export default function Products() {
 
     const handleDeleteProduct = async () => {
         if (!selectedProductId) return;
+
+        // 1. Capture the ID and close modal early for better UX
+        const idToDelete = selectedProductId;
+        setIsModalOpen(false);
         setLoading(true);
+
         try {
-            await deleteProduct(selectedProductId);
+            await deleteProduct(idToDelete);
+
+            // 2. Update local state immediately (Optimistic Update)
+            setProducts((prev) => prev.filter((p) => p.id !== idToDelete));
+            setTotal((prev) => prev - 1);
+
+            // 3. Optional: Refresh from server to ensure sync
             await fetchProducts();
         } catch (err) {
             console.error("Failed to delete product:", err);
+            // If it fails, re-fetch to restore the list
+            await fetchProducts();
         } finally {
             setLoading(false);
-            setIsModalOpen(false);
             setSelectedProductId(null);
         }
     };
@@ -76,7 +96,9 @@ export default function Products() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800">Items</h1>
-                    <p className="text-sm text-gray-600">Manage your items here.</p>
+                    <p className="text-sm text-gray-600">
+                        Manage your items here.
+                    </p>
                 </div>
 
                 <button
@@ -98,7 +120,8 @@ export default function Products() {
                 title="Confirm Product Deletion"
             >
                 <p className="mt-2 text-sm text-gray-500">
-                    Are you sure you want to delete this item? This action cannot be undone.
+                    Are you sure you want to delete this item? This action
+                    cannot be undone.
                 </p>
 
                 <div className="mt-4 flex justify-end gap-3">
@@ -138,7 +161,7 @@ export default function Products() {
                 status="active"
                 products={products}
                 onEdit={handleEditProduct}
-                onDeleteConfirm={handleConfirmDelete} 
+                onDeleteConfirm={handleConfirmDelete}
                 loading={loading}
                 total={total}
             />
