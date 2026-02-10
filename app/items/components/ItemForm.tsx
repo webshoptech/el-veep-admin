@@ -69,23 +69,7 @@ export default function ItemForm({ onClose, item }: Props) {
                 setQuantity={form.setQuantity}
                 shopType={form.shopType}
             />
-
-            {/* {form.shopType === "products" && (
-                <ProductDimensionFields
-                    weight={form.weight}
-                    setWeight={form.setWeight}
-                    weightUnit={form.weightUnit}
-                    setWeightUnit={form.setWeightUnit}
-                    lengthVal={form.lengthVal}
-                    setLengthVal={form.setLengthVal}
-                    widthVal={form.widthVal}
-                    setWidthVal={form.setWidthVal}
-                    heightVal={form.heightVal}
-                    setHeightVal={form.setHeightVal}
-                    sizeUnit={form.sizeUnit}
-                    setSizeUnit={form.setSizeUnit}
-                />
-            )} */}
+ 
 
             {form.shopType === "services" && (
                 <ServiceFields

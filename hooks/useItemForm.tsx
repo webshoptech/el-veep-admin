@@ -3,9 +3,16 @@
 import { useState, useEffect, useMemo } from "react";
 import toast from "react-hot-toast";
 import axios, { AxiosError } from "axios";
-import { DELIVERY_METHOD_OPTIONS, MAX_IMAGE_SIZE, MAX_IMAGES, PRICING_MODEL_OPTIONS, VALID_IMAGE_TYPES } from "@/setting";
+import {
+    DELIVERY_METHOD_OPTIONS,
+    MAX_IMAGE_SIZE,
+    MAX_IMAGES,
+    PRICING_MODEL_OPTIONS,
+    VALID_IMAGE_TYPES,
+} from "@/setting";
 import { getCategories } from "@/lib/api/categories";
 import { addItem, deleteItemPhoto, updateItem } from "@/lib/api/products";
+import imageCompression from "browser-image-compression";
 
 type DropdownOption = {
     label: string;
@@ -36,16 +43,16 @@ export function useItemForm(item: any) {
     });
     // pricing
     const [salesPrice, setSalesPrice] = useState<string>(
-        item?.sales_price ? String(item.sales_price) : ""
+        item?.sales_price ? String(item.sales_price) : "",
     );
     const [regularPrice, setRegularPrice] = useState<string>(
-        item?.regular_price ? String(item.regular_price) : ""
+        item?.regular_price ? String(item.regular_price) : "",
     );
     const [quantity, setQuantity] = useState<string>(
-        item?.quantity ? String(item.quantity) : "0"
+        item?.quantity ? String(item.quantity) : "0",
     );
 
-    // dimensions 
+    // dimensions
     const findOption = (options: any[], value: string) =>
         options.find((o) => o.value === value) ?? EMPTY;
 
@@ -65,27 +72,27 @@ export function useItemForm(item: any) {
 
     // services
     const [pricingModel, setPricingModel] = useState(
-        findOption(PRICING_MODEL_OPTIONS, item?.pricing_model ?? "fixed")
+        findOption(PRICING_MODEL_OPTIONS, item?.pricing_model ?? "fixed"),
     );
     const [deliveryMethod, setDeliveryMethod] = useState(
-        findOption(DELIVERY_METHOD_OPTIONS, item?.delivery_method ?? "online")
+        findOption(DELIVERY_METHOD_OPTIONS, item?.delivery_method ?? "online"),
     );
     const [estimatedDeliveryTime, setEstimatedDeliveryTime] = useState<string>(
-        item?.estimated_delivery_time ?? ""
+        item?.estimated_delivery_time ?? "",
     );
     const [availableDays, setAvailableDays] = useState<string[]>(
-        item?.available_days ?? []
+        item?.available_days ?? [],
     );
     const [availableFrom, setAvailableFrom] = useState<string>(
-        item?.available_from ?? ""
+        item?.available_from ?? "",
     );
     const [availableTo, setAvailableTo] = useState<string>(
-        item?.available_to ?? ""
+        item?.available_to ?? "",
     );
 
     function findCategory(
         categories: DropdownOption[],
-        id: string
+        id: string,
     ): DropdownOption | undefined {
         for (const cat of categories) {
             if (cat.value === id) return cat;
@@ -113,21 +120,27 @@ export function useItemForm(item: any) {
                 }));
 
                 setCategories(formatted);
- 
+
                 if (item?.id && item?.type === shopType) {
-                    const parentCategory = findCategory(formatted, String(item.category_id));
+                    const parentCategory = findCategory(
+                        formatted,
+                        String(item.category_id),
+                    );
                     if (parentCategory) {
                         setSelectedCategory(parentCategory);
                         const child = parentCategory.children?.find(
-                            (ch) => ch.value === String(item.child_category_id ?? item.category_id)
+                            (ch) =>
+                                ch.value ===
+                                String(
+                                    item.child_category_id ?? item.category_id,
+                                ),
                         );
                         if (child) setSelectedChildCategory(child);
                     }
-                } else { 
+                } else {
                     setSelectedCategory(EMPTY);
                     setSelectedChildCategory(EMPTY);
                 }
-
             } catch (e) {
                 console.error("Failed to fetch categories:", e);
             }
@@ -136,15 +149,18 @@ export function useItemForm(item: any) {
         fetchAndFormatCategories();
 
         return () => {
-            mounted = false; 
+            mounted = false;
             newPreviews.forEach((u) => URL.revokeObjectURL(u));
         };
     }, [shopType, item?.id]);
 
-    const handleImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImagesChange = async (
+        e: React.ChangeEvent<HTMLInputElement>,
+    ) => {
         const files = Array.from(e.target.files || []);
         if (files.length === 0) return;
 
+        // 1. Validate Total Count
         const combinedCount =
             existingImages.urls.length + newImages.length + files.length;
         if (combinedCount > MAX_IMAGES) {
@@ -152,24 +168,55 @@ export function useItemForm(item: any) {
             return;
         }
 
-        for (const file of files) {
-            if (!VALID_IMAGE_TYPES.includes(file.type)) {
-                toast.error("Only JPG, PNG, WebP, or JPEG images are allowed");
-                return;
-            }
-            if (file.size > MAX_IMAGE_SIZE) {
-                toast.error("Each image must be smaller than 2MB");
-                return;
-            }
+        // 2. Optimized Compression Settings for 100-200KB
+        const compressionOptions = {
+            maxSizeMB: 0.15, // Aim for ~150KB
+            maxWidthOrHeight: 800, // Sufficient for mobile/web product thumbnails
+            useWebWorker: true,
+            initialQuality: 0.7, // Start at 70% quality to force smaller size
+        };
+
+        try {
+            const compressedFiles = await Promise.all(
+                files.map(async (file) => {
+                    if (!VALID_IMAGE_TYPES.includes(file.type)) return null;
+
+                    // Skip compression ONLY if it's already under 100KB
+                    if (file.size < 102400) return file;
+
+                    console.log(
+                        `Original: ${(file.size / 1024).toFixed(1)} KB`,
+                    );
+
+                    const compressed = await imageCompression(
+                        file,
+                        compressionOptions,
+                    );
+
+                    console.log(
+                        `Compressed: ${(compressed.size / 1024).toFixed(1)} KB`,
+                    );
+                    return compressed;
+                }),
+            );
+
+            // Filter out any nulls from invalid types
+            const filteredFiles = compressedFiles.filter(
+                (f): f is File => f !== null,
+            );
+
+            setNewImages((prev) => [...prev, ...filteredFiles]);
+            const previews = filteredFiles.map((f) => URL.createObjectURL(f));
+            setNewPreviews((prev) => [...prev, ...previews]);
+
+            e.target.value = "";
+        } catch (error) {
+            console.error("Compression Error:", error);
+            toast.error("Failed to process images.");
         }
-
-        setNewImages((prev) => [...prev, ...files]);
-        const previews = files.map((f) => URL.createObjectURL(f));
-        setNewPreviews((prev) => [...prev, ...previews]);
-        e.currentTarget.value = "";
     };
-
     const removeNewImage = (idx: number) => {
+        URL.revokeObjectURL(newPreviews[idx]);
         setNewImages((prev) => prev.filter((_, i) => i !== idx));
         setNewPreviews((prev) => prev.filter((_, i) => i !== idx));
     };
@@ -224,11 +271,10 @@ export function useItemForm(item: any) {
         )
             return "Please select a subcategory";
 
-        
-
         if (shopType === "services") {
             if (!pricingModel) return "Pricing model is required for services";
-            if (!deliveryMethod) return "Delivery method is required for services";
+            if (!deliveryMethod)
+                return "Delivery method is required for services";
             const deliveryRegex =
                 /^(?:[1-9][0-9]?\s*(?:second|minute|hour)s?\s*){1,2}$/i;
 
@@ -248,7 +294,7 @@ export function useItemForm(item: any) {
                 const parse = (t: string) => t.replace(/\s+/g, "");
                 if (parse(availableFrom) >= parse(availableTo))
                     return "Available 'to' must be after 'from'";
-            } catch (e) { }
+            } catch (e) {}
         }
 
         if (
@@ -284,7 +330,8 @@ export function useItemForm(item: any) {
         fd.append("title", title);
         fd.append("description", description);
         fd.append("type", shopType);
-        const categoryId = selectedChildCategory.value || selectedCategory.value;
+        const categoryId =
+            selectedChildCategory.value || selectedCategory.value;
         if (categoryId) fd.append("category_id", categoryId);
 
         if (shopType === "services") {
@@ -335,7 +382,7 @@ export function useItemForm(item: any) {
             "saturday",
             "sunday",
         ],
-        []
+        [],
     );
 
     return {
@@ -354,7 +401,7 @@ export function useItemForm(item: any) {
         regularPrice,
         setRegularPrice,
         quantity,
-        setQuantity, 
+        setQuantity,
         selectedCategory,
         setSelectedCategory,
         selectedChildCategory,
