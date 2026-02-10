@@ -187,6 +187,8 @@ export function useItemForm(item: any) {
                     console.log(
                         `Original: ${(file.size / 1024).toFixed(1)} KB`,
                     );
+                    // toast to show it optimize
+                    toast.loading(`Optimizing ${file.name}...`, { id: "compress" });
 
                     const compressed = await imageCompression(
                         file,
@@ -196,6 +198,8 @@ export function useItemForm(item: any) {
                     console.log(
                         `Compressed: ${(compressed.size / 1024).toFixed(1)} KB`,
                     );
+                    // end the toast loading
+                    toast.dismiss("compress");
                     return compressed;
                 }),
             );
