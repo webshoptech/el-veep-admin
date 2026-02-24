@@ -26,7 +26,6 @@ export function useItemForm(item: any) {
     const [shopType, setShopType] = useState(item?.type || "products");
     const [categories, setCategories] = useState<DropdownOption[]>([]);
 
-    console.log(shopType);
     // basic
     const [title, setTitle] = useState(item?.title ?? "");
     const [description, setDescription] = useState(item?.description ?? "");
@@ -110,7 +109,7 @@ export function useItemForm(item: any) {
                 const data = await getCategories(100, 0, "", shopType);
                 if (!mounted) return;
 
-                const formatted = (data ?? []).map((c: any) => ({
+                const formatted = (data.data ?? []).map((c: any) => ({
                     label: c.name,
                     value: String(c.id),
                     children: (c.children ?? []).map((ch: any) => ({
