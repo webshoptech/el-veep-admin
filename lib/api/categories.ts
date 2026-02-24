@@ -10,7 +10,7 @@ export async function getCategories(
     const response = await axios.get("/categories", {
         params: { limit, offset, type, search },
     });
-    return response.data.data;
+    return response.data;
 }
 
 export async function listSubCategories(
