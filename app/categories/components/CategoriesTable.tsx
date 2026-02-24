@@ -285,7 +285,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
 
     return (
         <div className="space-y-6">
-            <CategorySummary loading={loading} stats={itemStats} />
+            {/* <CategorySummary loading={loading} stats={itemStats} /> */}
 
             <div className="mb-4">
                 <input

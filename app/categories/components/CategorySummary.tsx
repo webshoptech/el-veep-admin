@@ -14,12 +14,12 @@ export default function CategorySummary({ loading, stats }: CategorySummaryProps
     const summaries = [
         {
             label: "Total categories",
-            value: stats.total_categories,
+            value: stats.total_categories ?? 0,
             icon: <CubeIcon className="w-6 h-6 text-green-600" />,
         }, 
         {
             label: "Inactive categories",
-            value: stats.total_inactive,
+            value: stats.total_inactive ?? 0,
             icon: <XCircleIcon className="w-6 h-6 text-red-600" />,
         },  
     ];
