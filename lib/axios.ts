@@ -4,7 +4,7 @@ import { setupCache } from 'axios-cache-interceptor';
 const base = axios.create({
     baseURL:
         process.env.NEXT_PUBLIC_API_URL ||
-        "https://api.olajumokehospital.com.ng/api/v1/admin",
+        "https://api.elveep.org/api/v1/admin",
     withCredentials: true,
 });
 
