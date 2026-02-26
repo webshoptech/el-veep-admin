@@ -171,3 +171,9 @@ export const bottomNavigation = [
         isLogout: true,
     },
 ];
+
+
+export const TYPES = [
+    { label: "Physical Product", value: "products" },
+    { label: "Service / Digital", value: "services" },
+];

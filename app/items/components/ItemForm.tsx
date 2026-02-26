@@ -7,20 +7,16 @@ import ImageUploader from "./fields/ImageUploader";
 import { useItemForm } from "@/hooks/useItemForm";
 import { SubmitButton as OriginalSubmitButton } from "../../components/commons/SubmitButton";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
+import { TYPES } from "@/setting";
 
 interface Props {
     onClose: () => void;
     item?: any;
 }
 
-const typeOptions = [
-    { label: "Physical Product", value: "products" },
-    { label: "Service / Digital", value: "services" },
-];
-
 export default function ItemForm({ onClose, item }: Props) {
     const form = useItemForm(item);
-    const selectedType = typeOptions.find(opt => opt.value === form.shopType) || typeOptions[0];
+    const selectedType = TYPES.find(opt => opt.value === form.shopType) || TYPES[0];
 
     return (
         <form
@@ -35,7 +31,7 @@ export default function ItemForm({ onClose, item }: Props) {
                     What are you adding?
                 </label>
                 <SelectDropdown
-                    options={typeOptions}
+                    options={TYPES}
                     value={selectedType} 
                     onChange={(opt) => form.setShopType(opt.value)}
                     className="w-full"
