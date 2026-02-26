@@ -40,10 +40,7 @@ export default function CategoryForm({ onClose, category }: Props) {
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
 
-    const { categories } = useCategoryStore();
-    const editorRef = useRef<TinyMCEEditor | null>(null);
-
-    // Find current type object for the dropdown
+    const { categories } = useCategoryStore(); 
     const selectedType = TYPES.find((opt) => opt.value === type) || TYPES[0];
 
     const categoryOptions = useMemo(() => {
@@ -67,7 +64,7 @@ export default function CategoryForm({ onClose, category }: Props) {
 
         const formData = new FormData();
         formData.append("name", name);
-        formData.append("type", type); // Append the type to FormData
+        formData.append("type", type);  
         formData.append("description", description);
         if (selectedParent?.value)
             formData.append("parent_id", selectedParent.value);
@@ -82,7 +79,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                 toast.success("Category added successfully");
             }
             onClose();
-            window.location.reload();
+            // window.location.reload();
         } catch (error) {
             console.error(error);
             toast.error(
