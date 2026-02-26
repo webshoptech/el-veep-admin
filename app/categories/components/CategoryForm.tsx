@@ -79,7 +79,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                 toast.success("Category added successfully");
             }
             onClose();
-            // window.location.reload();
+            window.location.reload();
         } catch (error) {
             console.error(error);
             toast.error(

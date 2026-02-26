@@ -10,8 +10,7 @@ import TanStackTable from "@/app/components/commons/TanStackTable";
 import { listProducts, updateItemStatus } from "@/lib/api/products";
 import ItemSummary from "./ItemSummary";
 import { getStockBadgeClass } from "@/utils/StockBadge";
-import { EyeIcon, PencilIcon, StarIcon, TrashIcon } from "@heroicons/react/24/outline";
-import ProductAreaChart from "./ProductAreaChart";
+import { EyeIcon, PencilIcon, TrashIcon, StarIcon } from "@heroicons/react/24/outline";
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
 import { formatAmount } from "@/utils/formatCurrency";
@@ -23,34 +22,43 @@ const statusOptions: Option[] = [
     { label: "Draft", value: "inactive" },
 ];
 
+const typeOptions: Option[] = [
+    { label: "Products", value: "products" },
+    { label: "Services", value: "services" },
+];
+
 interface ProductTableProps {
     limit: number;
     type: string;
     status: string;
-    // optional props from parent
     products?: Product[];
     onEdit?: (product: Product) => void;
     onDeleteConfirm?: (productId: number) => void;
     loading?: boolean;
     total?: number;
+    onTypeChange?: (newType: string) => void; 
+    onRefresh: (limit: number, offset: number, search: string) => void;
 }
 
 export default function ProductsTable({
     limit,
-    type,
+    type: initialType,
     status,
     products: externalProducts,
     onEdit,
     onDeleteConfirm,
     loading: externalLoading,
     total: externalTotal,
+    onTypeChange,
+    onRefresh
 }: ProductTableProps) {
-    const [products, setProducts] = useState<Product[]>(externalProducts ?? []);
+        const [products, setProducts] = useState<Product[]>(externalProducts ?? []);
+    const [currentType, setCurrentType] = useState(initialType); 
     const [loading, setLoading] = useState<boolean>(externalLoading ?? !externalProducts);
     const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState<string>("");
     const [pagination, setPagination] = useState({
-        pageIndex: 0,
+        pageIndex: 0,   
         pageSize: limit,
     });
     const [totalProducts, setTotalProducts] = useState<number>(externalTotal ?? 0);
@@ -63,16 +71,13 @@ export default function ProductsTable({
     });
 
     useEffect(() => {
-        if (externalProducts && externalProducts.length > 0) {
-            setProducts(externalProducts);
-            setLoading(false);
-            setTotalProducts(externalTotal ?? externalProducts.length);
-        } else if (externalProducts && externalProducts.length === 0) {
-            setProducts([]);
-            setLoading(false);
-            setTotalProducts(0);
-        }
+        setProducts(externalProducts ?? []);
+        setTotalProducts(externalTotal ?? (externalProducts?.length || 0));
     }, [externalProducts, externalTotal]);
+
+    useEffect(() => {
+        setCurrentType(initialType);
+    }, [initialType]);
 
     const updateProductStatusInState = useCallback((id: number, newStatus: "active" | "inactive") => {
         setProducts((prev: Product[]) =>
@@ -80,14 +85,14 @@ export default function ProductsTable({
         );
     }, []);
 
-    const fetchProducts = useCallback(
-        async (pageIndex: number, search: string = "") => {
-            if (externalProducts && externalProducts.length > 0) return;
+   
 
+    const fetchProducts = useCallback(
+        async (pageIndex: number, search: string = "", typeToFetch: string) => { 
             try {
                 setLoading(true);
                 const offset = pageIndex * pagination.pageSize;
-                const response = await listProducts(pagination.pageSize, offset, search, type, status);
+                const response = await listProducts(pagination.pageSize, offset, search, typeToFetch, status);
                 setProducts(response.data || []);
                 setTotalProducts(response.total || 0);
                 setItemStats(response.stats || itemStats);
@@ -98,41 +103,53 @@ export default function ProductsTable({
                 setLoading(false);
             }
         },
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [pagination.pageSize, type, status, externalProducts]
+        [pagination.pageSize, status, itemStats]
     );
 
     const debouncedFetchProducts = useMemo(
         () =>
-            debounce((pageIndex: number, search: string) => {
-                fetchProducts(pageIndex, search);
+            debounce((pageIndex: number, search: string, typeToFetch: string) => {
+                fetchProducts(pageIndex, search, typeToFetch);
             }, 300),
         [fetchProducts]
     );
 
     useEffect(() => {
-        if (!externalProducts || externalProducts.length === 0) {
-            debouncedFetchProducts(pagination.pageIndex, search);
-        }
+        debouncedFetchProducts(pagination.pageIndex, search, currentType);
         return () => debouncedFetchProducts.cancel();
-    }, [pagination.pageIndex, debouncedFetchProducts, search, externalProducts]);
+    }, [pagination.pageIndex, debouncedFetchProducts, search, currentType]); 
+    useEffect(() => {
+        const offset = pagination.pageIndex * pagination.pageSize;
+        
+        const delayDebounce = setTimeout(() => {
+            onRefresh(pagination.pageSize, offset, search);
+        }, 300);
+
+        return () => clearTimeout(delayDebounce);
+    }, [search, pagination.pageIndex, pagination.pageSize, onRefresh]);
+ 
+    useEffect(() => {
+        setPagination(prev => ({ ...prev, pageIndex: 0 }));
+    }, [currentType]);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
         setPagination((prev) => ({ ...prev, pageIndex: 0 }));
     };
 
-    const handleEdit = useCallback((product: Product) => onEdit?.(product), [onEdit]);
-    const handleDeleteConfirm = useCallback((productId: number) => onDeleteConfirm?.(productId), [onDeleteConfirm]);
+    const handleTypeChange = (selected: Option) => {
+        setCurrentType(selected.value);
+        setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+        if (onTypeChange) onTypeChange(selected.value);
+    };
 
-    const handleStatusChange = useCallback(async (productId: number, selected: Option, revert: () => void) => {
+    const handleStatusChange = useCallback(async (productId: number, selected: Option) => {
         try {
             await updateItemStatus(productId, selected.value);
             toast.success("Status updated");
             updateProductStatusInState(productId, selected.value as "active" | "inactive");
         } catch {
             toast.error("Failed to update status");
-            revert();
         }
     }, [updateProductStatusInState]);
 
@@ -145,7 +162,6 @@ export default function ProductsTable({
                     const image = row.original.images?.[0];
                     const title = row.original.title;
                     const category = row.original.category?.name;
-
                     return (
                         <div className="flex items-center space-x-2">
                             <Image
@@ -164,137 +180,68 @@ export default function ProductsTable({
                 },
             },
             {
-                header: "Avg. Rating",
-                accessorKey: "average_rating",
-                cell: ({ getValue }) => {
-                    const rating = parseFloat(getValue() as string) || 0;
-                    const stars = Math.round(rating);
-
-                    return (
-                        <div className="flex items-center gap-0.5">
-                            {[...Array(5)].map((_, index) => (
-                                <StarIcon key={index} className={`w-4 h-4 ${index < stars ? "text-green-500" : "text-gray-300"}`} />
-                            ))}
-                            <span className="ml-2 text-sm text-gray-600">{rating.toFixed(1)}</span>
-                        </div>
-                    );
-                },
-            },
-            {
                 header: "Price",
                 cell: ({ row }) => {
                     const salesPrice = parseFloat(row.original.sales_price || "0");
-                    const regularPrice = parseFloat(row.original.regular_price || "0");
-
-                    const formattedSales = `${formatAmount(salesPrice)}`;
-                    const formattedRegular = `${formatAmount(regularPrice)}`;
-
-                    return (
-                        <div className="flex flex-col text-xs">
-                            <span className="text-gray-800 font-semibold">{formattedSales}</span>
-                            {salesPrice > 0 && regularPrice > 0 && salesPrice < regularPrice && (
-                                <span className="text-gray-500 line-through text-xs">{formattedRegular}</span>
-                            )}
-                        </div>
-                    );
+                    return <span className="text-gray-800 font-semibold">{formatAmount(salesPrice)}</span>;
                 },
             },
             {
                 header: "Stock",
                 accessorKey: "quantity",
                 cell: ({ getValue }) => {
-                    const quantity = getValue() as number;
-                    const max = 100;
-                    const badgeClass = getStockBadgeClass(quantity, max);
-
-                    return <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${badgeClass}`}>{quantity}</span>;
-                },
-            },
-            {
-                header: "Views",
-                accessorKey: "views",
-                cell: ({ getValue }) => {
-                    const views = getValue() as number;
-                    return (
-                        <div className="flex items-center gap-1 text-gray-700">
-                            <EyeIcon className="w-4 h-4 text-green-600" />
-                            <span>{views}</span>
-                        </div>
-                    );
+                    const qty = getValue() as number;
+                    const badgeClass = getStockBadgeClass(qty, 100);
+                    return <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${badgeClass}`}>{qty}</span>;
                 },
             },
             {
                 header: "Status",
                 accessorKey: "status",
                 cell: ({ row }) => {
-                    const product = row.original;
-                    const initial = product.status ?? "inactive";
+                    const initial = row.original.status ?? "inactive";
                     const selectedOption = statusOptions.find((s) => s.value === initial) ?? statusOptions[0];
-
                     return (
                         <SelectDropdown
                             value={selectedOption}
                             options={statusOptions}
-                            onChange={(opt) => {
-                                const revert = () => {
-                                };
-                                handleStatusChange(product.id, opt, revert);
-                            }}
+                            onChange={(opt) => handleStatusChange(row.original.id, opt)}
                         />
                     );
                 },
             },
             {
-                header: "Created At",
-                accessorKey: "created_at",
-                cell: ({ getValue }) => {
-                    const value = getValue() as string;
-                    return formatHumanReadableDate(value);
-                },
-            },
-            {
                 header: "Action",
-                accessorKey: "id",
-                cell: ({ row }) => {
-                    const product = row.original;
-                    return (
-                        <div className="flex items-center gap-3">
-                            <button
-                                onClick={() => handleEdit(product)}
-                                className="bg-yellow-500 text-white p-1.5 rounded-md hover:bg-yellow-600 flex items-center gap-1 cursor-pointer"
-                            >
-                                <PencilIcon className="w-4 h-4" />
-                                Edit
-                            </button>
-
-                            <button
-                                onClick={() => handleDeleteConfirm(product.id)}
-                                className="bg-red-500 text-white p-1.5 rounded-md hover:bg-red-600 flex items-center gap-1 cursor-pointer"
-                            >
-                                <TrashIcon className="w-4 h-4" />
-                                Delete
-                            </button>
-                        </div>
-                    );
-                },
+                cell: ({ row }) => (
+                    <div className="flex items-center gap-3">
+                        <button onClick={() => onEdit?.(row.original)} className="bg-yellow-500 text-white p-1.5 rounded-md hover:bg-yellow-600">
+                            <PencilIcon className="w-4 h-4" />
+                        </button>
+                        <button onClick={() => onDeleteConfirm?.(row.original.id)} className="bg-red-500 text-white p-1.5 rounded-md hover:bg-red-600">
+                            <TrashIcon className="w-4 h-4" />
+                        </button>
+                    </div>
+                ),
             },
         ],
-        [handleDeleteConfirm, handleEdit, handleStatusChange]
+        [onEdit, onDeleteConfirm, handleStatusChange]
     );
 
     return (
         <div className="space-y-6">
             <ItemSummary loading={loading} stats={itemStats} />
-            <ProductAreaChart type={type} status={status} />
 
-            <div className="mb-4">
-                <input
-                    type="text"
-                    placeholder="Search by product name..."
-                    value={search}
-                    onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900"
-                />
+            <div className="flex flex-col md:flex-row gap-4 mb-4">
+                {/* Search input */}
+                <div className="flex-1">
+                    <input
+                        type="text"
+                        placeholder="Search by name..."
+                        value={search}
+                        onChange={handleSearchChange}
+                        className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900"
+                    />
+                </div> 
             </div>
 
             <TanStackTable
@@ -305,14 +252,9 @@ export default function ProductsTable({
                 pagination={{
                     pageIndex: pagination.pageIndex,
                     pageSize: pagination.pageSize,
-                    totalRows: externalTotal ?? totalProducts,
+                    totalRows: totalProducts,
                 }}
-                onPaginationChange={(updatedPagination) =>
-                    setPagination({
-                        pageIndex: updatedPagination.pageIndex,
-                        pageSize: updatedPagination.pageSize,
-                    })
-                }
+                onPaginationChange={(updated) => setPagination({ pageIndex: updated.pageIndex, pageSize: updated.pageSize })}
             />
         </div>
     );

@@ -32,6 +32,11 @@ const statusOptions: Option[] = [
     { label: "Inactive", value: "inactive" },
 ];
 
+const typeOptions: Option[] = [
+    { label: "Products", value: "products" },
+    { label: "Services", value: "services" },
+];
+
 function CategoryActionCell({
     category,
     onStatusUpdate,
@@ -46,8 +51,6 @@ function CategoryActionCell({
     );
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isDrawerOpen, setDrawerOpen] = useState(false);
-    const [editingCategory, setEditingCategory] = useState<CategoryType | null>(null);
     const [loading, setLoading] = useState(false);
 
     const handleStatusChange = async (selected: Option) => {
@@ -57,6 +60,7 @@ function CategoryActionCell({
             await updateItemStatus(category.id, selected.value);
             onStatusUpdate(selected.value as "active" | "inactive");
             toast.success("Category status updated.");
+            window.location.reload();
         } catch {
             setStatus(previous);
             toast.error("Failed to update category status.");
@@ -84,15 +88,13 @@ function CategoryActionCell({
                     value={status}
                     options={statusOptions}
                     onChange={handleStatusChange}
-                    className="w-auto min-w-[140px]"
+                    className="w-auto min-w-35"
                 />
 
                 <button
                     title="Update"
                     className="bg-yellow-500 text-white p-1.5 rounded-md hover:bg-yellow-600 flex items-center gap-1 cursor-pointer"
-                    onClick={() => {
-                        onEdit(category);
-                    }}
+                    onClick={() => onEdit(category)}
                 >
                     <PencilSquareIcon className="w-4 h-4" /> Edit
                 </button>
@@ -125,27 +127,14 @@ function CategoryActionCell({
                     </button>
                 </div>
             </ConfirmationModal>
-            <Drawer
-                isOpen={isDrawerOpen}
-                onClose={() => {
-                    setDrawerOpen(false);
-                    setEditingCategory(null);
-                }}
-                title={editingCategory ? 'Edit Category' : 'Create Category'}
-            >
-                <CategoryForm
-                    category={editingCategory ?? undefined}
-                    onClose={() => {
-                        setDrawerOpen(false);
-                        setEditingCategory(null);
-                    }}
-                />
-            </Drawer>
         </>
     );
 }
-const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
+
+const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type: initialType }) => {
     const [categories, setCategories] = useState<CategoryType[]>([]);
+    // ADDED: Local state for Type filter
+    const [selectedType, setSelectedType] = useState<string>(initialType || "products");
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [search, setSearch] = useState<string>("");
@@ -200,7 +189,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                 accessorKey: "description",
                 cell: ({ getValue }) => (
                     <span className="text-sm text-gray-700 truncate w-40 overflow-hidden whitespace-nowrap block">
-                        {getValue() as string}
+                        {(getValue() as string) || "N/A"}
                     </span>
                 ),
             },
@@ -244,11 +233,12 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
     );
 
     const fetchCategories = useCallback(
-        async (pageIndex: number, search: string = "") => {
+        async (pageIndex: number, search: string = "", typeToFetch: string) => {
             try {
                 setLoading(true);
                 const offset = pageIndex * pagination.pageSize;
-                const response = await getCategories(pagination.pageSize, offset, search, type);
+                // UPDATED: Now uses typeToFetch from local state
+                const response = await getCategories(pagination.pageSize, offset, search, typeToFetch);
                 saveToStore(response.data);
                 setCategories(response.data);
                 setTotalCategories(response.total || 0);
@@ -260,41 +250,59 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                 setLoading(false);
             }
         },
-        [pagination.pageSize, type, saveToStore]
+        [pagination.pageSize, saveToStore]
     );
 
     const debouncedFetch = useMemo(() => {
-        return debounce((pageIndex: number, search: string) => {
-            fetchCategories(pageIndex, search);
+        return debounce((pageIndex: number, search: string, typeToFetch: string) => {
+            fetchCategories(pageIndex, search, typeToFetch);
         }, 300);
     }, [fetchCategories]);
 
     useEffect(() => {
-        debouncedFetch(pagination.pageIndex, search);
+        // UPDATED: Added selectedType to dependency and fetch call
+        debouncedFetch(pagination.pageIndex, search, selectedType);
         return () => {
             debouncedFetch.cancel();
         };
-    }, [pagination.pageIndex, debouncedFetch, search]);
+    }, [pagination.pageIndex, debouncedFetch, search, selectedType]);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
         setPagination((prev) => ({ ...prev, pageIndex: 0 }));
     };
 
-
+    // Helper for SelectDropdown value
+    const currentTypeOption = typeOptions.find(o => o.value === selectedType) || typeOptions[0];
 
     return (
         <div className="space-y-6">
             <CategorySummary loading={loading} stats={itemStats} />
 
-            <div className="mb-4">
-                <input
-                    type="text"
-                    placeholder="Search by category name..."
-                    value={search}
-                    onChange={handleSearchChange}
-                    className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900"
-                />
+            <div className="flex flex-col md:flex-row gap-4">
+                {/* Search Bar */}
+                <div className="flex-1">
+                    <input
+                        type="text"
+                        placeholder="Search by category name..."
+                        value={search}
+                        onChange={handleSearchChange}
+                        className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900"
+                    />
+                </div>
+
+                {/* ADDED: Type Filter Dropdown */}
+                <div className="w-full md:w-64">
+                    <SelectDropdown
+                        options={typeOptions}
+                        value={currentTypeOption}
+                        onChange={(selected) => {
+                            setSelectedType(selected.value);
+                            setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+                        }}
+                        className="w-full"
+                    />
+                </div>
             </div>
 
             <TanStackTable
@@ -314,6 +322,7 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                     });
                 }}
             />
+
             <Drawer
                 isOpen={isDrawerOpen}
                 onClose={() => {
@@ -330,15 +339,8 @@ const CategoriesTable: React.FC<CategoryTableProps> = ({ limit, type }) => {
                     }}
                 />
             </Drawer>
-
-
         </div>
-
     );
-
-
 };
-
-
 
 export default CategoriesTable;

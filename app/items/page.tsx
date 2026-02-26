@@ -1,51 +1,54 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import ProductsTable from "./components/ProductsTable";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Drawer from "../components/commons/Drawer";
 import ConfirmationModal from "../components/commons/ConfirmationModal";
+import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import { listProducts, deleteProduct } from "@/lib/api/products";
 import { Product } from "@/types/ProductType";
 import ItemForm from "./components/ItemForm";
+
+type Option = { label: string; value: string };
+
+const typeOptions: Option[] = [
+    { label: "Products", value: "products" },
+    { label: "Services", value: "services" },
+];
 
 export default function Products() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-    const [selectedProductId, setSelectedProductId] = useState<number | null>(
-        null,
-    );
+    const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+    
+    // NEW: State for dynamic type filtering
+    const [selectedType, setSelectedType] = useState<string>("products");
 
     const [products, setProducts] = useState<Product[]>([]);
     const [total, setTotal] = useState<number>(0);
     const LIMIT = 10;
 
-    const fetchProducts = async (limit = LIMIT, offset = 0, search = "") => {
+    // UPDATED: fetchProducts now accepts type as an argument
+   const fetchProducts = useCallback(async (limit = LIMIT, offset = 0, search = "") => {
         try {
             setLoading(true);
-            const resp = await listProducts(
-                limit,
-                offset,
-                search,
-                "products",
-                "active",
-            );
+            // Notice we use selectedType directly from state here
+            const resp = await listProducts(limit, offset, search, selectedType, "active");
             setProducts(resp?.data || []);
             setTotal(resp?.total ?? 0);
         } catch (err) {
-            console.error("Failed to fetch products", err);
-            setProducts([]);
-            setTotal(0);
+            console.error("Failed to fetch", err);
         } finally {
             setLoading(false);
         }
-    };
+    }, [selectedType]); // Re-create function when type changes
 
     useEffect(() => {
         fetchProducts();
-    }, []);
+    }, [fetchProducts]);
 
     const handleEditProduct = (product: Product) => {
         setEditingProduct(product);
@@ -59,24 +62,17 @@ export default function Products() {
 
     const handleDeleteProduct = async () => {
         if (!selectedProductId) return;
-
-        // 1. Capture the ID and close modal early for better UX
         const idToDelete = selectedProductId;
         setIsModalOpen(false);
         setLoading(true);
 
         try {
             await deleteProduct(idToDelete);
-
-            // 2. Update local state immediately (Optimistic Update)
             setProducts((prev) => prev.filter((p) => p.id !== idToDelete));
             setTotal((prev) => prev - 1);
-
-            // 3. Optional: Refresh from server to ensure sync
             await fetchProducts();
         } catch (err) {
             console.error("Failed to delete product:", err);
-            // If it fails, re-fetch to restore the list
             await fetchProducts();
         } finally {
             setLoading(false);
@@ -90,6 +86,9 @@ export default function Products() {
         setEditingProduct(null);
     };
 
+    // Helper for dropdown value
+    const currentTypeOption = typeOptions.find(opt => opt.value === selectedType) || typeOptions[0];
+
     return (
         <div className="space-y-6 text-gray-800">
             {/* Header Row */}
@@ -97,20 +96,31 @@ export default function Products() {
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800">Items</h1>
                     <p className="text-sm text-gray-600">
-                        Manage your items here.
+                        Manage your {selectedType} here.
                     </p>
                 </div>
 
-                <button
-                    onClick={() => {
-                        setEditingProduct(null);
-                        setDrawerOpen(true);
-                    }}
-                    className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600 cursor-pointer"
-                >
-                    <PlusIcon className="w-4 h-4" />
-                    Add Item
-                </button>
+                <div className="flex items-center gap-3">
+                    {/* NEW: Type Filter Dropdown placed beside the action button */}
+                  <div className="w-40">
+                        <SelectDropdown
+                            options={typeOptions}
+                            value={currentTypeOption}
+                            onChange={(selected) => setSelectedType(selected.value)}
+                        />
+                    </div>
+
+                    <button
+                        onClick={() => {
+                            setEditingProduct(null);
+                            setDrawerOpen(true);
+                        }}
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600 cursor-pointer"
+                    >
+                        <PlusIcon className="w-4 h-4" />
+                        Add Item
+                    </button>
+                </div>
             </div>
 
             {/* Confirmation modal for delete */}
@@ -152,18 +162,20 @@ export default function Products() {
                 <ItemForm
                     item={editingProduct}
                     onClose={() => setDrawerOpen(false)}
+                    // onSuccess={handleFormSuccess}
                 />
             </Drawer>
 
-            <ProductsTable
+           <ProductsTable
                 limit={LIMIT}
-                type="products"
+                type={selectedType}
                 status="active"
                 products={products}
+                total={total}
+                loading={loading}
                 onEdit={handleEditProduct}
                 onDeleteConfirm={handleConfirmDelete}
-                loading={loading}
-                total={total}
+                onRefresh={fetchProducts} // Pass refresh so table can trigger fetch on search/page change
             />
         </div>
     );
