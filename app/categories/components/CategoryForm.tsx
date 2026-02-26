@@ -157,6 +157,7 @@ export default function CategoryForm({ onClose, category }: Props) {
                 <textarea
                     id="description"
                     rows={4}
+                    maxLength={500}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Describe this category..."
