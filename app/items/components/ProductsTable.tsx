@@ -172,7 +172,7 @@ export default function ProductsTable({
                                 className="w-10 h-10 object-cover rounded"
                             />
                             <div className="flex flex-col">
-                                <span className="font-medium text-gray-800">{title}</span>
+                                <span className="font-medium text-gray-800 truncate w-60" title={title}>{title}</span>
                                 {category && <span className="text-xs text-gray-500">{category}</span>}
                             </div>
                         </div>
