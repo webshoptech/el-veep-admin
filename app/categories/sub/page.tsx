@@ -9,6 +9,12 @@ import { FlattenedSubCategory } from "@/types/CategoryType";
 import { deleteCategory } from "@/lib/api/categories";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/app/components/commons/ConfirmationModal";
+import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
+
+const TYPE_OPTIONS = [
+    { label: "Products Catalog", value: "products" },
+    { label: "Services Catalog", value: "services" },
+];
 
 export default function Sub() {
     const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -16,6 +22,9 @@ export default function Sub() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [categoryToDelete, setCategoryToDelete] = useState<FlattenedSubCategory | null>(null);
     const [loading, setLoading] = useState(false);
+    
+    // Track type at the parent level to keep table and form in sync
+    const [selectedType, setSelectedType] = useState("products");
 
     const handleEdit = (category: FlattenedSubCategory) => {
         setEditingCategory(category);
@@ -49,30 +58,27 @@ export default function Sub() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800">Sub categories</h1>
-                    <p className="text-sm text-gray-600">Manage your sub-categories here.</p>
+                    <p className="text-sm text-gray-600">Manage your {selectedType} sub-categories here.</p>
                 </div>
 
-                <div className="flex gap-3 items-center">
-                    <div className="w-48">
-
-                    </div>
-
+                <div className="flex gap-3 items-center w-full sm:w-auto">
+                    {/* Optional: Type switcher here if you want it outside the table */}
                     <button
                         onClick={() => {
                             setEditingCategory(null);
                             setDrawerOpen(true);
                         }}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600 cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-green-500 text-white hover:bg-green-600 cursor-pointer shadow-sm transition-all"
                     >
                         <PlusIcon className="w-4 h-4" />
-                        Create Subcategory
+                        Create {selectedType === 'products' ? 'Product' : 'Service'} Subcategory
                     </button>
                 </div>
             </div>
 
             <SubCategoriesTable
                 limit={10}
-                type={"products"}
+                initialType={selectedType} // Passing the dynamic type here
                 onEdit={handleEdit}
                 onDelete={confirmDelete}
             />
@@ -91,6 +97,8 @@ export default function Sub() {
                         setEditingCategory(null);
                     }}
                     category={editingCategory ?? undefined}
+                    // Pass the type to the form so it knows which categories to fetch
+                    type={editingCategory?.type || selectedType} 
                 />
             </Drawer>
 

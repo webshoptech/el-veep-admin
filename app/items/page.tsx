@@ -24,18 +24,15 @@ export default function Products() {
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
     
-    // NEW: State for dynamic type filtering
     const [selectedType, setSelectedType] = useState<string>("products");
 
     const [products, setProducts] = useState<Product[]>([]);
     const [total, setTotal] = useState<number>(0);
     const LIMIT = 10;
 
-    // UPDATED: fetchProducts now accepts type as an argument
    const fetchProducts = useCallback(async (limit = LIMIT, offset = 0, search = "") => {
         try {
             setLoading(true);
-            // Notice we use selectedType directly from state here
             const resp = await listProducts(limit, offset, search, selectedType, "active");
             setProducts(resp?.data || []);
             setTotal(resp?.total ?? 0);
@@ -44,8 +41,7 @@ export default function Products() {
         } finally {
             setLoading(false);
         }
-    }, [selectedType]); // Re-create function when type changes
-
+    }, [selectedType]); 
     useEffect(() => {
         fetchProducts();
     }, [fetchProducts]);
@@ -86,7 +82,6 @@ export default function Products() {
         setEditingProduct(null);
     };
 
-    // Helper for dropdown value
     const currentTypeOption = typeOptions.find(opt => opt.value === selectedType) || typeOptions[0];
 
     return (
@@ -101,7 +96,6 @@ export default function Products() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                    {/* NEW: Type Filter Dropdown placed beside the action button */}
                   <div className="w-40">
                         <SelectDropdown
                             options={typeOptions}
@@ -175,7 +169,7 @@ export default function Products() {
                 loading={loading}
                 onEdit={handleEditProduct}
                 onDeleteConfirm={handleConfirmDelete}
-                onRefresh={fetchProducts} // Pass refresh so table can trigger fetch on search/page change
+                onRefresh={fetchProducts} 
             />
         </div>
     );

@@ -45,6 +45,7 @@ export interface FlattenedSubCategory {
     parent_id: number;
     parent_name: string;
     parent_slug: string;
+    type?: "products" | "services";
 }
 
 export interface BannerType {

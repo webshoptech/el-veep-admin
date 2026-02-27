@@ -20,12 +20,17 @@ const TYPE_OPTIONS = [
 export default function SubCategoryForm({
     onClose,
     category,
+    type: initialType, // Accept type from parent
 }: {
     onClose: () => void;
     category?: FlattenedSubCategory;
+    type?: string; // New prop
 }) {
     const [name, setName] = useState(category?.name ?? "");
-    const [type, setType] = useState((category as any)?.type || "products");
+    
+    // Prioritize: 1. Existing category type, 2. Type passed from parent, 3. Default "products"
+    const [type, setType] = useState(category?.type || initialType || "products");
+    
     const [selectedParent, setSelectedParent] = useState<{
         label: string;
         value: string;
@@ -41,6 +46,13 @@ export default function SubCategoryForm({
     const { categories, setCategories: saveToStore } = useCategoryStore();
     const [loading, setLoading] = useState(false);
 
+    // Sync state if initialType changes from parent while drawer is open
+    useEffect(() => {
+        if (initialType && !category) {
+            setType(initialType);
+        }
+    }, [initialType, category]);
+
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -54,25 +66,25 @@ export default function SubCategoryForm({
         if (categories.length === 0) {
             fetchCategories();
         }
-    }, [categories, saveToStore]);
+    }, [categories.length, saveToStore]);
 
-    // 1. Filter parent categories based on the selected Type
+    // Filter parent categories based on the selected Type
     const filteredCategoryOptions = useMemo(() => {
         return categories
-            .filter((cat) => cat.type === type) // Only show parents matching selected type
+            .filter((cat) => cat.type === type)
             .map((cat) => ({
                 label: cat.name,
                 value: String(cat.id),
             }));
     }, [categories, type]);
 
-    const selectedType =
+    const selectedTypeOption =
         TYPE_OPTIONS.find((opt) => opt.value === type) || TYPE_OPTIONS[0];
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!selectedParent) {
+        if (!selectedParent || selectedParent.value === "") {
             toast.error("Please select a parent category");
             return;
         }
@@ -106,22 +118,22 @@ export default function SubCategoryForm({
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Type Selector Section */}
+            {/* Type Selector Section - Optional: disable if editing to prevent parent-child type mismatch */}
             <div className="bg-green-50 p-4 rounded-xl border border-green-100">
                 <label className="block text-sm font-semibold text-green-800 mb-2">
-                    What are you adding?
+                    Classification
                 </label>
                 <SelectDropdown
                     options={TYPE_OPTIONS}
-                    value={selectedType}
+                    value={selectedTypeOption}
                     onChange={(opt) => {
                         setType(opt.value);
                         setSelectedParent(null); // Reset parent if type changes
                     }}
                     className="w-full"
                 />
-                <p className="text-xs text-green-600 mt-2">
-                    Showing {type} categories for the parent selection.
+                <p className="text-[11px] text-green-600 mt-2 italic">
+                    * Selection filters the Parent Categories list below.
                 </p>
             </div>
 
@@ -132,29 +144,37 @@ export default function SubCategoryForm({
                 </label>
                 <input
                     type="text"
-                    placeholder="Enter sub category name"
+                    placeholder="e.g. Smart Phones, Web Design, etc."
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-xl text-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all"
+                    required
                 />
             </div>
 
             {/* Filtered Parent Category Dropdown */}
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Parent Category <span className="text-green-500">*</span>
+                    Parent Category <span className="text-red-400">*</span>
                 </label>
                 <SelectDropdown
                     options={filteredCategoryOptions}
                     value={
-                        selectedParent || { label: "Select parent", value: "" }
+                        selectedParent || { label: "Select parent category", value: "" }
                     }
                     onChange={(opt) => setSelectedParent(opt)}
                     className="w-full"
                 />
+                {filteredCategoryOptions.length === 0 && !loading && (
+                    <p className="text-xs text-red-500 mt-1">
+                        No {type} parent categories found. Create a parent category first.
+                    </p>
+                )}
             </div>
 
-            <SubmitButton loading={loading} label="Save changes" />
+            <div className="pt-4">
+                <SubmitButton loading={loading} label={category?.id ? "Update Subcategory" : "Create Subcategory"} />
+            </div>
         </form>
     );
 }
