@@ -108,7 +108,7 @@ export const NAVIGATION = [
         icon: CubeIcon,
         children: [
             { name: "All items", href: "/items" },
-            { name: "Item Analytics", href: "/items/analytics" },
+            // { name: "Item Analytics", href: "/items/analytics" },
         ],
     },
     {
