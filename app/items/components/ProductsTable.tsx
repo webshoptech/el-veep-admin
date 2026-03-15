@@ -14,6 +14,7 @@ import { EyeIcon, PencilIcon, TrashIcon, StarIcon } from "@heroicons/react/24/ou
 import SelectDropdown from "@/app/components/commons/Fields/SelectDropdown";
 import toast from "react-hot-toast";
 import { formatAmount } from "@/utils/formatCurrency";
+import Link from "next/link";
 
 type Option = { label: string; value: string };
 
@@ -163,19 +164,21 @@ export default function ProductsTable({
                     const title = row.original.title;
                     const category = row.original.category?.name;
                     return (
-                        <div className="flex items-center space-x-2">
-                            <Image
-                                src={image || "/placeholder.png"}
-                                alt={title}
-                                width={40}
-                                height={40}
-                                className="w-10 h-10 object-cover rounded"
-                            />
-                            <div className="flex flex-col">
-                                <span className="font-medium text-gray-800 truncate w-60" title={title}>{title}</span>
-                                {category && <span className="text-xs text-gray-500">{category}</span>}
+                        <Link href={`/items/${row.original.slug}`} className="flex items-center gap-3">
+                            <div className="flex items-center space-x-2">
+                                <Image
+                                    src={image || "/placeholder.png"}
+                                    alt={title}
+                                    width={40}
+                                    height={40}
+                                    className="object-cover w-10 h-10 rounded"
+                                />
+                                <div className="flex flex-col">
+                                    <span className="font-medium text-gray-800 truncate w-60" title={title}>{title}</span>
+                                    {category && <span className="text-xs text-gray-500">{category}</span>}
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     );
                 },
             },
@@ -183,7 +186,7 @@ export default function ProductsTable({
                 header: "Price",
                 cell: ({ row }) => {
                     const salesPrice = parseFloat(row.original.sales_price || "0");
-                    return <span className="text-gray-800 font-semibold">{formatAmount(salesPrice)}</span>;
+                    return <span className="font-semibold text-gray-800">{formatAmount(salesPrice)}</span>;
                 },
             },
             {
@@ -231,7 +234,7 @@ export default function ProductsTable({
         <div className="space-y-6">
             <ItemSummary loading={loading} stats={itemStats} />
 
-            <div className="flex flex-col md:flex-row gap-4 mb-4">
+            <div className="flex flex-col gap-4 mb-4 md:flex-row">
                 {/* Search input */}
                 <div className="flex-1">
                     <input
@@ -239,7 +242,7 @@ export default function ProductsTable({
                         placeholder="Search by name..."
                         value={search}
                         onChange={handleSearchChange}
-                        className="w-full px-3 py-2 border rounded-md border-green-600 text-gray-900"
+                        className="w-full px-3 py-2 text-gray-900 border border-green-600 rounded-md"
                     />
                 </div> 
             </div>
